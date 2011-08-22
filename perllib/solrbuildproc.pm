@@ -555,14 +555,10 @@ sub textedit {
     # only output if working with doc level
     $text .= $end_doc if ($sec_tag_name eq "");
 
-
 ##    $text .= "<commit/>\n";
 
     print $solrhandle $text;
 
-    open(TOUT,">>/tmp/solr.out"); binmode(TOUT,":utf8");
-    print TOUT $text;
-    close(TOUT);
 }
 
 

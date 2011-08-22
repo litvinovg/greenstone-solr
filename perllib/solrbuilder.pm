@@ -319,16 +319,9 @@ sub pre_build_indexes
 	# (Unforunately) we need to process all the documents in the collection
 	# to figure out what the metadata_field_mapping is	    
 
-##	my $db_level = "section"; #always
-
 	# set up the document processr
 	$self->{'buildproc'}->set_output_handle (undef);
 	$self->{'buildproc'}->set_mode ('index_field_mapping');
-##	$self->{'buildproc'}->set_index ($index);
-##	$self->{'buildproc'}->set_indexing_text (0);
-	#$self->{'buildproc'}->set_indexfieldmap ($self->{'indexfieldmap'});
-##	$self->{'buildproc'}->set_levels ($levels);
-##	$self->{'buildproc'}->set_db_level ($db_level);
 	$self->{'buildproc'}->reset();
 	
 	&plugin::begin($self->{'pluginfo'}, $self->{'source_dir'},
@@ -337,11 +330,6 @@ sub pre_build_indexes
 		       "", {}, {}, $self->{'buildproc'}, $self->{'maxdocs'}, 0, $self->{'gli'});
 	&plugin::end($self->{'pluginfo'});
 	
-##	close ($handle) unless $self->{'debug'};
-
-##	$self->print_stats();
-
-	# just make "delete" stop  ???
     }
 
     else {
@@ -372,63 +360,6 @@ sub pre_build_indexes
     # => use RELOAD call to refresh fields now expressed in schema.xml
 
 }
-
-# Essentially the same as the lucenebuilder.pm version, only using solr_passes
-# => refactor and make better use of inheritence
-
-sub build_indexesXXXX {
-    my $self = shift (@_);
-    my ($indexname) = @_;
-    my $outhandle = $self->{'outhandle'};
-
-    $self->pre_build_indexes($indexname);
-
-    my $indexes = [];
-    if (defined $indexname && $indexname =~ /\w/) {
-	push @$indexes, $indexname;
-    } else {
-	$indexes = $self->{'collect_cfg'}->{'indexes'};
-    }
-
-    # have we got para index?
-    foreach my $level (keys %{$self->{'levels'}}) {
-	if ($level =~ /paragraph/) {
-	    print $outhandle "Warning: Paragraph level indexing not supported by Solr\n";
-	    last;
-	}
-    }
-    # create the mapping between the index descriptions
-    # and their directory names (includes subcolls and langs)
-    $self->{'index_mapping'} = $self->create_index_mapping ($indexes);
-
-    # build each of the indexes
-    foreach my $index (@$indexes) {
-	if ($self->want_built($index)) {
-
-	    my $idx = $self->{'index_mapping'}->{$index};
-	    foreach my $level (keys %{$self->{'levels'}}) {
-		next if $level =~ /paragraph/; # we don't do para indexing
-		my ($pindex) = $level =~ /^(.)/;
-		# should probably check that new name with level
-		# is unique ... but currently (with doc sec and para)
-		# each has unique first letter.
-		$self->{'index_mapping'}->{$index} = $pindex.$idx;
-
-		my $llevel = $mgppbuilder::level_map{$level};
-		print $outhandle "\n*** building index $index at level $llevel in subdirectory " .
-		    "$self->{'index_mapping'}->{$index}\n" if ($self->{'verbosity'} >= 1);
-		print STDERR "<Stage name='Index' source='$index' level=$llevel>\n" if $self->{'gli'};
-
-		$self->build_index($index,$llevel);
-	    }
-	    $self->{'index_mapping'}->{$index} = $idx;
-
-	} else {
-	    print $outhandle "\n*** ignoring index $index\n" if ($self->{'verbosity'} >= 1);
-	}
-    }
-}
-
 
 # Essentially the same as the lucenebuilder.pm version, only using solr_passes
 # => refactor and make better use of inheritence
@@ -545,19 +476,11 @@ sub build_index {
 
     print $handle "<update>\n";
 
-    open(TOUT,">/tmp/solr.out"); binmode(TOUT,":utf8");
-    print TOUT "<update>\n";
-    close(TOUT);
-
     &plugin::read ($self->{'pluginfo'}, $self->{'source_dir'},
 		   "", {}, {}, $self->{'buildproc'}, $self->{'maxdocs'}, 0, $self->{'gli'});
 
 
     print $handle "</update>\n";
-
-    open(TOUT,">>/tmp/solr.out"); binmode(TOUT,":utf8");
-    print TOUT "</update>\n";
-    close(TOUT);
 
     close ($handle) unless $self->{'debug'};
 
@@ -567,7 +490,6 @@ sub build_index {
     print STDERR "</Stage>\n" if $self->{'gli'};
 
 }
-
 
 
 sub post_build_indexes {

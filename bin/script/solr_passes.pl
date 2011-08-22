@@ -34,7 +34,6 @@
 # main task of monitor_xml() is to translate the XML syntax Greenstone uses
 # into that needed by the solr server.  
 
-my $jetty_stop_key="greenstone-solr";
 
 BEGIN {
     die "GSDLHOME not set\n" unless defined $ENV{'GSDLHOME'};
@@ -46,14 +45,12 @@ BEGIN {
 use strict;
 use util;
 
-
 # Not quite OO, but close enough for now
 #
 my $self = { 'full_server_jar' => undef,
-##	     'full_post_jar'   = undef,
-##	     'full_index_propfile' = undef,
-	     'jetty_explicitly_started' => undef
-	 };
+	     'jetty_explicitly_started' => undef,
+	     'jetty_stop_key' => "greenstone-solr"
+	     };
 
 
 
@@ -80,15 +77,16 @@ sub start_solr_server
 {
     my ($search_path) = @_;
 
-    my $solr_home       = $ENV{'GEXT_SOLR'};
-    my $jetty_stop_port = $ENV{'JETTY_STOP_PORT'};
+    my $solr_home         = $ENV{'GEXT_SOLR'};
+    my $jetty_stop_port   = $ENV{'JETTY_STOP_PORT'};
+    my $jetty_server_port = $ENV{'SOLR_JETTY_PORT'};
 
     chdir($solr_home);
     
     my $solr_etc = &util::filename_cat($solr_home,"etc");
 
     my $server_props = "-DSTOP.PORT=$jetty_stop_port";
-    $server_props .= " -DSTOP.KEY=$jetty_stop_key";
+    $server_props .= " -DSTOP.KEY=".$self->{'jetty_stop_key'};
     $server_props .= " -Dsolr.solr.home=$solr_etc";
 
     my $server_jar = &util::filename_cat("lib","java","solr-jetty-server.jar");
@@ -96,28 +94,56 @@ sub start_solr_server
     $self->{'full_server_jar'} = $full_server_jar;
     
     my $server_java_cmd = "java $server_props -jar \"$full_server_jar\"";
-#    if ($ENV{'GSDLOS'} eq "windows") {
-#	$server_java_cmd = "start $server_java_cmd";
-#    }
-#    else {
-#	$server_java_cmd .= " &";
-#    }
-    
+
+##    print STDERR "**** server cmd = $server_java_cmd\n";
 
     if (open(SIN,"$server_java_cmd 2>&1 |")) {
 	
+	my $server_status = "unknown";
+
 	my $line;
 	while (defined($line=<SIN>)) {
 	    # Scan through output until you see a line like:
 	    #   2011-08-22 .. :INFO::Started SocketConnector@0.0.0.0:8983
 	    # which signifies that the server has started up and is
 	    # "ready and listening"
-	    
-	    last if ($line =~ m/INFO::Started SocketConnector/);
+
+##	    print STDERR "**** $line";
+
+	    if (($line =~ m/^(WARN|ERROR|SEVERE):/)
+		|| ($line =~ m/^[0-9 :-]*(WARN|ERROR|SEVERE)::/)) {
+		print $line;
+	    }
+
+
+	    if ($line =~ m/WARN::failed SocketConnector/) {
+		if ($line =~ m/Address already in use/) {
+		    $server_status = "already-running";
+		}
+		else {
+		    $server_status = "failed-to-start";
+		}
+		last;
+	    }
+		
+	    if ($line =~ m/INFO::Started SocketConnector/) {
+		$server_status = "explicitly-started";
+		last;
+	    }
 	}
 
-	print STDERR "Jetty server ready and listening for connections\n";
-
+	if ($server_status eq "explicitly-started") {
+	    $self->{'jetty_explicitly_started'} = 1;
+	    print STDERR "Jetty server ready and listening for connections\n";
+	}
+	elsif ($server_status eq "already-running") {
+	    print STDERR "Using existing server detected on port $jetty_server_port\n";
+	}
+	else {
+	    print STDERR "Failed to start Solr/Jetty web server on $jetty_server_port\n";
+	    exit -1;
+	}
+	    
 	# now we know the server is ready to accept connections, fork a
 	# child process that continues to listen to the output and
 	# prints out any lines that are not INFO lines
@@ -139,14 +165,18 @@ sub start_solr_server
     }
     else {
 	print STDERR "Error: failed to start solr-jetty-server\n";
-	print STDERR "!$\n";
+	print STDERR "!$\n\n";
+	print STDERR "Command attempted was:\n";
+	print STDERR "  $server_java_cmd\n";
+	print STDERR "run from directory:\n";
+	print STDERR "  $solr_home\n";
+	print STDERR "----\n";
+
 	exit -1;
     }
 
     # If get to here then server started (and ready and listening)
     # *and* we are the parent process of the fork()
-
-    $self->{'jetty_explicitly_started'} = 1;
 
 }
 
@@ -157,7 +187,8 @@ sub stop_solr_server
     my $full_server_jar = $self->{'full_server_jar'};
     my $jetty_stop_port = $ENV{'JETTY_STOP_PORT'};
     
-    my $server_props = "-DSTOP.PORT=$jetty_stop_port -DSTOP.KEY=$jetty_stop_key";
+    my $server_props = "-DSTOP.PORT=$jetty_stop_port";
+    $server_props   .= " -DSTOP.KEY=".$self->{'jetty_stop_key'};
     my $server_java_cmd = "java $server_props -jar \"$full_server_jar\" --stop";
 
     my $server_status = system($server_java_cmd);
@@ -169,6 +200,7 @@ sub stop_solr_server
     }
     else {
 	wait(); # let the child process finish
+	print STDERR "Jetty server shutdown\n";
     }
 }
 
@@ -184,24 +216,6 @@ sub open_java_solr
       &util::rm_r($full_indexdir);
   }
 
-# No longer used, as solr now run as two cores per collection (-Doc and -Sec)
-#
-#  # Set up an 'index.properties' file in $full_builddir, with the line
-#  #   index=$indexdir
-#  $full_index_propfile = &util::filename_cat($full_builddir,"index.properties");
-
-#  if (open(IPOUT,">$full_index_propfile")) {
-#      print IPOUT "index=$indexdir\n";
-#      close(IPOUT);
-#  }
-#  else {
-#      print STDERR "Failed to create $full_index_propfile\n";
-#      print STDERR "!$\n";
-#      exit -2;
-#  }
-
-  
-
   my $search_path = [];
 
   push(@$search_path,$ENV{'GSDLCOLLECTDIR'}) if defined $ENV{'GSDLCOLLECTDIR'};
@@ -214,15 +228,12 @@ sub open_java_solr
   #
   start_solr_server($search_path);
 
-
   # Now run the solr-post command
 
   chdir($ENV{'GEXT_SOLR'});
-
   
   my $post_jar   = &util::filename_cat("lib","java","solr-post.jar");
   my $full_post_jar   = locate_file($search_path,$post_jar);
-##  $self->{'full_post_jar'} = $full_post_jar;
 
   my $jetty_server_port = $ENV{'SOLR_JETTY_PORT'};
 
@@ -233,7 +244,7 @@ sub open_java_solr
 
   my $post_java_cmd = "java $post_props -jar \"$full_post_jar\"";
 
-  print STDERR "**** post cmd = $post_java_cmd\n";
+###  print STDERR "**** post cmd = $post_java_cmd\n";
   
   open (PIPEOUT, "| $post_java_cmd") 
       || die "Error in solr_passes.pl: Failed to run $post_java_cmd\n!$\n";
@@ -249,16 +260,10 @@ sub close_java_solr
     if ($self->{'jetty_explicitly_started'}) {
 	stop_solr_server();
     }
-
-#  No longer used
-#    # $full_index_propfile is set up as a global variable so it can be shared
-#    # between open_java_solr() and here
-#    &util::rm($full_index_propfile);
 }
 
 
-
-
+#----
 
 sub save_xml_doc
 {
@@ -417,7 +422,7 @@ sub main
       monitor_xml_stream($full_textdir);
   }
   else {
-      print STDERR "Streaming input onto solr server!\n";
+      print STDERR "Streaming document input onto Solr server!\n";
       pass_on_xml_stream();
   }
 
