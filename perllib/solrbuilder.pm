@@ -30,6 +30,7 @@ use strict;
 no strict 'refs';
 
 use lucenebuilder;
+use solrserver;
 use Config; # for getting the perlpath in the recommended way
 
 sub BEGIN {
@@ -270,13 +271,51 @@ sub premake_solr_auxiliary_files
 }
 
 
+sub solr_core_admin
+{
+    my $self = shift (@_);
+    my ($url) = @_;
+
+    my $cmd = "wget -q -O - \"$url\"";
+
+    my $status = undef;
+
+    if (open(WIN,"$cmd |")) {
+
+	my $xml_output = "";
+	my $line;
+	while (defined ($line=<WIN>)) {
+
+	    $xml_output .= $line;
+	}
+	close(WIN);
+
+##	print $xml_output;
+
+	($status) = ($xml_output =~ m!<int name="status">(\d+)</int>!s);
+	
+    }
+    else {
+	print STDERR "Warning: failed to run $cmd\n";
+	print STDERR "  $!\n";
+    }
+
+    return $status;
+
+}
+
 sub pre_build_indexes
 {
     my $self = shift (@_);
     my ($indexname) = @_;
     my $outhandle = $self->{'outhandle'};
 
-    # read in build.cfg if in incremental mode???
+    # If the Solr/Jetty server is not already running, the following starts
+    # it up, and only returns when the server is "reading and listening"
+  
+    my $solr_server = new solrserver();
+    $solr_server->start();
+    $self->{'solr_server'} = $solr_server;
 
     my $indexes = [];
     if (defined $indexname && $indexname =~ /\w/) {
@@ -349,15 +388,37 @@ sub pre_build_indexes
 	}
     }
 
-    # write out solr 'schema.xml' (and related) file 
+    # Write out solr 'schema.xml' (and related) file 
+    #
     $self->make_final_field_list();
     $self->premake_solr_auxiliary_files();
 
-    # if collect==core not already in solr.xml (check with STATUS)
-    # => use CREATE API to add to solr.xml
-    #
-    # else 
-    # => use RELOAD call to refresh fields now expressed in schema.xml
+    # Now update the solr-core information in solr.xml
+    # => at most two cores <colname>-Doc and <colname>-Sec
+
+    my $jetty_server_port = $ENV{'SOLR_JETTY_PORT'};
+    my $base_url = "http://localhost:$jetty_server_port/solr/admin/cores";
+
+    my $collection = $self->{'collection'};
+
+    foreach my $level (keys %{$self->{'levels'}}) {
+
+	my $llevel = $mgppbuilder::level_map{$level};
+
+	my $core = $collection."-".lc($llevel);
+	my $check_core_url = "$base_url?action=STATUS&core=$core";
+
+	my $check_status = $self->solr_core_admin($check_core_url);
+	
+	print STDERR "*** check status = $check_status\n";
+
+
+	# if collect==core not already in solr.xml (check with STATUS)
+	# => use CREATE API to add to solr.xml
+	#
+	# else 
+	# => use RELOAD call to refresh fields now expressed in schema.xml
+    }
 
 }
 
@@ -498,7 +559,19 @@ sub post_build_indexes {
     # deliberately override to prevent the mgpp post_build_index() calling
     #  $self->make_final_field_list()
     # as this has been done in our pre_build_indexes() phase for solr
+
+
+    # Also need to stop the Solr/jetty server if it was explicitly started
+    # in pre_build_indexes()
     
+    my $solr_server = $self->{'solr_server'};
+
+    if ($solr_server->explicitly_started()) {
+	$solr_server->stop();
+    }
+
+    $self->{'solr_server'} = undef;
+
 }    
 
 

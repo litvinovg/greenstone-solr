@@ -40,175 +40,24 @@ BEGIN {
     die "GSDLOS not set\n" unless defined $ENV{'GSDLOS'};
     unshift (@INC, "$ENV{'GSDLHOME'}/perllib");
     die "GEXT_SOLR not set\n" unless defined $ENV{'GEXT_SOLR'};
+
+    my $solr_ext = $ENV{'GEXT_SOLR'};
+    unshift (@INC, "$solr_ext/perllib");
 }
 
 use strict;
 use util;
+use solrutil;
+use solrserver;
+
 
 # Not quite OO, but close enough for now
 #
-my $self = { 'full_server_jar' => undef,
-	     'jetty_explicitly_started' => undef,
-	     'jetty_stop_key' => "greenstone-solr"
-	     };
-
-
-
-sub locate_file
-{
-    my ($search_path,$suffix) = @_;
-        
-    foreach my $sp (@$search_path) {
-	my $full_path = &util::filename_cat($sp,$suffix);
-	
-	if (-f $full_path) {
-	    return $full_path;
-	}
-    }
-    
-    # if get to here, then failed to find match
-
-    print STDERR "Error: Failed to find '$suffix'\n";
-    print STDERR "  Looked in: ", join(", ", @$search_path), "\n";
-    exit -1;
-}
-
-sub start_solr_server
-{
-    my ($search_path) = @_;
-
-    my $solr_home         = $ENV{'GEXT_SOLR'};
-    my $jetty_stop_port   = $ENV{'JETTY_STOP_PORT'};
-    my $jetty_server_port = $ENV{'SOLR_JETTY_PORT'};
-
-    chdir($solr_home);
-    
-    my $solr_etc = &util::filename_cat($solr_home,"etc");
-
-    my $server_props = "-DSTOP.PORT=$jetty_stop_port";
-    $server_props .= " -DSTOP.KEY=".$self->{'jetty_stop_key'};
-    $server_props .= " -Dsolr.solr.home=$solr_etc";
-
-    my $server_jar = &util::filename_cat("lib","java","solr-jetty-server.jar");
-    my $full_server_jar = locate_file($search_path,$server_jar);
-    $self->{'full_server_jar'} = $full_server_jar;
-    
-    my $server_java_cmd = "java $server_props -jar \"$full_server_jar\"";
-
-##    print STDERR "**** server cmd = $server_java_cmd\n";
-
-    if (open(SIN,"$server_java_cmd 2>&1 |")) {
-	
-	my $server_status = "unknown";
-
-	my $line;
-	while (defined($line=<SIN>)) {
-	    # Scan through output until you see a line like:
-	    #   2011-08-22 .. :INFO::Started SocketConnector@0.0.0.0:8983
-	    # which signifies that the server has started up and is
-	    # "ready and listening"
-
-##	    print STDERR "**** $line";
-
-	    if (($line =~ m/^(WARN|ERROR|SEVERE):/)
-		|| ($line =~ m/^[0-9 :-]*(WARN|ERROR|SEVERE)::/)) {
-		print $line;
-	    }
-
-
-	    if ($line =~ m/WARN::failed SocketConnector/) {
-		if ($line =~ m/Address already in use/) {
-		    $server_status = "already-running";
-		}
-		else {
-		    $server_status = "failed-to-start";
-		}
-		last;
-	    }
-		
-	    if ($line =~ m/INFO::Started SocketConnector/) {
-		$server_status = "explicitly-started";
-		last;
-	    }
-	}
-
-	if ($server_status eq "explicitly-started") {
-	    $self->{'jetty_explicitly_started'} = 1;
-	    print STDERR "Jetty server ready and listening for connections\n";
-	}
-	elsif ($server_status eq "already-running") {
-	    print STDERR "Using existing server detected on port $jetty_server_port\n";
-	}
-	else {
-	    print STDERR "Failed to start Solr/Jetty web server on $jetty_server_port\n";
-	    exit -1;
-	}
-	    
-	# now we know the server is ready to accept connections, fork a
-	# child process that continues to listen to the output and
-	# prints out any lines that are not INFO lines
-
-	if (fork()==0) {
-	    # child process
-	    
-	    my $line;
-	    while (defined ($line = <SIN>)) {
-		next if ($line =~ m/^INFO:/);
-		next if ($line =~ m/^[0-9 :-]*INFO::/);
-		next if ($line =~ m/^\d{2}\/\d{2}\/\d{4}\s+/); 
-	    }
-	    close(SIN);
-	    
-	    # And now stop nicely
-	    exit 0;
-	}
-    }
-    else {
-	print STDERR "Error: failed to start solr-jetty-server\n";
-	print STDERR "!$\n\n";
-	print STDERR "Command attempted was:\n";
-	print STDERR "  $server_java_cmd\n";
-	print STDERR "run from directory:\n";
-	print STDERR "  $solr_home\n";
-	print STDERR "----\n";
-
-	exit -1;
-    }
-
-    # If get to here then server started (and ready and listening)
-    # *and* we are the parent process of the fork()
-
-}
-
-
-
-sub stop_solr_server
-{
-    my $full_server_jar = $self->{'full_server_jar'};
-    my $jetty_stop_port = $ENV{'JETTY_STOP_PORT'};
-    
-    my $server_props = "-DSTOP.PORT=$jetty_stop_port";
-    $server_props   .= " -DSTOP.KEY=".$self->{'jetty_stop_key'};
-    my $server_java_cmd = "java $server_props -jar \"$full_server_jar\" --stop";
-
-    my $server_status = system($server_java_cmd);
-    
-    if ($server_status!=0) {
-	print STDERR "Error: failed to stop solr-jetty-server\n";
-	print STDERR "!$\n";
-	exit -1;
-    }
-    else {
-	wait(); # let the child process finish
-	print STDERR "Jetty server shutdown\n";
-    }
-}
-
+my $self = { 'solr_server' => undef };
 
 sub open_java_solr
 {
   my ($collect, $doc_tag_level,$full_builddir,$indexdir,$removeold) = @_;
-
 
   # if removeold set, then delete the curring $full_builddir
   if ($removeold) {
@@ -216,52 +65,26 @@ sub open_java_solr
       &util::rm_r($full_indexdir);
   }
 
-  my $search_path = [];
-
-  push(@$search_path,$ENV{'GSDLCOLLECTDIR'}) if defined $ENV{'GSDLCOLLECTDIR'};
-  push(@$search_path,$ENV{'GSDLHOME'})       if defined $ENV{'GSDLHOME'};
-  push(@$search_path,$ENV{'GEXT_SOLR'})      if defined $ENV{'GEXT_SOLR'};
-
-
-  # The following returns once Jetty has generated its 
-  # "reading and listening" line
-  #
-  start_solr_server($search_path);
-
-  # Now run the solr-post command
-
-  chdir($ENV{'GEXT_SOLR'});
+  # If the Solr/Jetty server is not already running, the following starts
+  # it up, and only returns when the server is "reading and listening"
   
-  my $post_jar   = &util::filename_cat("lib","java","solr-post.jar");
-  my $full_post_jar   = locate_file($search_path,$post_jar);
+  my $solr_server = new solrserver();
+  $solr_server->start();
+  $self->{'solr_server'} = $solr_server;
 
-  my $jetty_server_port = $ENV{'SOLR_JETTY_PORT'};
-
-  # Now run solr-post command
-  my $post_props = "-Durl=http://localhost:$jetty_server_port/solr/$collect-$doc_tag_level/update";
-  $post_props .= " -Ddata=stdin";
-  $post_props .= " -Dcommit=yes";
-
-  my $post_java_cmd = "java $post_props -jar \"$full_post_jar\"";
-
-###  print STDERR "**** post cmd = $post_java_cmd\n";
-  
-  open (PIPEOUT, "| $post_java_cmd") 
-      || die "Error in solr_passes.pl: Failed to run $post_java_cmd\n!$\n";
+  # Now start up the solr-post command
+  &solrutil::open_post_pipe($collect,$doc_tag_level);
 }
-
-
 
 sub close_java_solr
 {
-    # closing the pipe has the effect of shutting down solr-post.jar
-    close(PIPEOUT);
-    
-    if ($self->{'jetty_explicitly_started'}) {
-	stop_solr_server();
+    &solrutil::close_post_pipe();
+      
+    my $solr_server = $self->{'solr_server'};
+    if ($solr_server->explicitly_started()) {
+	$solr_server->stop();
     }
 }
-
 
 #----
 
@@ -347,7 +170,7 @@ sub pass_on_xml_stream
 {
     my $line;
     while (defined ($line = <STDIN>)) {
-	print PIPEOUT $line;
+	&solrutil::print_to_post_pipe($line);
     }
 }
 
