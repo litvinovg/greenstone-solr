@@ -22,23 +22,13 @@
   persistent: Save changes made via the API to this file
   sharedLib: path to a lib directory that will be shared across all cores
 -->
-<solr persistent="false">
+<solr persistent="true">
 
   <!--
   adminPath: RequestHandler path to manage cores.  
     If 'null' (or absent), cores will not be manageable via request handler
   -->
-  <cores adminPath="/admin/cores" defaultCoreName="collection1">
-    <core name="collection1" instanceDir=".">
-    </core>
-
-    <core name="demo-Doc" instanceDir="/research/code/greenstone2-svn/collect/demo/etc">
-      <property name="solr.data.dir" value="/research/code/greenstone2-svn/collect/demo/index/didx" />
-    </core>
-
-    <core name="demo-Sec" instanceDir="/research/code/greenstone2-svn/collect/demo/etc">
-      <property name="solr.data.dir" value="/research/code/greenstone2-svn/collect/demo/index/sidx" />
-    </core>
+  <cores adminPath="/admin/cores">
 
   </cores>
 </solr>
