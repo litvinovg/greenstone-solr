@@ -276,32 +276,50 @@ sub solr_core_admin
     my $self = shift (@_);
     my ($url) = @_;
 
-    my $cmd = "wget -q -O - \"$url\"";
+    my $cmd = "wget -O - \"$url\" 2>&1";
 
-    my $status = undef;
+    my $preamble_output = "";    
+    my $xml_output = "";
+    my $error_output = undef;
 
+    my $in_preamble = 1;
+    
     if (open(WIN,"$cmd |")) {
 
-	my $xml_output = "";
 	my $line;
 	while (defined ($line=<WIN>)) {
 
-	    $xml_output .= $line;
+	    if ($line =~ m/ERROR \d+:/) {
+		chomp $line;
+		$error_output = $line;
+		last;
+	    }
+	    elsif ($in_preamble) {
+		if ($line =~ m/<.*>/) {
+		    $in_preamble = 0;
+		}
+		else {
+		    $preamble_output .= $line;
+		}
+	    }
+
+	    if (!$in_preamble) {
+		$xml_output .= $line;
+	    }
 	}
 	close(WIN);
 
-##	print $xml_output;
-
-	($status) = ($xml_output =~ m!<int name="status">(\d+)</int>!s);
-	
     }
     else {
-	print STDERR "Warning: failed to run $cmd\n";
-	print STDERR "  $!\n";
+	$error_output = "Error: failed to run $cmd\n";
+	$error_output .= "  $!\n";
     }
 
-    return $status;
+    my $output = { 'preamble' => $preamble_output,
+		   'output'   => $xml_output,
+		   'error'    => $error_output };
 
+    return $output;
 }
 
 sub pre_build_indexes
@@ -401,23 +419,77 @@ sub pre_build_indexes
 
     my $collection = $self->{'collection'};
 
+    # my $idx = $self->{'index_mapping'}->{$index};
+    my $idx = "idx";
+
     foreach my $level (keys %{$self->{'levels'}}) {
-
-	my $llevel = $mgppbuilder::level_map{$level};
-
-	my $core = $collection."-".lc($llevel);
-	my $check_core_url = "$base_url?action=STATUS&core=$core";
-
-	my $check_status = $self->solr_core_admin($check_core_url);
 	
-	print STDERR "*** check status = $check_status\n";
-
-
+	my ($pindex) = $level =~ /^(.)/;
+	
+	my $llevel = $mgppbuilder::level_map{$level};
+	my $core = $collection."-".lc($llevel);
+	
+	
 	# if collect==core not already in solr.xml (check with STATUS)
 	# => use CREATE API to add to solr.xml
 	#
 	# else 
 	# => use RELOAD call to refresh fields now expressed in schema.xml
+	
+	
+	my $check_core_url    = "$base_url?action=STATUS&core=$core";
+	my $output = $self->solr_core_admin($check_core_url);
+
+	if (defined $output->{'error'}) {
+
+	    my $preamble = $output->{'preamble'};
+	    my $error    = $output->{'error'};
+
+	    print STDERR "----\n";
+	    print STDERR "Error: Failed to get XML response from:\n";
+	    print STDERR "         $check_core_url\n";
+	    print STDERR "Output was:\n";
+	    print STDERR $preamble if ($preamble ne "");
+	    print STDERR "$error\n";
+	    print STDERR "----\n";
+
+	    next;
+	}
+	
+	# If the collection doesn't exist yet, then there will be
+	# an empty element of the form:
+	#   <lst name="collect-doc"/>
+	# where 'collect' is the actual name of the collection, 
+	# such as demo
+
+	my $xml_output = $output->{'output'};
+	
+	my $empty_element="<lst\\s+name=\"$core\"\\s*\\/>";
+	
+	my $check_core_exists = !($xml_output =~ m/$empty_element/s);
+	
+	if ($check_core_exists) {
+	    
+	    my $reload_core_url    = "$base_url?action=RELOAD&core=$core";
+	    
+	    print $outhandle "Reloading Solr core: $core\n";
+	    $self->solr_core_admin($reload_core_url);
+	}
+	else {
+	    
+	    my $collect_home = $ENV{'GSDLCOLLECTDIR'};
+	    my $etc_dirname = &util::filename_cat($collect_home,"etc");
+	    
+	    my $build_dir = $self->{'build_dir'};
+	    my $idx_dirname = &util::filename_cat($build_dir,$pindex.$idx);
+	    
+	    my $create_core_url    = "$base_url?action=CREATE&name=$core";
+	    $create_core_url .= "&instanceDir=$etc_dirname";
+	    $create_core_url .= "&dataDir=$idx_dirname";
+	    
+	    print $outhandle "Creating Solr core: $core\n";
+	    $self->solr_core_admin($create_core_url);
+	}
     }
 
 }
