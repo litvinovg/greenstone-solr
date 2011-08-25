@@ -52,10 +52,10 @@ if [ "x$GEXT_SOLR" = "x" ] ; then
 
   extdir=${GEXT_SOLR##*/}
 
-  if [ "x$GSDLEXTS" = "x" ] ; then
-    export GSDLEXTS=$extdir
+  if [ "x$GSDL3EXTS" = "x" ] ; then
+    export GSDL3EXTS=$extdir
   else 
-    export GSDLEXTS=$GSDLEXTS:$extdir
+    export GSDL3EXTS=$GSDL3EXTS:$extdir
   fi
 
   export SOLR_JETTY_PORT
