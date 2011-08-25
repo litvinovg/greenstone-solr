@@ -62,7 +62,7 @@ sub get_search_path
 
 sub open_post_pipe
 {
-    my ($collect,$doc_tag_level) = @_;
+    my ($collect,$ds_idx) = @_;
 
     my $search_path = get_search_path();
 
@@ -74,7 +74,7 @@ sub open_post_pipe
     my $jetty_port = $ENV{'SOLR_JETTY_PORT'};
     
     # Now run solr-post command
-    my $core = $collect."-".lc($doc_tag_level);
+    my $core = $collect."-".$ds_idx;
     my $post_props = "-Durl=http://localhost:$jetty_port/solr/$core/update";
     $post_props .= " -Ddata=stdin";
     $post_props .= " -Dcommit=yes";

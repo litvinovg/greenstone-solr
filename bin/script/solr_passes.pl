@@ -57,7 +57,7 @@ my $self = { 'solr_server' => undef };
 
 sub open_java_solr
 {
-  my ($collect, $doc_tag_level,$full_builddir,$indexdir,$removeold) = @_;
+  my ($collect, $ds_idx,$full_builddir,$indexdir,$removeold) = @_;
 
   # if removeold set, then delete the curring $full_builddir
   if ($removeold) {
@@ -73,7 +73,7 @@ sub open_java_solr
   $self->{'solr_server'} = $solr_server;
 
   # Now start up the solr-post command
-  &solrutil::open_post_pipe($collect,$doc_tag_level);
+  &solrutil::open_post_pipe($collect,$ds_idx);
 }
 
 sub close_java_solr
@@ -223,20 +223,20 @@ sub main
   my $filtered_argc = scalar(@filtered_argv);
 
   if ($filtered_argc < 5) {
-    print STDERR "Usage: solr_passes.pl [-removeold|-verbosity num] collect \"text\"|\"index\" doc-tag-level build-dir index-name\n";
+    print STDERR "Usage: solr_passes.pl [-removeold|-verbosity num] collect \"text\"|\"index\" {d|s}idx build-dir index-name\n";
     exit 1;
   }
 
   my $collect       = $filtered_argv[0];
   my $mode          = $filtered_argv[1];
-  my $doc_tag_level = $filtered_argv[2];
+  my $ds_idx        = $filtered_argv[2];
   my $full_builddir = $filtered_argv[3];
   my $indexdir      = $filtered_argv[4];
 
   # We only need the Solr handle opened if we are indexing the
   # documents, not if we are just storing the text
   if ($mode eq "index") {
-    open_java_solr($collect, $doc_tag_level, $full_builddir, $indexdir, $removeold);
+    open_java_solr($collect, $ds_idx, $full_builddir, $indexdir, $removeold);
   }
 
   if ($mode eq "text") {

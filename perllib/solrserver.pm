@@ -27,13 +27,17 @@
 package solrserver;
 
 use strict; 
+#no strict 'refs';
 
 use solrutil;
+
+my $key_count = 0;
 
 sub new {
     my $class = shift(@_);
 
-    my $self = { 'jetty_stop_key' => "greenstone-solr" };
+    $key_count++;
+    my $self = { 'jetty_stop_key' => "greenstone-solr-".$$."-".$key_count };
 
     my $search_path = &solrutil::get_search_path();
 
@@ -43,8 +47,196 @@ sub new {
 
     $self->{'jetty_explicitly_started'} = undef;
 
+    my $jetty_server_port = $ENV{'SOLR_JETTY_PORT'};
+    my $base_url = "http://localhost:$jetty_server_port/solr/";
+    my $admin_url = "http://localhost:$jetty_server_port/solr/admin/cores";
+    
+    $self->{'base-url'} = $base_url;
+    $self->{'admin-url'} = $admin_url;
+
     return bless $self, $class;
 }
+
+
+
+sub _wget_service
+{
+    my $self = shift (@_);
+    my ($output_format,$url,$cgi_get_args) = @_;
+
+    my $full_url = $url;
+
+    $url .= "?$cgi_get_args" if (defined $cgi_get_args);
+    
+    my $cmd = "wget -O - \"$url\" 2>&1";
+
+##    print STDERR "**** wget cmd: $cmd\n";
+
+    my $preamble_output = "";    
+    my $xml_output = "";
+    my $error_output = undef;
+
+    my $in_preamble = ($output_format eq "xml") ? 1 : 0;
+    
+    if (open(WIN,"$cmd |")) {
+
+	my $line;
+	while (defined ($line=<WIN>)) {
+
+	    if ($line =~ m/ERROR \d+:/) {
+		chomp $line;
+		$error_output = $line;
+		last;
+	    }
+	    elsif ($line =~ m/failed: Connection refused/) {
+		chomp $line;
+		$error_output = $line;
+		last;
+	    }
+	    elsif ($in_preamble) {
+		if ($line =~ m/<.*>/) {
+		    $in_preamble = 0;
+		}
+		else {
+		    $preamble_output .= $line;
+		}
+	    }
+
+	    if (! $in_preamble) {
+		$xml_output .= $line;
+	    }
+	}
+	close(WIN);
+
+    }
+    else {
+	$error_output = "Error: failed to run $cmd\n";
+	$error_output .= "  $!\n";
+    }
+
+    my $output = { 'preamble' => $preamble_output,
+		   'output'   => $xml_output,
+		   'error'    => $error_output };
+
+    return $output;
+}
+
+
+sub _base_service
+{
+    my $self = shift (@_);
+    my ($cgi_get_args) = @_;
+
+    my $base_url = $self->{'base-url'};
+
+    return $self->_wget_service("html",$base_url,$cgi_get_args);
+}
+ 
+sub _admin_service
+{
+    my $self = shift (@_);
+    my ($cgi_get_args) = @_;
+
+    my $admin_url = $self->{'admin-url'};
+
+    return $self->_wget_service("xml",$admin_url,$cgi_get_args);
+}
+
+
+sub server_running
+{
+    my $self = shift @_;
+
+    my $output = $self->_base_service();
+
+    my $have_error = defined $output->{'error'};
+
+    my $running = !$have_error;
+
+    return $running;
+}
+
+
+sub admin_ping_core
+{
+    my $self = shift @_;
+    my ($core) = @_;
+
+    my $cgi_get_args = "action=STATUS&core=$core";
+
+    my $ping_status = 1;
+
+    my $output = $self->_admin_service($cgi_get_args);
+
+    if (defined $output->{'error'}) {
+	# severe error, such as failing to connect to the server
+	$ping_status = 0;
+
+	my $url      = $output->{'url'};
+	my $preamble = $output->{'preamble'};
+	my $error    = $output->{'error'};
+	
+	print STDERR "----\n";
+	print STDERR "Error: Failed to get XML response from:\n";
+	print STDERR "         $url\n";
+	print STDERR "Output was:\n";
+	print STDERR $preamble if ($preamble ne "");
+	print STDERR "$error\n";
+	print STDERR "----\n";
+    }
+    else {
+	
+	# If the collection doesn't exist yet, then there will be
+	# an empty element of the form:
+	#   <lst name="collect-doc"/>
+	# where 'collect' is the actual name of the collection, 
+	# such as demo
+
+	my $xml_output = $output->{'output'};
+	
+	my $empty_element="<lst\\s+name=\"$core\"\\s*\\/>";
+	
+	$ping_status = !($xml_output =~ m/$empty_element/s);
+    }
+
+
+    return $ping_status;
+}
+
+
+sub admin_reload_core
+{
+    my $self = shift @_;
+    my ($core) = @_;
+
+    my $cgi_get_args = "action=RELOAD&core=$core";
+
+    $self->_admin_service($cgi_get_args);
+}
+
+
+sub admin_create_core
+{
+    my $self = shift @_;
+    my ($core) = @_;
+
+    my ($ds_idx) = ($core =~ m/^.*-(.*)$/);
+
+    my $cgi_get_args = "action=CREATE&name=$core";
+
+    my $collect_home = $ENV{'GSDLCOLLECTDIR'};
+    my $etc_dirname = &util::filename_cat($collect_home,"etc");
+	    
+    my $build_dir = $self->{'build_dir'};
+    my $idx_dirname = &util::filename_cat($build_dir,$ds_idx);
+	    
+    $cgi_get_args .= "&instanceDir=$etc_dirname";
+    $cgi_get_args .= "&dataDir=$idx_dirname";
+
+    $self->_admin_service($cgi_get_args);
+}
+
+
 
 sub start
 {
@@ -66,58 +258,68 @@ sub start
     
     my $server_java_cmd = "java $server_props -jar \"$full_server_jar\"";
 
-##    print STDERR "**** server cmd = $server_java_cmd\n";
-
-    my $pid = open(STARTIN,"-|");
-
-    if ($pid==0) {
-	# child process that will start up jetty and monitor output
-
-	setpgrp(0,0);
-	
-	exec "$server_java_cmd 2>&1" || die "Failed to execute $server_java_cmd\n$!\n";
-	# everything stops here
-    }
+##    print STDERR "**** server cmd start = $server_java_cmd\n";
 
     my $server_status = "unknown";
 
-    my $line;
-    while (defined($line=<STARTIN>)) {
-	# Scan through output until you see a line like:
-	#   2011-08-22 .. :INFO::Started SocketConnector@0.0.0.0:8983
-	# which signifies that the server has started up and is
-	# "ready and listening"
-	
-##	print STDERR "**** $line";
-		
-	# skip annoying "not listening" message
-	next if ($line =~ m/WARN:\s*Not listening on monitor port/);
+    my $server_already_running = $self->server_running();
 
-	if (($line =~ m/^(WARN|ERROR|SEVERE):/)
-	    || ($line =~ m/^[0-9 :-]*(WARN|ERROR|SEVERE)::/)) {
-	    print "Jetty startup: $line";
-	}
+##    print STDERR "**** already running = $server_already_running\n";
+
+    if ($server_already_running) {
+	$server_status = "already-running";
+    }
+    elsif (open(STARTIN,"$server_java_cmd 2>&1 |")) {
+
+	my $line;
+	while (defined($line=<STARTIN>)) {
+	    # Scan through output until you see a line like:
+	    #   2011-08-22 .. :INFO::Started SocketConnector@0.0.0.0:8983
+	    # which signifies that the server has started up and is
+	    # "ready and listening"
 	
-	
-	if ($line =~ m/WARN::failed SocketConnector/) {
-	    if ($line =~ m/Address already in use/) {
-		$server_status = "already-running";
+##	    print STDERR "**** $line";
+		
+	    # skip annoying "not listening" message
+	    next if ($line =~ m/WARN:\s*Not listening on monitor port/);
+
+	    if (($line =~ m/^(WARN|ERROR|SEVERE):/)
+		|| ($line =~ m/^[0-9 :-]*(WARN|ERROR|SEVERE)::/)) {
+		print "Jetty startup: $line";
 	    }
-	    else {
-		$server_status = "failed-to-start";
+	    
+	    if ($line =~ m/WARN::failed SocketConnector/) {
+		if ($line =~ m/Address already in use/) {
+		    $server_status = "already-running";
+		}
+		else {
+		    $server_status = "failed-to-start";
+		}
+		last;
 	    }
-	    last;
-	}
-	
-	if ($line =~ m/INFO::Started SocketConnector/) {
-	    $server_status = "explicitly-started";
-	    last;
+	    
+	    if ($line =~ m/INFO::Started SocketConnector/) {
+		$server_status = "explicitly-started";
+		last;
+	    }
 	}
     }
-	    
+    else {
+	print STDERR "Error: failed to start solr-jetty-server\n";
+	print STDERR "$!\n";
+	print STDERR "Command attempted was:\n";
+	print STDERR "  $server_java_cmd\n";
+	print STDERR "run from directory:\n";
+	print STDERR "  $solr_home\n";
+	print STDERR "----\n";
+
+	exit -1;
+    }
+
     if ($server_status eq "explicitly-started") {
 	$self->{'jetty_explicitly_started'} = 1;
-	print "Jetty server ready and listening for connections on port $jetty_server_port\n";
+	print "Jetty server ready and listening for connections on port";
+	print " $jetty_server_port\n";
 	    
 	# now we know the server is ready to accept connections, fork a
 	# child process that continues to listen to the output and
@@ -125,7 +327,7 @@ sub start
 
 	if (fork()==0) {
 	    # child process
-	    
+
 	    my $line;
 	    while (defined ($line = <STARTIN>)) {
 
@@ -154,42 +356,29 @@ sub start
 	# otherwise let the parent continue on
     }
     elsif ($server_status eq "already-running") {
-	print "Using existing server detected on port $jetty_server_port\n";
+	print STDERR "Using existing server detected on port $jetty_server_port\n";
 	$self->{'jetty_explicitly_started'} = 0;
-	
-	# Kill of the child process
 
-	my $ks = kill(9,-$pid);
+	# silently stop our unneeded jetty server, using its unique key
+
+#	my $options = { 'do_wait' => 0, 'output_verbosity' => 2 };
+
+#	$self->stop($options);
 
 	# Consume any remaining (buffered) output (not interested in values)
-	while (defined ($line = <STARTIN>)) { 
+#	my $line;
+#	while (defined ($line = <STARTIN>)) { 
 	    # skip info lines
-	}
-	close(STARTIN);
+#	}
+#	close(STARTIN);
     }
-    else {
-	print STDERR "Failed to start Solr/Jetty web server on $jetty_server_port\n";
+    elsif ($server_status eq "failed-to-start") {
+	print STDERR "Started Solr/Jetty web server on port $jetty_server_port";
+	print STDERR ", but encountered an initialization error\n";
 	exit -1;
     }
 
-
-#    else {
-#	print STDERR "Error: failed to start solr-jetty-server\n";
-#	print STDERR "!$\n\n";
-#	print STDERR "Command attempted was:\n";
-#	print STDERR "  $server_java_cmd\n";
-#	print STDERR "run from directory:\n";
-#	print STDERR "  $solr_home\n";
-#	print STDERR "----\n";
-
-#	exit -1;
-#    }
-
-#    # If get to here then server started (and ready and listening)
-#    # *and* we are the parent process of the fork()
-
 }
-
 
 sub explicitly_started
 {
@@ -197,6 +386,7 @@ sub explicitly_started
 
     return $self->{'jetty_explicitly_started'};
 }
+
 
 
 sub stop
@@ -227,6 +417,9 @@ sub stop
     my $server_props = "-DSTOP.PORT=$jetty_stop_port";
     $server_props   .= " -DSTOP.KEY=".$self->{'jetty_stop_key'};
     my $server_java_cmd = "java $server_props -jar \"$full_server_jar\" --stop";
+
+##    print STDERR "**** java server stop cmd:\n  $server_java_cmd\n";
+
     if (open(STOPIN,"$server_java_cmd 2>&1 |")) {
 
 	my $line;
@@ -245,7 +438,7 @@ sub stop
     }
     else {
 	print STDERR "Error: failed to stop solr-jetty-server\n";
-	print STDERR "!$\n";
+	print STDERR "$!\n";
 	print STDERR "Command attempted was:\n";
 	print STDERR "  $server_java_cmd\n";
 	print STDERR "run from directory:\n";
