@@ -31,13 +31,10 @@ use strict;
 
 use solrutil;
 
-my $key_count = 0;
-
 sub new {
     my $class = shift(@_);
 
-    $key_count++;
-    my $self = { 'jetty_stop_key' => "greenstone-solr-".$$."-".$key_count };
+    my $self = { 'jetty_stop_key' => "greenstone-solr" };
 
     my $search_path = &solrutil::get_search_path();
 
@@ -69,8 +66,6 @@ sub _wget_service
     $url .= "?$cgi_get_args" if (defined $cgi_get_args);
     
     my $cmd = "wget -O - \"$url\" 2>&1";
-
-##    print STDERR "**** wget cmd: $cmd\n";
 
     my $preamble_output = "";    
     my $xml_output = "";
@@ -199,7 +194,6 @@ sub admin_ping_core
 	$ping_status = !($xml_output =~ m/$empty_element/s);
     }
 
-
     return $ping_status;
 }
 
@@ -263,8 +257,6 @@ sub start
     my $server_status = "unknown";
 
     my $server_already_running = $self->server_running();
-
-##    print STDERR "**** already running = $server_already_running\n";
 
     if ($server_already_running) {
 	$server_status = "already-running";
@@ -358,19 +350,6 @@ sub start
     elsif ($server_status eq "already-running") {
 	print STDERR "Using existing server detected on port $jetty_server_port\n";
 	$self->{'jetty_explicitly_started'} = 0;
-
-	# silently stop our unneeded jetty server, using its unique key
-
-#	my $options = { 'do_wait' => 0, 'output_verbosity' => 2 };
-
-#	$self->stop($options);
-
-	# Consume any remaining (buffered) output (not interested in values)
-#	my $line;
-#	while (defined ($line = <STARTIN>)) { 
-	    # skip info lines
-#	}
-#	close(STARTIN);
     }
     elsif ($server_status eq "failed-to-start") {
 	print STDERR "Started Solr/Jetty web server on port $jetty_server_port";
@@ -386,8 +365,6 @@ sub explicitly_started
 
     return $self->{'jetty_explicitly_started'};
 }
-
-
 
 sub stop
 {    
