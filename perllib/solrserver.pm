@@ -256,9 +256,7 @@ sub start
 
     my $server_status = "unknown";
 
-    my $server_already_running = $self->server_running();
-
-    if ($server_already_running) {
+    if ($self->server_running()) {
 	$server_status = "already-running";
     }
     elsif (open(STARTIN,"$server_java_cmd 2>&1 |")) {
@@ -270,11 +268,6 @@ sub start
 	    # which signifies that the server has started up and is
 	    # "ready and listening"
 	
-##	    print STDERR "**** $line";
-		
-	    # skip annoying "not listening" message
-	    next if ($line =~ m/WARN:\s*Not listening on monitor port/);
-
 	    if (($line =~ m/^(WARN|ERROR|SEVERE):/)
 		|| ($line =~ m/^[0-9 :-]*(WARN|ERROR|SEVERE)::/)) {
 		print "Jetty startup: $line";
@@ -327,7 +320,6 @@ sub start
 #		    || ($line =~ m/^[0-9 :-]*(WARN|ERROR|SEVERE)::/)) {
 #		    print "Jetty $line";
 #		}
-
 
 		# skip info lines
 		next if ($line =~ m/^INFO:/);
