@@ -262,7 +262,7 @@ sub premake_solr_auxiliary_files
 
     my @in_file_list = ( "solrconfig.xml", "stopwords.txt", "stopwords_en.txt",
 			 "synonyms.txt", "protwords.txt" );
-
+ 
     foreach my $file ( @in_file_list ) {
 	my $in_filename = &util::filename_cat($in_dirname,$file.".in");
 	my $out_filename = &util::filename_cat($out_dirname,$file);
@@ -368,14 +368,16 @@ sub pre_build_indexes
     # my $idx = $self->{'index_mapping'}->{$index};
     my $idx = "idx";
 
+    my $site = $self->{'site'};
+
     foreach my $level (keys %{$self->{'levels'}}) {
 	
 	my ($pindex) = $level =~ /^(.)/;
 	
-##	my $llevel = $mgppbuilder::level_map{$level};
-##	my $core = $collection."-".lc($llevel);
-		
 	my $core = $collection."-".$pindex.$idx;
+
+	# prefix site if exists (e.g. Greenstone 3)
+	$core = "$site-$core" if defined $site;
 
 	# if collect==core already in solr.xml (check with STATUS)
 	# => use RELOAD call to refresh fields now expressed in schema.xml
