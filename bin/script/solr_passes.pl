@@ -57,23 +57,17 @@ my $self = { 'solr_server' => undef };
 
 sub open_java_solr
 {
-  my ($collect, $ds_idx,$full_builddir,$indexdir,$removeold) = @_;
-
-  # if removeold set, then delete the curring $full_builddir
-  if ($removeold) {
-      my $full_indexdir = &util::filename_cat($full_builddir,$indexdir);
-      &util::rm_r($full_indexdir);
-  }
+  my ($core,$full_builddir,$indexdir) = @_;
 
   # If the Solr/Jetty server is not already running, the following starts
   # it up, and only returns when the server is "reading and listening"
   
-  my $solr_server = new solrserver();
+  my $solr_server = new solrserver($full_builddir);
   $solr_server->start();
   $self->{'solr_server'} = $solr_server;
 
   # Now start up the solr-post command
-  &solrutil::open_post_pipe($collect,$ds_idx);
+  &solrutil::open_post_pipe($core);
 }
 
 sub close_java_solr
@@ -186,7 +180,6 @@ sub main
   my (@argv) = @_;
   my $argc = scalar(@argv);
 
-  my $removeold = 0;
   my @filtered_argv = ();
 
   my $i = 0;
@@ -195,13 +188,8 @@ sub main
 
       my $option = $1;
 
-      # -removeold causes the existing index to be overwritten
-      if ($option eq "removeold") {
-        print STDERR "\n-removeold set (new index will be created)\n";
-        $removeold = 1;
-      }
       # -verbosity <num>
-      elsif ($option eq "verbosity") {
+      if ($option eq "verbosity") {
         $i++;
         if ($i<$argc)
 	{
@@ -222,21 +210,20 @@ sub main
 
   my $filtered_argc = scalar(@filtered_argv);
 
-  if ($filtered_argc < 5) {
-    print STDERR "Usage: solr_passes.pl [-removeold|-verbosity num] collect \"text\"|\"index\" {d|s}idx build-dir index-name\n";
+  if ($filtered_argc < 4) {
+    print STDERR "Usage: solr_passes.pl [-verbosity num] core \"text\"|\"index\" build-dir index-name\n";
     exit 1;
   }
 
-  my $collect       = $filtered_argv[0];
+  my $core          = $filtered_argv[0];
   my $mode          = $filtered_argv[1];
-  my $ds_idx        = $filtered_argv[2];
-  my $full_builddir = $filtered_argv[3];
-  my $indexdir      = $filtered_argv[4];
+  my $full_builddir = $filtered_argv[2];
+  my $indexdir      = $filtered_argv[3];
 
   # We only need the Solr handle opened if we are indexing the
   # documents, not if we are just storing the text
   if ($mode eq "index") {
-    open_java_solr($collect, $ds_idx, $full_builddir, $indexdir, $removeold);
+    open_java_solr($core, $full_builddir, $indexdir);
   }
 
   if ($mode eq "text") {

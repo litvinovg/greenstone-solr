@@ -62,7 +62,7 @@ sub get_search_path
 
 sub open_post_pipe
 {
-    my ($collect,$ds_idx) = @_;
+    my ($core) = @_;
 
     my $search_path = get_search_path();
 
@@ -74,14 +74,13 @@ sub open_post_pipe
     my $jetty_port = $ENV{'SOLR_JETTY_PORT'};
     
     # Now run solr-post command
-    my $core = $collect."-".$ds_idx;
     my $post_props = "-Durl=http://localhost:$jetty_port/solr/$core/update";
     $post_props .= " -Ddata=stdin";
     $post_props .= " -Dcommit=yes";
     
     my $post_java_cmd = "java $post_props -jar \"$full_post_jar\"";
     
-###  print STDERR "**** post cmd = $post_java_cmd\n";
+##  print STDERR "**** post cmd = $post_java_cmd\n";
     
     open (PIPEOUT, "| $post_java_cmd") 
 	|| die "Error in solr_passes.pl: Failed to run $post_java_cmd\n!$\n";

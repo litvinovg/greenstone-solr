@@ -33,8 +33,11 @@ use solrutil;
 
 sub new {
     my $class = shift(@_);
+    my ($build_dir) = @_;
 
     my $self = { 'jetty_stop_key' => "greenstone-solr" };
+
+    $self->{'build_dir'} = $build_dir;
 
     my $search_path = &solrutil::get_search_path();
 
@@ -73,6 +76,8 @@ sub _wget_service
 
     my $in_preamble = ($output_format eq "xml") ? 1 : 0;
     
+##    print STDERR "**** wgetcmd = \n $cmd\n";
+
     if (open(WIN,"$cmd |")) {
 
 	my $line;
@@ -212,9 +217,9 @@ sub admin_reload_core
 sub admin_create_core
 {
     my $self = shift @_;
-    my ($core) = @_;
+    my ($core,$removeold) = @_;
 
-    my ($ds_idx) = ($core =~ m/^.*-(.*)$/);
+    my ($ds_idx) = ($core =~ m/^.*-(.*?)$/);
 
     my $cgi_get_args = "action=CREATE&name=$core";
 
@@ -242,17 +247,16 @@ sub start
 
     chdir($solr_home);
     
-    my $solr_etc = &util::filename_cat($solr_home,"etc");
+##    my $solr_etc = &util::filename_cat($solr_home,"etc");
 
     my $server_props = "-DSTOP.PORT=$jetty_stop_port";
     $server_props .= " -DSTOP.KEY=".$self->{'jetty_stop_key'};
-    $server_props .= " -Dsolr.solr.home=$solr_etc";
+    $server_props .= " -Dsolr.solr.home=$solr_home";
 
     my $full_server_jar = $self->{'full_server_jar'};
     
     my $server_java_cmd = "java $server_props -jar \"$full_server_jar\"";
 
-##    print STDERR "**** server cmd start = $server_java_cmd\n";
 
     my $server_status = "unknown";
 
@@ -260,6 +264,8 @@ sub start
 	$server_status = "already-running";
     }
     elsif (open(STARTIN,"$server_java_cmd 2>&1 |")) {
+
+##	print STDERR "**** startup up server with cmd start =\n $server_java_cmd\n";
 
 	my $line;
 	while (defined($line=<STARTIN>)) {

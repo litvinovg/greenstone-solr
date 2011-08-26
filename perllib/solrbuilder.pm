@@ -111,13 +111,16 @@ sub compress_text
     }
     else
     {
-	my $collection = $self->{'collection'};
+	my $site        = $self->{'site'};
+	my $collect     = $self->{'collection'};	
+	my $core_prefix = (defined $site) ? "$site-$collect" : $collect;
+	my $core        = $core_prefix; # unused in this call to solr_passes
 
         print STDERR "Executable:    $solr_passes_exe\n";
         print STDERR "Sections:      $solr_passes_sections\n";
         print STDERR "Build Dir:     $build_dir\n";
-        print STDERR "Cmd:           $solr_passes_exe $collection text dummy \"$build_dir\" \"dummy\"   $osextra\n";
-	if (!open($handle, "| $solr_passes_exe $collection text dummy \"$build_dir\" \"dummy\"   $osextra"))
+        print STDERR "Cmd:           $solr_passes_exe $core text \"$build_dir\" \"dummy\"   $osextra\n";
+	if (!open($handle, "| $solr_passes_exe $core text \"$build_dir\" \"dummy\"   $osextra"))
 	{
 	    print STDERR "<FatalError name='NoRunSolrPasses'/>\n</Stage>\n" if $self->{'gli'};
 	    die "solrbuilder::build_index - couldn't run $solr_passes_exe\n$!\n";
@@ -242,7 +245,8 @@ sub premake_solr_auxiliary_files
 	      'insert' => $schema_insert_xml } ];
         
     my $solr_home = $ENV{'GEXT_SOLR'};
-    my $in_dirname = &util::filename_cat($solr_home,"etc","conf");
+##    my $in_dirname = &util::filename_cat($solr_home,"etc","conf");
+    my $in_dirname = &util::filename_cat($solr_home,"conf");
     my $schema_in_filename = &util::filename_cat($in_dirname,"schema.xml.in");
 
 
@@ -280,7 +284,7 @@ sub pre_build_indexes
     # If the Solr/Jetty server is not already running, the following starts
     # it up, and only returns when the server is "reading and listening"
   
-    my $solr_server = new solrserver();
+    my $solr_server = new solrserver($self->{'build_dir'});
     $solr_server->start();
     $self->{'solr_server'} = $solr_server;
 
@@ -363,21 +367,30 @@ sub pre_build_indexes
     # Now update the solr-core information in solr.xml
     # => at most two cores <colname>-Doc and <colname>-Sec
 
-    my $collection = $self->{'collection'};
+    my $site        = $self->{'site'};
+    my $collect     = $self->{'collection'};
+    my $core_prefix = (defined $site) ? "$site-$collect" : $collect;
 
     # my $idx = $self->{'index_mapping'}->{$index};
     my $idx = "idx";
 
-    my $site = $self->{'site'};
+    my $build_dir = $self->{'build_dir'};
 
     foreach my $level (keys %{$self->{'levels'}}) {
 	
 	my ($pindex) = $level =~ /^(.)/;
-	
-	my $core = $collection."-".$pindex.$idx;
 
-	# prefix site if exists (e.g. Greenstone 3)
-	$core = "$site-$core" if defined $site;
+	my $index_dir = $pindex.$idx;
+	my $core = "$core_prefix-$index_dir";
+
+	my $force_removeold = ($self->{'incremental'}) ? 0 : 1;
+	if ($force_removeold) {
+	    print $outhandle "\n-removeold set (new index will be created)\n";
+
+	    my $full_index_dir = &util::filename_cat($build_dir,$index_dir);
+	    &util::rm_r($full_index_dir);
+	    &util::mk_dir($full_index_dir);
+	}
 
 	# if collect==core already in solr.xml (check with STATUS)
 	# => use RELOAD call to refresh fields now expressed in schema.xml
@@ -419,8 +432,6 @@ sub build_index {
     # define the section names for solrpasses
     # define the section names and possibly the doc name for solrpasses
     my $solr_passes_sections = $llevel;
-
-    my $opt_create_index = ($self->{'incremental'}) ? "" : "-removeold";
 
     my $osextra = "";
     if ($ENV{'GSDLOS'} =~ /^windows$/i) {
@@ -477,11 +488,14 @@ sub build_index {
     if ($self->{'debug'}) {
 	$handle = *STDOUT;
     } else {
-	my $collection = $self->{'collection'};
-	my $ds_idx = $self->{'index_mapping'}->{$index};
+	my $site        = $self->{'site'};
+	my $collect     = $self->{'collection'};
+	my $core_prefix = (defined $site) ? "$site-$collect" : $collect;
+	my $ds_idx      = $self->{'index_mapping'}->{$index};
+	my $core        = "$core_prefix-$ds_idx";
 
-	print STDERR "Cmd: $solr_passes_exe $opt_create_index $collection index $ds_idx \"$build_dir\" \"$indexdir\"   $osextra\n";
-	if (!open($handle, "| $solr_passes_exe $opt_create_index $collection index $ds_idx \"$build_dir\" \"$indexdir\"   $osextra")) {
+	print STDERR "Cmd: $solr_passes_exe $core index \"$build_dir\" \"$indexdir\"   $osextra\n";
+	if (!open($handle, "| $solr_passes_exe $core index \"$build_dir\" \"$indexdir\"   $osextra")) {
 	    print STDERR "<FatalError name='NoRunSolrPasses'/>\n</Stage>\n" if $self->{'gli'};
 	    die "solrbuilder::build_index - couldn't run $solr_passes_exe\n!$\n";
 	}
