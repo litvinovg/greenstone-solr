@@ -1,4 +1,5 @@
-service/GS2SolrSearch.java
 service/SolrSearch.java
-#util/AudioDBDocInfo.java
-#util/AudioDBWrapper.java 
+service/GS2SolrSearch.java
+service/GS2SolrRetrieve.java
+util/SolrQueryWrapper.java
+util/SolrQueryResult.java 
