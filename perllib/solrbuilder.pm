@@ -235,7 +235,7 @@ sub premake_solr_auxiliary_files
 
 	$schema_insert_xml .= "    "; # indent
 	$schema_insert_xml .= "<field name=\"$field\" ";
-	$schema_insert_xml .=   "type=\"string\" indexed=\"true\" ";
+	$schema_insert_xml .=   "type=\"text_en_splitting\" indexed=\"true\" ";
 	$schema_insert_xml .=   "stored=\"false\" multiValued=\"true\" />\n"; 
     }
 
@@ -248,7 +248,6 @@ sub premake_solr_auxiliary_files
 ##    my $in_dirname = &util::filename_cat($solr_home,"etc","conf");
     my $in_dirname = &util::filename_cat($solr_home,"conf");
     my $schema_in_filename = &util::filename_cat($in_dirname,"schema.xml.in");
-
 
     my $collect_home = $ENV{'GSDLCOLLECTDIR'};
     my $out_dirname = &util::filename_cat($collect_home,"etc","conf");
@@ -383,30 +382,43 @@ sub pre_build_indexes
 	my $index_dir = $pindex.$idx;
 	my $core = "$core_prefix-$index_dir";
 
+	# force_removeold == opposite of being run in 'incremental' mode
 	my $force_removeold = ($self->{'incremental'}) ? 0 : 1;
+
 	if ($force_removeold) {
 	    print $outhandle "\n-removeold set (new index will be created)\n";
 
 	    my $full_index_dir = &util::filename_cat($build_dir,$index_dir);
 	    &util::rm_r($full_index_dir);
 	    &util::mk_dir($full_index_dir);
-	}
 
-	# if collect==core already in solr.xml (check with STATUS)
-	# => use RELOAD call to refresh fields now expressed in schema.xml
-	#
-	# else 
-	# => use CREATE API to add to solr.xml
-		
-	my $check_core_exists = $solr_server->admin_ping_core($core);
-       
-	if ($check_core_exists) {	    
-	    print $outhandle "Reloading Solr core: $core\n";
-	    $solr_server->admin_reload_core($core);
-	}
-	else {
+	    # Solr then wants an "index" folder within this general index area!
+#	    my $full_index_index_dir = &util::filename_cat($full_index_dir,"index");
+#	    &util::mk_dir($full_index_index_dir);
+
+
+	    # now go on and create new index
 	    print $outhandle "Creating Solr core: $core\n";
 	    $solr_server->admin_create_core($core);
+
+	}
+	else {
+	    # if collect==core already in solr.xml (check with STATUS)
+	    # => use RELOAD call to refresh fields now expressed in schema.xml
+	    #
+	    # else 
+	    # => use CREATE API to add to solr.xml
+		
+	    my $check_core_exists = $solr_server->admin_ping_core($core);
+       
+	    if ($check_core_exists) {	    
+		print $outhandle "Reloading Solr core: $core\n";
+		$solr_server->admin_reload_core($core);
+	    }
+	    else {
+		print $outhandle "Creating Solr core: $core\n";
+		$solr_server->admin_create_core($core);
+	    }
 	}
     }
 

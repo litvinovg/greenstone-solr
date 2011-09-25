@@ -114,7 +114,8 @@ sub _wget_service
 	$error_output .= "  $!\n";
     }
 
-    my $output = { 'preamble' => $preamble_output,
+    my $output = { 'url'      => $full_url,
+		   'preamble' => $preamble_output,
 		   'output'   => $xml_output,
 		   'error'    => $error_output };
 
