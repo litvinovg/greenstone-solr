@@ -14,9 +14,9 @@ done
 if [ ! -d backup ] ; then
   echo "Patching GS2LuceneSearch to inherit from SharedSoleneGS2FieldSearch.java"
   mkdir backup
-  /bin/mv ../../$gsdlsrc/service/GS2LuceneSearch.java backup/.
-  /bin/cp $gsdlsrc/service/GS2LuceneSearch.java ../../$gsdlsrc/service/.
-  /bin/cp $gsdlsrc/service/SharedSoleneGS2FieldSearch.java ../../$gsdlsrc/service/.
+  /bin/mv ../../$gsdlsrcdir/service/GS2LuceneSearch.java backup/.
+  /bin/cp $gsdlsrcdir/service/GS2LuceneSearch.java ../../$gsdlsrcdir/service/.
+  /bin/cp $gsdlsrcdir/service/SharedSoleneGS2FieldSearch.java ../../$gsdlsrcdir/service/.
 fi
 
 classesdir=web/WEB-INF/classes
@@ -36,6 +36,8 @@ if [ ! -d ../../$webextdir ] ; then
   mkir ../../$webextdir
 fi
 
-# copy the content of the web folder (avoiding the top-level .svn directory)
-/bin/cp -r web/* ../../$webextdir/.
+if [ -d web ] ;
+  # copy the content of the web folder (avoiding the top-level .svn directory)
+  /bin/cp -r web/* ../../$webextdir/.
+fi
 
