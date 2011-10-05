@@ -14,9 +14,9 @@ done
 
 if [ -d backup ] ; then
   echo "Reverting GS2LuceneSearch to nolonger inherit from SharedSoleneGS2FieldSearch.java"
-  /bin/rm ../../$gsdlsrc/service/SharedSoleneGS2FieldSearch.java 
-  /bin/rm ../../$gsdlsrc/service/GS2LuceneSearch.java 
-  /bin/mv backup/GS2LuceneSearch.java $gsdlsrc/service/.
+  /bin/rm ../../$gsdlsrcdir/service/SharedSoleneGS2FieldSearch.java 
+  /bin/rm ../../$gsdlsrcdir/service/GS2LuceneSearch.java 
+  /bin/mv backup/GS2LuceneSearch.java $gsdlsrcdir/service/.
   rmdir backup
 fi
 
@@ -30,3 +30,10 @@ for f in $prop_list ; do
 
   /bin/rm -f "../../$classesdir/$f"
 done
+
+webextdir=ext/solr
+
+if [ -d web ] ;
+  # remove the content of the web folder copied in by ADD-SERVICE.sh
+  /bin/rm -r ../../$webextdir
+fi
