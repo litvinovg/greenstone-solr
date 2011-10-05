@@ -29,6 +29,19 @@ for f in $prop_list ; do
   /bin/cp "properties/$f" "../../$classesdir/$f"
 done
 
+
+jarwebdir=web/WEB-INF/lib
+
+file_list=`cat jar-file-list.txt | egrep -v '^#'`
+
+for f in $file_list ; do
+  echo "Adding $gsdlsrcdir/$f to gsdl3 web jar lib directory"
+
+  /bin/cp "lib/java/$f" "../../$jarwebdir/$f"
+done
+
+
+
 webextdir=ext/solr
 
 if [ ! -d ../../$webextdir ] ; then
@@ -36,7 +49,7 @@ if [ ! -d ../../$webextdir ] ; then
   mkir ../../$webextdir
 fi
 
-if [ -d web ] ;
+if [ -d web ] ; then
   # copy the content of the web folder (avoiding the top-level .svn directory)
   /bin/cp -r web/* ../../$webextdir/.
 fi

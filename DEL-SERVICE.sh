@@ -31,9 +31,20 @@ for f in $prop_list ; do
   /bin/rm -f "../../$classesdir/$f"
 done
 
+jarwebdir=web/WEB-INF/lib
+
+file_list=`cat jar-file-list.txt | egrep -v '^#'`
+
+for f in $file_list ; do
+  echo "Adding $gsdlsrcdir/$f to gsdl3 web jar lib directory"
+
+  /bin/rm -f "../../$jarwebdir/$f"
+done
+
+
 webextdir=ext/solr
 
-if [ -d web ] ;
+if [ -d web ] ; then
   # remove the content of the web folder copied in by ADD-SERVICE.sh
   /bin/rm -r ../../$webextdir
 fi
