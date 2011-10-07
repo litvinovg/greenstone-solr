@@ -28,7 +28,7 @@ package org.greenstone.gsdl3.util;
 
 import java.util.Vector;
 
-import org.greenstone.LuceneWrapper.SharedSoleneQueryResult;
+import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
 
 
 /** Opportunity to fine tune QueryResult for solr search,

@@ -44,8 +44,8 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.ModifiableSolrParams;
 import org.apache.solr.common.params.SolrParams;
 
-import org.greenstone.LuceneWrapper.SharedSoleneQuery;
-import org.greenstone.LuceneWrapper.SharedSoleneQueryResult;
+import org.greenstone.LuceneWrapper3.SharedSoleneQuery;
+import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
 
 
 public class SolrQueryWrapper  extends SharedSoleneQuery

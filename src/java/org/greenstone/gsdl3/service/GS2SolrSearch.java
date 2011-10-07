@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
 
 //import org.greenstone.SolrWrapper.GS2SolrQuery;
 //import org.greenstone.SolrWrapper.SolrQueryResult;
-import org.greenstone.LuceneWrapper.SharedSoleneQueryResult;
+import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
 
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.core.CoreContainer;
