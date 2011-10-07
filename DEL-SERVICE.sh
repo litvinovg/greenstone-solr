@@ -12,14 +12,6 @@ for f in $file_list ; do
   fi
 done
 
-if [ -d backup ] ; then
-  echo "Reverting GS2LuceneSearch to nolonger inherit from SharedSoleneGS2FieldSearch.java"
-  /bin/rm ../../$gsdlsrcdir/service/SharedSoleneGS2FieldSearch.java 
-  /bin/rm ../../$gsdlsrcdir/service/GS2LuceneSearch.java 
-  /bin/mv backup/GS2LuceneSearch.java $gsdlsrcdir/service/.
-  rmdir backup
-fi
-
 
 classesdir=web/WEB-INF/classes
 

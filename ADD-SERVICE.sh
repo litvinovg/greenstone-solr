@@ -11,14 +11,6 @@ for f in $file_list ; do
 done
 
 
-if [ ! -d backup ] ; then
-  echo "Patching GS2LuceneSearch to inherit from SharedSoleneGS2FieldSearch.java"
-  mkdir backup
-  /bin/mv ../../$gsdlsrcdir/service/GS2LuceneSearch.java backup/.
-  /bin/cp $gsdlsrcdir/service/GS2LuceneSearch.java ../../$gsdlsrcdir/service/.
-  /bin/cp $gsdlsrcdir/service/SharedSoleneGS2FieldSearch.java ../../$gsdlsrcdir/service/.
-fi
-
 classesdir=web/WEB-INF/classes
 
 prop_list=`cat prop-file-list.txt`
