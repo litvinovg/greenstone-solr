@@ -96,6 +96,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
     public void cleanUp() {
 	super.cleanUp();
 	this.solr_src.cleanUp();
+	all_solr_cores.shutdown();
     }
 	    
     /** methods to handle actually doing the query */
