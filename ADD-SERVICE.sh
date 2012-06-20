@@ -10,7 +10,6 @@ for f in $file_list ; do
   /bin/cp "$gsdlsrcdir/$f" "../../$gsdlsrcdir/$f"
 done
 
-
 classesdir=web/WEB-INF/classes
 
 prop_list=`cat prop-file-list.txt`
@@ -20,7 +19,6 @@ for f in $prop_list ; do
 
   /bin/cp "properties/$f" "../../$classesdir/$f"
 done
-
 
 jarwebdir=web/WEB-INF/lib
 
@@ -32,17 +30,21 @@ for f in $file_list ; do
   /bin/cp "lib/java/$f" "../../$jarwebdir/$f"
 done
 
-
-
-webextdir=ext/solr
+webextdir=web/ext/solr
 
 if [ ! -d ../../$webextdir ] ; then
   echo "Creating web extension direction: $webextdir"
-  mkir ../../$webextdir
+  mkdir ../../$webextdir
 fi
+
+web_list="solr.xml"
+
+for f in $web_list ; do
+  echo "Adding $f to gsdl3 web ext directory"
+  /bin/cp "$f" "../../$webextdir/$f"
+done
 
 if [ -d web ] ; then
   # copy the content of the web folder (avoiding the top-level .svn directory)
   /bin/cp -r web/* ../../$webextdir/.
 fi
-
