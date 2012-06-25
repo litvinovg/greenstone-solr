@@ -48,7 +48,7 @@ public class SolrSearch extends LuceneSearch {
 	solr_server = new HashMap();
 
 	if (solr_cores == null) {
-	    // Share one CoreContainer across all sties/collections
+	    // Share one CoreContainer across all sites/collections
 	    try { 
 		
 		String gsdl3_home = GlobalProperties.getGSDL3Home();
@@ -66,6 +66,14 @@ public class SolrSearch extends LuceneSearch {
 	}
     }
 
+    // Overriding the cleanUp() method here, so as to parallel the structure of GS2SolrSearch 
+    // which also calls shutdown() on its CoreContainer object in GS2SolrSearch.cleanUp().
+    // However, this class has not yet been tested, so it's not certain that this method is 
+    // required here.
+    public void cleanUp() {
+	super.cleanUp();
+	solr_cores.shutdown();
+    }
 
     public boolean configure(Element info, Element extra_info) {
 	if (!super.configure(info, extra_info)){
