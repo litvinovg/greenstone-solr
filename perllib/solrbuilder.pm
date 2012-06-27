@@ -228,15 +228,24 @@ sub premake_solr_auxiliary_files
 
     foreach my $ifm (@{$self->{'build_cfg'}->{'indexfieldmap'}}) {
 
-	my ($field) = ($ifm =~ m/^.*->(.*)$/);
+		my ($field) = ($ifm =~ m/^.*->(.*)$/);
 
-	# Need special case for Long/Lat
-	# ... but for now treat everything as of type string
+		$schema_insert_xml .= "    "; # indent
+		$schema_insert_xml .= "<field name=\"$field\" ";
 
-	$schema_insert_xml .= "    "; # indent
-	$schema_insert_xml .= "<field name=\"$field\" ";
-	$schema_insert_xml .=   "type=\"text_en_splitting\" indexed=\"true\" ";
-	$schema_insert_xml .=   "stored=\"false\" multiValued=\"true\" />\n"; 
+		if($field eq "LA" || $field eq "LO")
+		{
+			$schema_insert_xml .=   "type=\"location\" ";
+		}
+		elsif ($field ne "ZZ" && $field ne "TX")
+		{
+			$schema_insert_xml .=   "type=\"string\" ";
+		}
+		else
+		{
+			$schema_insert_xml .= "type=\"text_en_splitting\" ";
+		}
+		$schema_insert_xml .=  "indexed=\"true\" stored=\"false\" multiValued=\"true\" />\n"; 
     }
 
     # just the one rule to date
@@ -543,8 +552,7 @@ sub build_index {
 
     &plugin::read ($self->{'pluginfo'}, $self->{'source_dir'},
 		   "", {}, {}, $self->{'buildproc'}, $self->{'maxdocs'}, 0, $self->{'gli'});
-
-
+	
     print $handle "</update>\n";
 
     close ($handle) unless $self->{'debug'};

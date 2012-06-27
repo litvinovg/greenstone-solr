@@ -78,9 +78,9 @@ sub open_post_pipe
     $post_props .= " -Ddata=stdin";
     $post_props .= " -Dcommit=yes";
     
-    my $post_java_cmd = "java $post_props -jar \"$full_post_jar\"";
+    my $post_java_cmd = "java -Xmx256M $post_props -jar \"$full_post_jar\"";
     
-##  print STDERR "**** post cmd = $post_java_cmd\n";
+	##print STDERR "**** post cmd = $post_java_cmd\n";
     
     open (PIPEOUT, "| $post_java_cmd") 
 	|| die "Error in solr_passes.pl: Failed to run $post_java_cmd\n!$\n";

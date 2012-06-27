@@ -265,7 +265,6 @@ sub textedit {
 
     my $gs2_docOID = $doc_obj->get_OID();
 
-
     my $start_doc;
     my $end_doc;
 
@@ -295,8 +294,12 @@ sub textedit {
     my $doc_section = 0; # just for this document
 
     # only output if working with doc level
-    my $text = $start_doc if ($sec_tag_name eq "");
+	# my $text = undef;
+	
+    my $text = ($sec_tag_name eq "") ? $start_doc : "";
 
+#	  my $text = $start_doc if ($sec_tag_name eq "");
+	  
     # get the text for this document
     my $section = $doc_obj->get_top_section();
 
@@ -317,7 +320,7 @@ sub textedit {
 	    $start_sec  = "  <add>\n";
 	    $start_sec .= "    <doc>\n";
 	    $start_sec .= "      <field name=\"docOID\">$sec_gs2_docOID</field>\n";
-
+	
 	    $end_sec    = "    </doc>\n";
 	    $end_sec   .= "  </add>\n"; 
 	}
@@ -440,6 +443,11 @@ sub textedit {
 		    $allfields_text .= $new_text;
 		}
 
+		# Remove any leading or trailing white space
+		$new_text =~ s/\s+$//;
+		$new_text =~ s/^\s+//;
+	
+		
 		if ($self->{'indexing_text'}) {
 		    # add the tag
 		    $new_text = "<field name=\"$shortname\" >$new_text</field>\n";
