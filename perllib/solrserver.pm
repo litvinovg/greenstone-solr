@@ -203,7 +203,8 @@ sub admin_ping_core
     return $ping_status;
 }
 
-
+# Some of the Solr CoreAdmin API calls available. 
+# See http://wiki.apache.org/solr/CoreAdmin
 sub admin_reload_core
 {
     my $self = shift @_;
@@ -214,11 +215,42 @@ sub admin_reload_core
     $self->_admin_service($cgi_get_args);
 }
 
+sub admin_rename_core
+{
+    my $self = shift @_;
+    my ($oldcore, $newcore) = @_;
+
+    my $cgi_get_args = "action=RENAME&core=$oldcore&other=$newcore";
+
+    $self->_admin_service($cgi_get_args);
+}
+
+sub admin_swap_core
+{
+    my $self = shift @_;
+    my ($oldcore, $newcore) = @_;
+
+    my $cgi_get_args = "action=SWAP&core=$oldcore&other=$newcore";
+
+    $self->_admin_service($cgi_get_args);
+}
+
+# The ALIAS action is not supported in our version of solr (despite it
+# being marked as experimental in the documentation for Core Admin)
+sub admin_alias_core
+{
+    my $self = shift @_;
+    my ($oldcore, $newcore) = @_;
+
+    my $cgi_get_args = "action=ALIAS&core=$oldcore&other=$newcore";
+
+    $self->_admin_service($cgi_get_args);
+}
 
 sub admin_create_core
 {
     my $self = shift @_;
-    my ($core,$removeold) = @_;
+    my ($core, $data_parent_dir) = @_; # data_parent_dir is optional, can be index_dir. Defaults to builddir if not provided
 
     my ($ds_idx) = ($core =~ m/^.*-(.*?)$/);
 
@@ -226,9 +258,12 @@ sub admin_create_core
 
     my $collect_home = $ENV{'GSDLCOLLECTDIR'};
     my $etc_dirname = &util::filename_cat($collect_home,"etc");
-	    
-    my $build_dir = $self->{'build_dir'};
-    my $idx_dirname = &util::filename_cat($build_dir,$ds_idx);
+
+    if(!defined $data_parent_dir) {
+	$data_parent_dir = $self->{'build_dir'};
+    } 
+    
+    my $idx_dirname = &util::filename_cat($data_parent_dir,$ds_idx); # "dataDir"  
 	    
     $cgi_get_args .= "&instanceDir=$etc_dirname";
     $cgi_get_args .= "&dataDir=$idx_dirname";
@@ -236,7 +271,28 @@ sub admin_create_core
     $self->_admin_service($cgi_get_args);
 }
 
+# removes (unloads) core from th eext/solr/sorl.xml config file
+sub admin_unload_core
+{
+    my $self = shift @_;
+    my ($core) = @_;
 
+    my $cgi_get_args = "action=UNLOAD&core=$core"; # &deleteIndex=true from Solr3.3
+
+    $self->_admin_service($cgi_get_args);
+}
+
+sub copy_solrxml_to_web
+{
+    my $self = shift @_;
+
+    my $ext_solrxml = &util::filename_cat($ENV{'GEXT_SOLR'}, "solr.xml");
+    my $web_solrxml = &util::filename_cat($ENV{'GSDL3HOME'}, "ext", "solr", "solr.xml");
+
+    #print STDERR "@@@@ Copying $ext_solrxml to $web_solrxml...\n";
+
+    &util::cp($ext_solrxml, $web_solrxml);
+}
 
 sub start
 {
