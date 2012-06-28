@@ -116,6 +116,8 @@ sub compress_text
 	my $core_prefix = (defined $site) ? "$site-$collect" : $collect;
 	my $core        = $core_prefix; # unused in this call to solr_passes
 
+	$core = "building-".$core unless $self->{'incremental'}; # core points to building only for force_removeold
+
         print STDERR "Executable:    $solr_passes_exe\n";
         print STDERR "Sections:      $solr_passes_sections\n";
         print STDERR "Build Dir:     $build_dir\n";
@@ -397,6 +399,9 @@ sub pre_build_indexes
 	if ($force_removeold) {
 	    print $outhandle "\n-removeold set (new index will be created)\n";
 
+	    # create cores under temporary core names, corresponding to building directory
+	    $core = "building-".$core; 
+
 	    my $full_index_dir = &util::filename_cat($build_dir,$index_dir);
 	    &util::rm_r($full_index_dir);
 	    &util::mk_dir($full_index_dir);
@@ -514,6 +519,8 @@ sub build_index {
 	my $core_prefix = (defined $site) ? "$site-$collect" : $collect;
 	my $ds_idx      = $self->{'index_mapping'}->{$index};
 	my $core        = "$core_prefix-$ds_idx";
+
+	$core = "building-".$core unless $self->{'incremental'}; # core points to building only for force_removeold
 
 	print STDERR "Cmd: $solr_passes_exe $core index \"$build_dir\" \"$indexdir\"   $osextra\n";
 	if (!open($handle, "| $solr_passes_exe $core index \"$build_dir\" \"$indexdir\"   $osextra")) {

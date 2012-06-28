@@ -275,9 +275,12 @@ sub admin_create_core
 sub admin_unload_core
 {
     my $self = shift @_;
-    my ($core) = @_;
+    my ($core, $delete) = @_;
 
     my $cgi_get_args = "action=UNLOAD&core=$core"; # &deleteIndex=true from Solr3.3
+    if(defined $delete && $delete == 1) {
+	$cgi_get_args = $cgi_get_args."&deleteIndex=true";
+    }
 
     $self->_admin_service($cgi_get_args);
 }
