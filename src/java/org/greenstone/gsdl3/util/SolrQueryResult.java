@@ -26,20 +26,32 @@
 
 package org.greenstone.gsdl3.util;
 
-import java.util.Vector;
+import java.util.List;
 
+import org.apache.solr.client.solrj.response.FacetField;
 import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
 
-
-/** Opportunity to fine tune QueryResult for solr search,
- * such as facets, spelling corrections, etc.
- *
+/**
+ * Opportunity to fine tune QueryResult for solr search, such as facets,
+ * spelling corrections, etc.
+ * 
  */
 
-public class SolrQueryResult extends SharedSoleneQueryResult {
-
-    // Currently no fine tuning -- rely on underlying shared Solr/Lucene base class
-    SolrQueryResult() {
-	super();
-    } 
+public class SolrQueryResult extends SharedSoleneQueryResult
+{
+	protected List<FacetField> _facetResults = null;
+	SolrQueryResult()
+	{
+		super();
+	}
+	
+	public void setFacetResults(List<FacetField> facetResults)
+	{
+		_facetResults = facetResults;
+	}
+	
+	public List<FacetField> getFacetResults()
+	{
+		return _facetResults;
+	}
 }
