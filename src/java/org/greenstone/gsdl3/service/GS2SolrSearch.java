@@ -23,16 +23,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
+import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.core.CoreContainer;
 import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
+import org.greenstone.gsdl3.util.FacetWrapper;
 import org.greenstone.gsdl3.util.GSFile;
 import org.greenstone.gsdl3.util.GSXML;
+import org.greenstone.gsdl3.util.SolrFacetWrapper;
+import org.greenstone.gsdl3.util.SolrQueryResult;
 import org.greenstone.gsdl3.util.SolrQueryWrapper;
 import org.greenstone.util.GlobalProperties;
 import org.w3c.dom.Element;
@@ -51,6 +56,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 
 	public GS2SolrSearch()
 	{
+		does_faceting = true;
 		// Used to store the solr cores that match the required 'level' 
 		// of search (e.g. either document-level=>didx, or 
 		// section-level=>sidx.  The hashmap is filled out on demand
@@ -101,14 +107,14 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 				chosenFacets.add(current.getAttribute(GSXML.NAME_ATT));
 			}
 		}
-		
+
 		Element indexListElem = (Element) GSXML.getChildByTagName(info, GSXML.INDEX_ELEM + GSXML.LIST_MODIFIER);
 		NodeList buildIndexElems = indexListElem.getElementsByTagName(GSXML.INDEX_ELEM);
 
-		for(int j = 0; j < buildIndexElems.getLength(); j++)
+		for (int j = 0; j < buildIndexElems.getLength(); j++)
 		{
 			Element current = (Element) buildIndexElems.item(j);
-			for(int i = 0; i < chosenFacets.size(); i++)
+			for (int i = 0; i < chosenFacets.size(); i++)
 			{
 				if (current.getAttribute(GSXML.NAME_ATT).equals(chosenFacets.get(i)))
 				{
@@ -116,7 +122,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -249,7 +255,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		String coll_name = this.cluster_name;
 
 		String core_name = site_name + "-" + coll_name + "-" + index;
-		
+
 		EmbeddedSolrServer solr_core = null;
 
 		if (!solr_core_cache.containsKey(core_name))
@@ -349,4 +355,28 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		return true;
 	}
 
+	protected ArrayList<FacetWrapper> getFacets(Object query_result)
+	{
+		if (!(query_result instanceof SolrQueryResult))
+		{
+			return null;
+		}
+
+		SolrQueryResult result = (SolrQueryResult) query_result;
+		List<FacetField> facets = result.getFacetResults();
+
+		if (facets == null)
+		{
+			return null;
+		}
+
+		ArrayList<FacetWrapper> newFacetList = new ArrayList<FacetWrapper>();
+
+		for (FacetField facet : facets)
+		{
+			newFacetList.add(new SolrFacetWrapper(facet));
+		}
+
+		return newFacetList;
+	}
 }
