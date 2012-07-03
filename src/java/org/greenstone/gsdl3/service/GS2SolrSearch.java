@@ -73,10 +73,8 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 				String solr_ext_name = GlobalProperties.getProperty("gsdlext.solr.dirname", "solr");
 
 				String solr_home_str = GSFile.extHome(gsdl3_home, solr_ext_name);
-				File solr_home = new File(solr_home_str);
-				File solr_xml = new File(solr_home, "solr.xml");
 
-				all_solr_cores = new CoreContainer(solr_home_str, solr_xml);
+				all_solr_cores = new CoreContainer(solr_home_str);
 			}
 			catch (Exception e)
 			{
@@ -90,11 +88,35 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 	/** configure this service */
 	public boolean configure(Element info, Element extra_info)
 	{
-		if (!super.configure(info, extra_info))
-		{
-			return false;
-		}
+		boolean success = super.configure(info, extra_info);
 
+		// 1. Make the CoreContainer reload solr.xml
+		// This is particularly needed for when activate.pl is executed during
+		// a running GS3 server. At that point, the solr collection is reactivated and 
+		// we need to tell Greenstone that the solr index has changed. This requires
+		// the CoreContainer to reload the solr.xml file, and it all works again.
+
+		solr_core_cache.clear(); // clear the map of existing solr cores
+	    
+		// Reload the updated solr.xml into the CoreContainer
+		// (Doing an all_solr_cores.shutdown() first doesn't seem to be required)
+		try { 	
+		    String solr_home_str = all_solr_cores.getSolrHome();
+		    File solr_home = new File(solr_home_str);
+		    File solr_xml = new File( solr_home,"solr.xml" );
+		    
+		    all_solr_cores.load(solr_home_str,solr_xml);
+		} catch (Exception e) {
+		    logger.error("Exception in GS2SolrSearch.configure(): " + e.getMessage());
+		    e.printStackTrace();
+		    return false;
+		}
+		
+		if(!success) {
+		    return false;
+		}
+		
+		// 2. Setting up facets
 		Element searchElem = (Element) GSXML.getChildByTagName(extra_info, GSXML.SEARCH_ELEM);
 		NodeList configIndexElems = searchElem.getElementsByTagName(GSXML.INDEX_ELEM);
 
