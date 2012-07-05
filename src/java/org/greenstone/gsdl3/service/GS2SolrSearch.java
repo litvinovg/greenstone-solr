@@ -21,6 +21,7 @@ package org.greenstone.gsdl3.service;
 // Greenstone classes
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +33,7 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.core.CoreContainer;
+import org.apache.solr.core.SolrCore;
 import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
 import org.greenstone.gsdl3.util.FacetWrapper;
 import org.greenstone.gsdl3.util.GSFile;
@@ -96,7 +98,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		// we need to tell Greenstone that the solr index has changed. This requires
 		// the CoreContainer to reload the solr.xml file, and it all works again.
 
-		solr_core_cache.clear(); // clear the map of existing solr cores
+		solr_core_cache.clear(); // clear the map of solr cores for this collection added to the map upon querying
 	    
 		// Reload the updated solr.xml into the CoreContainer
 		// (Doing an all_solr_cores.shutdown() first doesn't seem to be required)
@@ -106,6 +108,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		    File solr_xml = new File( solr_home,"solr.xml" );
 		    
 		    all_solr_cores.load(solr_home_str,solr_xml);
+
 		} catch (Exception e) {
 		    logger.error("Exception in GS2SolrSearch.configure(): " + e.getMessage());
 		    e.printStackTrace();
@@ -152,7 +155,60 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 	{
 		super.cleanUp();
 		this.solr_src.cleanUp();
-		all_solr_cores.shutdown();
+
+		// When cleaning up, not only do we need to empty the solr_core_cache map, but we also need to remove all
+		// references to this collection's sorlcores in the CoreContainer object, which can be more SolrCores than
+		// the EmbeddedSolrServers instantiated and added to the solr_core_cache, since the cache does lazy loading 
+		// while the CoreContainer contains all the cores defined in solr.xml, which includes all *possible* cores
+		// for this collection even if EmbeddedSolrServers for these were not added to the solr_core_cache_map.
+
+		// 1. clear the map keeping track of the solrcores' EmbeddedSolrServers in this collection
+		solr_core_cache.clear();
+
+		// 2. Remove all SolrCores in the CoreContainer (all_solr_cores) that are specific to this collection
+		String collection_core_name_prefix = getCollectionCoreNamePrefix();
+
+		Collection<String> coreNames = all_solr_cores.getCoreNames();
+		if(!coreNames.isEmpty()) {
+		    Iterator<String> coreIterator = coreNames.iterator();
+		    while(coreIterator.hasNext()) {
+
+			String solrCoreName = coreIterator.next();		
+			if(solrCoreName.startsWith(collection_core_name_prefix)) {
+
+			    logger.error("**** Removing collection-specific core: " + solrCoreName + " from CoreContainer");
+
+			    // CoreContainer.remove(String name): removes and returns registered core w/o decrementing it's reference count
+			    // http://lucene.apache.org/solr/api/index.html?org/apache/solr/core/CoreContainer.html
+			    SolrCore solr_core = all_solr_cores.remove(solrCoreName);
+			    while(!solr_core.isClosed()) {
+				logger.error("@@@@@@ " + solrCoreName + " was not closed. Closing....");
+				solr_core.close(); // http://lucene.apache.org/solr/api/org/apache/solr/core/SolrCore.html
+			    } 
+			    if(solr_core.isClosed()) {
+				logger.error("@@@@@@ " + solrCoreName + " is closed.");
+			    }
+			    solr_core = null;
+			}
+		    }
+		}
+
+		// 3. if there are no more solr cores in Greenstone, then all_solr_cores will be empty, null the CoreContainer
+		// All going well, this will happen when we're ant stopping the Greenstone server and the last Solr collection
+		// is being deactivated
+		Collection<String> coreNamesRemaining = all_solr_cores.getCoreNames();
+		if(coreNamesRemaining.isEmpty()) {
+		    logger.error("**** CoreContainer contains 0 solrCores. Shutting down...");
+
+		    all_solr_cores.shutdown(); // wouldn't do anything anyway for 0 cores I think
+		    all_solr_cores = null;
+		} 
+		else { // else part is just for debugging
+		    Iterator coreIterator = coreNamesRemaining.iterator();
+		    while(coreIterator.hasNext()) {
+			logger.error("**** Core: " + coreIterator.next() + " still exists in CoreContainer");
+		    }
+		}
 	}
 
 	/** methods to handle actually doing the query */
@@ -272,11 +328,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 
 		// now we know the index level, we can dig out the required
 		// solr-core, (caching the result in 'solr_core_cache')
-
-		String site_name = this.router.getSiteName();
-		String coll_name = this.cluster_name;
-
-		String core_name = site_name + "-" + coll_name + "-" + index;
+		String core_name = getCollectionCoreNamePrefix() + "-" + index;
 
 		EmbeddedSolrServer solr_core = null;
 
@@ -401,4 +453,12 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 
 		return newFacetList;
 	}
+
+
+    protected String getCollectionCoreNamePrefix() {
+	String site_name = this.router.getSiteName();
+	String coll_name = this.cluster_name;
+	String collection_core_name_prefix = site_name + "-" + coll_name;
+	return collection_core_name_prefix;
+    }
 }
