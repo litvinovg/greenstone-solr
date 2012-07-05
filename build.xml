@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<project name="gs3-solr-ext" default="usage" basedir=".">
+
+  <!-- DIRECTORY LOCATIONS -->
+  <property name="web.home" value="${basedir}/../../web"/>
+  <property name="gsdlsrcdir" value="${basedir}/../../src/java/org/greenstone/gsdl3"/>
+  <property name="ext.gsdlsrcdir" value="${basedir}/src/java/org/greenstone/gsdl3"/>
+  <property name="classesdir" value="${web.home}/WEB-INF/classes"/>
+  <property name="jarwebdir" value="${web.home}/WEB-INF/lib"/>  
+  <property name="web.extdir" value="${web.home}/ext/solr"/>
+  <property name="web.list" value="solr.xml"/>
+  
+  <!-- FILE LISTINGS.-->
+  <!-- Created as property elements rather than as filelist elements, since
+	they can then be reused for the add-service and delete-service targets. -->
+  <property name="jars" 
+		value="apache-solr-core-3.3.0.jar
+		apache-solr-solrj-3.3.0.jar
+		lucene-spatial-3.3.0.jar
+		lucene-spellchecker-3.3.0.jar
+		lucene-analyzers-3.3.0.jar
+		lucene-highlighter-3.3.0.jar
+		commons-io-1.4.jar
+		commons-fileupload-1.2.1.jar
+		velocity-1.6.1.jar
+		log4j-over-slf4j-1.6.1.jar
+		slf4j-api-1.6.1.jar
+		slf4j-jdk14-1.6.1.jar"/>
+  
+  <property name="java-service-files" 
+			value="SolrSearch.java		   	
+           GS2SolrSearch.java
+		   GS2SolrRetrieve.java"/>  
+		   
+  <property name="java-util-files" 
+			value="SolrQueryWrapper.java		   	
+           SolrQueryResult.java"/>  		   
+  
+  <property name="property-files" 
+			value="SharedSoleneGS2FieldSearch.properties"/>  
+
+  <property name="web-list-files" 
+			value="solr.xml"/>
+
+			
+  <!-- TARGETS -->
+  <target name="usage" description="Print a help message">
+    <echo message="  Execute 'ant -projecthelp' for a list of targets."/>
+    <echo message="  Execute 'ant -help' for Ant help."/>
+    <echo>To install the Solr extension for Greenstone3, run 'ant add-service'.
+	To remove the files and folders installed by add-service, run 'ant del-service'.
+    </echo>
+  </target>			
+  
+  <target name="copy-files" description="Helper-target: copy files across for add-service target">
+  
+	<echo>Adding to gsdl3 java code-base: 
+	${ext.gsdlsrcdir}/service's files ${java-service-files} 
+	AND ${ext.gsdlsrcdir}/util's files ${java-util-files}</echo>
+	
+	<copy todir="${gsdlsrcdir}/service">
+        <filelist id="java-src-files-service" dir="${ext.gsdlsrcdir}/service" files="${java-service-files}"/> 
+    </copy>
+	<copy todir="${gsdlsrcdir}/util">
+        <filelist id="java-src-files-util" dir="${ext.gsdlsrcdir}/util" files="${java-util-files}"/>		   
+    </copy>
+	
+	<echo/>
+	<echo>Adding to gsdl3 properties area: properties/${property-files}</echo>
+	<copy todir="${classesdir}">
+        <filelist id="prop-files" dir="properties" files="${property-files}"/>
+    </copy>
+
+	<echo/>
+	<echo>Adding to gsdl3 web jar lib directory: ${basedir}/lib/java's ${jars}</echo>
+	<copy todir="${jarwebdir}">
+        <filelist id="jar-files" dir="lib/java" files="${jars}"/>
+    </copy>	
+	
+	<echo/>
+	<echo>Creating web extension directory: ${web.extdir}</echo>
+	<mkdir dir="${web.extdir}"/>
+	
+	<echo/>
+	<echo>Adding to gsdl3 web solr ext directory: ${web-list-files}</echo>
+	<copy todir="${web.extdir}">
+        <filelist id="web-list" dir="${basedir}" files="${web-list-files}"/> 
+    </copy>
+	
+	<!-- copy the content of the web folder (avoiding the top-level .svn directory) -->
+	<available property="ext.web.exists" file="${basedir}/web" type="dir" />	
+  </target>
+  
+  
+  <target name="add-service" depends="copy-files" if="ext.web.exists"
+	description="Run this target to setup the Solr extension for Greenstone3">
+	
+	<echo/>
+	<echo>Copy to gsdl3 web: the content of the ${basedir}/web folder (excluding .svn)</echo>
+  	<copy todir="${web.extdir}">
+        <dirset dir="${basedir}/web">
+			<exclude name=".svn"/>
+		</dirset> 
+    </copy>
+  </target>
+  
+  <target name="del-service" 
+	description="Run this target to unset the Solr extension for Greenstone3">	
+	
+	<!-- failonerror is set to false in case some files don't exist 
+	and can't be deleted therefore -->
+	
+	<echo>Removing from gsdl3 java code-base area:
+	${ext.gsdlsrcdir}/service's files ${java-service-files}
+	AND ${ext.gsdlsrcdir}/util's files ${java-util-files}</echo>	
+	
+	<delete failonerror="false">
+        <filelist dir="${gsdlsrcdir}/service" files="${java-service-files}"/> 
+    </delete>
+	<delete failonerror="false">
+        <filelist dir="${gsdlsrcdir}/util" files="${java-util-files}"/>		   
+    </delete>
+	
+	<echo/>
+	<echo>Removing from  gsdl3 properties area: properties/${property-files}</echo>
+	<delete failonerror="false">
+        <filelist dir="${classesdir}" files="${property-files}"/>
+    </delete>
+
+	<echo/>
+	<echo>Removing from gsdl3 web jar lib directory: ${basedir}/lib/java's ${jars}</echo>
+	<delete failonerror="false">
+        <filelist dir="${jarwebdir}" files="${jars}"/>
+    </delete>	
+	
+	<echo/>
+	<echo>Removing web solr extension directory: ${web.extdir}</echo>
+	<delete failonerror="false" includeEmptyDirs="true" dir="${web.extdir}"/>	
+	
+  </target>
+  
+</project>

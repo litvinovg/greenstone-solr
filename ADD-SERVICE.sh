@@ -25,7 +25,7 @@ jarwebdir=web/WEB-INF/lib
 file_list=`cat jar-file-list.txt | egrep -v '^#'`
 
 for f in $file_list ; do
-  echo "Adding $gsdlsrcdir/$f to gsdl3 web jar lib directory"
+  echo "Adding lib/java/$f to gsdl3 web jar lib directory"
 
   /bin/cp "lib/java/$f" "../../$jarwebdir/$f"
 done
@@ -33,7 +33,7 @@ done
 webextdir=web/ext/solr
 
 if [ ! -d ../../$webextdir ] ; then
-  echo "Creating web extension direction: $webextdir"
+  echo "Creating web extension directory: $webextdir"
   mkdir ../../$webextdir
 fi
 
@@ -45,6 +45,7 @@ for f in $web_list ; do
 done
 
 if [ -d web ] ; then
+  echo "Copying the content of the web folder (excluding the top-level .svn directory)"
   # copy the content of the web folder (avoiding the top-level .svn directory)
   /bin/cp -r web/* ../../$webextdir/.
 fi
