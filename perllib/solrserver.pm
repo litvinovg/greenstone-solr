@@ -57,7 +57,12 @@ sub new {
     return bless $self, $class;
 }
 
+sub set_jetty_stop_key {
+    my $self = shift (@_);
+    my ($stop_key) = @_;
 
+    $self->{'jetty_stop_key'} = $stop_key if defined $stop_key;
+}
 
 sub _wget_service
 {
@@ -271,7 +276,7 @@ sub admin_create_core
     $self->_admin_service($cgi_get_args);
 }
 
-# removes (unloads) core from th eext/solr/sorl.xml config file
+# removes (unloads) core from the ext/solr/sorl.xml config file
 sub admin_unload_core
 {
     my $self = shift @_;
@@ -300,6 +305,9 @@ sub copy_solrxml_to_web
 sub start
 {
     my $self = shift @_;
+    my ($verbosity) = @_;
+    
+    $verbosity = 1 unless defined $verbosity;
 
     my $solr_home         = $ENV{'GEXT_SOLR'};
     my $jetty_stop_port   = $ENV{'JETTY_STOP_PORT'};
@@ -325,7 +333,7 @@ sub start
     }
     elsif (open(STARTIN,"$server_java_cmd 2>&1 |")) {
 
-##	print STDERR "**** startup up server with cmd start =\n $server_java_cmd\n";
+	print STDERR "**** starting up solr jetty server with cmd start =\n $server_java_cmd\n" if ($verbosity > 1);
 
 	my $line;
 	while (defined($line=<STARTIN>)) {
@@ -453,7 +461,7 @@ sub stop
     $server_props   .= " -DSTOP.KEY=".$self->{'jetty_stop_key'};
     my $server_java_cmd = "java $server_props -jar \"$full_server_jar\" --stop";
 
-##    print STDERR "**** java server stop cmd:\n  $server_java_cmd\n";
+    print STDERR "**** java server stop cmd:\n  $server_java_cmd\n" if ($output_verbosity>1);
 
     if (open(STOPIN,"$server_java_cmd 2>&1 |")) {
 
