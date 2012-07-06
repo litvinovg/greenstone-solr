@@ -1,5 +1,12 @@
 README file for Greenstone 3's Solr extension
 
+CONTENTS OF THIS README
+- Acquiring and setting up the Solr extension
+- Importing and (re-)building a collection with the Solr extension
+- Running the Solr extension's Jetty server on its own
+- Some handy manual commands
+- Adding new Java classes into the Solr extension
+
 
 ACQUIRING AND SETTING UP THE SOLR EXTENSION
 
@@ -94,7 +101,7 @@ If that's the case, an XML listing the number of responses and some metadata for
 $gs3> perl -S run_solr_server.pl stop <optional stopkey>
 
 
-SOME HANDY MANUAL COMMANDS:
+SOME HANDY MANUAL COMMANDS
 The commands expressed below are for Linux, adjust them for Windows
 
 1. Manually running the solr extension's jetty server:
@@ -107,4 +114,11 @@ $gs3/ext/solr> java -Dsolr.solr.home=`pwd` -jar lib/java/solr-jetty-server.jar
 $gs3/ext/solr> java -Dsolr.solr.home=`pwd` -Durl=http://localhost:8983/solr/localsite-solr-jdbm-demo-didx/update -jar lib/java/solr-post.jar
 
 The above posts the solr-jdbm-demo collection's didx (document-level) index folder contents to Solr to be ingested.
+
+
+ADDING NEW JAVA CLASSES INTO THE SOLR EXTENSION
+
+1. Create the Java classes and place them into their package within the ext/solr location. 
+
+2. Adjust the ant build file in the solr extension (ext/solr/build.xml) to take these java source files into account during the setup process that takes place when the ant target 'add-service' is executed. The relevant portions of this build.xml file are likely to be the property 'java-service-files' and the property 'java-util-files'.
 

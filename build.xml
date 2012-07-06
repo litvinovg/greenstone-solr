@@ -33,8 +33,9 @@
 		   GS2SolrRetrieve.java"/>  
 		   
   <property name="java-util-files" 
-			value="SolrQueryWrapper.java		   	
-           SolrQueryResult.java"/>  		   
+			value="SolrFacetWrapper.java
+			SolrQueryWrapper.java			
+			SolrQueryResult.java"/>  		   
   
   <property name="property-files" 
 			value="SharedSoleneGS2FieldSearch.properties"/>  
