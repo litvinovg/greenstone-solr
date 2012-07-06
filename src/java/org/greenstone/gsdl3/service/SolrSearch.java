@@ -14,6 +14,7 @@ import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -28,6 +29,7 @@ import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
 import org.apache.solr.servlet.SolrRequestParsers;
 import org.apache.solr.core.CoreContainer;
+import org.apache.solr.core.SolrCore;
 
 import java.io.File;
 import java.util.Collection;
@@ -55,41 +57,110 @@ public class SolrSearch extends LuceneSearch {
 		String solr_ext_name = GlobalProperties.getProperty("gsdlext.solr.dirname","solr");
 		
 		String solr_home_str = GSFile.extHome(gsdl3_home,solr_ext_name);
-		File solr_home = new File(solr_home_str);
-		File solr_xml = new File( solr_home,"solr.xml" );
 
-		solr_cores = new CoreContainer(solr_home_str,solr_xml);	    	    
+		solr_cores = new CoreContainer(solr_home_str);
 	    }
 	    catch (Exception e) {
 		e.printStackTrace();
 	    }
 	}
     }
+	
 
     // Overriding the cleanUp() method here, so as to parallel the structure of GS2SolrSearch 
     // which also calls shutdown() on its CoreContainer object in GS2SolrSearch.cleanUp().
     // However, this class has not yet been tested, so it's not certain that this method is 
     // required here.
+	// Adjusted  to bring it up to speed with changes in GS2SolrSearch (for activate.pl) - not yet tested
     public void cleanUp() {
 	super.cleanUp();
-	solr_cores.shutdown();
+	
+		// 1. clear the map keeping track of the solrcores' EmbeddedSolrServers in this collection
+		solr_server.clear();
+
+		// 2. Remove all SolrCores in the CoreContainer (solr_cores) that are specific to this collection
+		String collection_core_name_prefix = getCollectionCoreNamePrefix();
+
+		Collection<String> coreNames = solr_cores.getCoreNames();
+		if(!coreNames.isEmpty()) {
+		    Iterator<String> coreIterator = coreNames.iterator();
+		    while(coreIterator.hasNext()) {
+
+			String solrCoreName = coreIterator.next();		
+			if(solrCoreName.startsWith(collection_core_name_prefix)) {
+
+			    logger.error("**** Removing collection-specific core: " + solrCoreName + " from CoreContainer");
+
+			    // CoreContainer.remove(String name): removes and returns registered core w/o decrementing it's reference count
+			    // http://lucene.apache.org/solr/api/index.html?org/apache/solr/core/CoreContainer.html
+			    SolrCore solr_core = solr_cores.remove(solrCoreName);
+			    while(!solr_core.isClosed()) {
+				logger.error("@@@@@@ " + solrCoreName + " was not closed. Closing....");
+				solr_core.close(); // http://lucene.apache.org/solr/api/org/apache/solr/core/SolrCore.html
+			    } 
+			    if(solr_core.isClosed()) {
+				logger.error("@@@@@@ " + solrCoreName + " is closed.");
+			    }
+			    solr_core = null;
+			}
+		    }
+		}
+
+		// 3. if there are no more solr cores in Greenstone, then solr_cores will be empty, null the CoreContainer
+		// All going well, this will happen when we're ant stopping the Greenstone server and the last Solr collection
+		// is being deactivated
+		Collection<String> coreNamesRemaining = solr_cores.getCoreNames();
+		if(coreNamesRemaining.isEmpty()) {
+		    logger.error("**** CoreContainer contains 0 solrCores. Shutting down...");
+
+		    solr_cores.shutdown(); // wouldn't do anything anyway for 0 cores I think
+		    solr_cores = null;
+		} 
+		else { // else part is just for debugging
+		    Iterator coreIterator = coreNamesRemaining.iterator();
+		    while(coreIterator.hasNext()) {
+			logger.error("**** Core: " + coreIterator.next() + " still exists in CoreContainer");
+		    }
+		}
+	
     }
 
+	
+	// adjusted configure to bring it up to speed with changes in GS2SolrSearch (for activate.pl) - not yet tested
     public boolean configure(Element info, Element extra_info) {
-	if (!super.configure(info, extra_info)){
-	    return false;
-	}
+		boolean success = super.configure(info, extra_info);
+	
+		// 1. Make the CoreContainer reload solr.xml
+		// This is particularly needed for when activate.pl is executed during
+		// a running GS3 server. At that point, the solr collection is reactivated and 
+		// we need to tell Greenstone that the solr index has changed. This requires
+		// the CoreContainer to reload the solr.xml file, and it all works again.
+
+		solr_server.clear(); // clear the map of solr cores for this collection added to the map upon querying
+	    
+		// Reload the updated solr.xml into the CoreContainer
+		// (Doing a solr_cores.shutdown() first doesn't seem to be required)
+		try { 	
+		    String solr_home_str = solr_cores.getSolrHome();
+		    File solr_home = new File(solr_home_str);
+		    File solr_xml = new File( solr_home,"solr.xml" );
+		    
+		    solr_cores.load(solr_home_str,solr_xml);			
+		} catch (Exception e) {
+		    logger.error("Exception in SolrSearch.configure(): " + e.getMessage());
+		    e.printStackTrace();
+		    return false;
+		}
 
 	// initialize required number of SolrCores based on values
 	// in 'index_ids' that are set by LuceneSearch::configure()
 
-	String site_name = this.router.getSiteName();
-	String coll_name = this.cluster_name;
+	String core_name_prefix = getCollectionCoreNamePrefix();
 
 	for (int i=0; i<index_ids.size(); i++) {
 
 	    String idx_name = (String)index_ids.get(i);
-	    String core_name = site_name + "-" + coll_name + "-" + idx_name;
+	    String core_name = core_name_prefix + "-" + idx_name;
 
 	    EmbeddedSolrServer solr_core
 		= new EmbeddedSolrServer(solr_cores,core_name);	
@@ -97,7 +168,7 @@ public class SolrSearch extends LuceneSearch {
 	    solr_server.put(core_name,solr_core);
 	}
 
-	return true;
+	return success;
     }
     
     protected void getIndexData(ArrayList index_ids, ArrayList index_names, String lang) 
@@ -138,10 +209,7 @@ public class SolrSearch extends LuceneSearch {
 	    //solrParams.set("start", start);
 	    //solrParams.set("rows", nbDocuments);
 
-	    String site_name = this.router.getSiteName();
-	    String coll_name = this.cluster_name;
-
-	    String core_name = site_name + "-" + coll_name + "-" + index;
+	    String core_name = getCollectionCoreNamePrefix() + "-" + index;
 
 	    EmbeddedSolrServer solr_core = (EmbeddedSolrServer)solr_server.get(core_name);
 
@@ -175,5 +243,11 @@ public class SolrSearch extends LuceneSearch {
 	    
     }
 
+	protected String getCollectionCoreNamePrefix() {
+		String site_name = this.router.getSiteName();
+		String coll_name = this.cluster_name;
+		String collection_core_name_prefix = site_name + "-" + coll_name;
+		return collection_core_name_prefix;
+    }
     
 }
