@@ -144,8 +144,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 
 					int colonIndex = currentQueryElement.indexOf(":");
 					String indexShortName = currentQueryElement.substring(0, colonIndex);
-					
-					if(grouping.get(indexShortName) == null)
+
+					if (grouping.get(indexShortName) == null)
 					{
 						grouping.put(indexShortName, new ArrayList<String>());
 					}
@@ -160,28 +160,28 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 			{
 				StringBuilder currentFacetString = new StringBuilder("(");
 				int groupCounter = 0;
-				for(String queryElem : grouping.get(key))
+				for (String queryElem : grouping.get(key))
 				{
 					currentFacetString.append(queryElem);
-					
+
 					groupCounter++;
-					if(groupCounter < grouping.get(key).size())
+					if (groupCounter < grouping.get(key).size())
 					{
 						currentFacetString.append(" OR ");
 					}
 				}
 				currentFacetString.append(")");
-				
+
 				facetQueryString.append(currentFacetString);
-				
+
 				keysetCounter++;
-				if(keysetCounter < grouping.keySet().size())
+				if (keysetCounter < grouping.keySet().size())
 				{
 					facetQueryString.append(" AND ");
 				}
 			}
-			
-			if(facetQueryString.length() > 0)
+
+			if (facetQueryString.length() > 0)
 			{
 				query_string += " AND " + facetQueryString;
 			}
@@ -192,7 +192,9 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		solrParams.set("start", start_results);
 		solrParams.set("rows", (end_results - start_results) + 1);
 		solrParams.set("fl", "docOID score");
-		
+		solrParams.set("terms", true);
+		solrParams.set("terms.fl", "ZZ");
+
 		if (_facets.size() > 0)
 		{
 			solrParams.set("facet", "true");
@@ -223,6 +225,12 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 
 				solr_query_result.setStartResults(start_results);
 				solr_query_result.setEndResults(start_results + hits.size());
+
+				int sepIndex = query_string.indexOf(":");
+				String field = query_string.substring(0, sepIndex);
+				String query = query_string.substring(sepIndex + 2, query_string.length() - 1);
+
+				solr_query_result.addTerm(query, field, (int) hits.getNumFound(), -1);
 
 				// Output the matching documents
 				for (int i = 0; i < hits.size(); i++)
