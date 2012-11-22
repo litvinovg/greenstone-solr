@@ -1,7 +1,7 @@
 @echo off
 pushd "%CD%"
 CD /D "%~dp0"
-d
+
 set extdesc=the Solr Extension
 
 :: The port Jetty runs on:
