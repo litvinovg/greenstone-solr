@@ -50,7 +50,6 @@ use util;
 use solrutil;
 use solrserver;
 
-
 # Not quite OO, but close enough for now
 #
 my $self = { 'solr_server' => undef };
@@ -93,7 +92,7 @@ sub save_xml_doc
 
     my $full_output_filename = &util::filename_cat($full_textdir,$output_filename);
     my ($full_output_dir) = ($full_output_filename =~ m/^(.*$dir_sep)/x);
-    &util::mk_all_dir($full_output_dir);
+    &FileUtils::makeAllDirectories($full_output_dir);
 
     open(DOCOUT,">$full_output_filename")
 	|| die "Unable to open $full_output_filename";
