@@ -79,9 +79,9 @@ sub compress_text
     my $outhandle = $self->{'outhandle'};
 
     # the text directory
-    my $text_dir = &util::filename_cat($self->{'build_dir'}, "text");
-    my $build_dir = &util::filename_cat($self->{'build_dir'},"");
-    &util::mk_all_dir ($text_dir);
+    my $text_dir = &FileUtils::filenameConcatenate($self->{'build_dir'}, "text");
+    my $build_dir = &FileUtils::filenameConcatenate($self->{'build_dir'},"");
+    &FileUtils::makeAllDirectories($text_dir);
 
     my $osextra = "";
     if ($ENV{'GSDLOS'} =~ /^windows$/i)
@@ -204,6 +204,57 @@ sub filter_in_out_file
 
 }
 
+# We need to push the list of indexfield to shortname mappings through to the
+# build_cfg as, unlike in MGPP, we need these mappings in advance to configure
+# Lucene/Solr. Unfortunately the original function found in mgbuilder.pm makes
+# a mess of this - it only output fields that have been processed (none have)
+# and it has a hardcoded renaming for 'text' so it becomes 'TX' according to
+# the schema but 'TE' according to XML sent to lucene_passes.pl/solr_passes.pl
+# This version is dumber - just copy them all across verbatum - but works. We
+# do still need to support the special case of 'allfields'
+sub make_final_field_list
+{
+  my $self = shift (@_);
+  $self->{'build_cfg'} = {};
+  my @indexfieldmap = ();
+  my @indexfields = ();
+
+  # @todo support: $self->{'buildproc'}->{'extraindexfields'}
+  foreach my $fields (@{$self->{'collect_cfg'}->{'indexes'}})
+  {
+    # remove subcoll stuff
+    $fields =~ s/:.*$//;
+    foreach my $field (split(';', $fields))
+    {
+      my $shortname = 'ERROR';
+      if ($field eq 'allfields')
+      {
+        $shortname = 'ZZ';
+      }
+      elsif (defined $self->{'buildproc'}->{'indexfieldmap'}->{$field})
+      {
+        $shortname = $self->{'buildproc'}->{'indexfieldmap'}->{$field};
+      }
+      else
+      {
+        print STDERR 'Error! Couldn\'t find indexfieldmap for field: ' . $field . "\n";
+      }
+      push (@indexfieldmap, $field . '->' . $shortname);
+      push (@indexfields, $field);
+    }
+  }
+
+  if (scalar @indexfieldmap)
+  {
+    $self->{'build_cfg'}->{'indexfieldmap'} = \@indexfieldmap;
+  }
+
+  if (scalar @indexfields)
+  {
+    $self->{'build_cfg'}->{'indexfields'} = \@indexfields;
+  }
+}
+
 # Generate solr schema.xml file based on indexmapfield and other associated
 # config files 
 #
@@ -215,7 +266,7 @@ sub filter_in_out_file
 sub premake_solr_auxiliary_files 
 {
     my $self = shift (@_);
-    
+
     # Replace the following marker: 
     #
     #   <!-- ##GREENSTONE-FIELDS## -->
@@ -225,7 +276,7 @@ sub premake_solr_auxiliary_files
     #   <field name="<field>" type="string" ... /> 
     #
     # for each <field> in 'indexfieldmap'
-  
+
     my $schema_insert_xml = "";
 
     foreach my $ifm (@{$self->{'build_cfg'}->{'indexfieldmap'}}) {
@@ -247,7 +298,8 @@ sub premake_solr_auxiliary_files
 		{
 			$schema_insert_xml .= "type=\"text_en_splitting\" ";
 		}
-		$schema_insert_xml .=  "indexed=\"true\" stored=\"false\" multiValued=\"true\" />\n"; 
+		$schema_insert_xml .=  "indexed=\"true\" stored=\"false\" multiValued=\"true\" />\n";
+                #$schema_insert_xml .=  "indexed=\"true\" stored=\"true\" multiValued=\"true\" />\n";
     }
 
     # just the one rule to date
@@ -256,17 +308,17 @@ sub premake_solr_auxiliary_files
 	      'insert' => $schema_insert_xml } ];
         
     my $solr_home = $ENV{'GEXT_SOLR'};
-##    my $in_dirname = &util::filename_cat($solr_home,"etc","conf");
-    my $in_dirname = &util::filename_cat($solr_home,"conf");
-    my $schema_in_filename = &util::filename_cat($in_dirname,"schema.xml.in");
+##    my $in_dirname = &FileUtils::filenameConcatenate($solr_home,"etc","conf");
+    my $in_dirname = &FileUtils::filenameConcatenate($solr_home,"conf");
+    my $schema_in_filename = &FileUtils::filenameConcatenate($in_dirname,"schema.xml.in");
 
     my $collect_home = $ENV{'GSDLCOLLECTDIR'};
-    my $out_dirname = &util::filename_cat($collect_home,"etc","conf");
-    my $schema_out_filename = &util::filename_cat($out_dirname,"schema.xml");
+    my $out_dirname = &FileUtils::filenameConcatenate($collect_home,"etc","conf");
+    my $schema_out_filename = &FileUtils::filenameConcatenate($out_dirname,"schema.xml");
     
     # make sure output conf directory exists
-    if (!-d $out_dirname) {
-	&util::mk_dir($out_dirname);
+    if (!FileUtils::directoryExists($out_dirname)) {
+	&FileUtils::makeDirectory($out_dirname);
     }
 
     filter_in_out_file($schema_in_filename,$schema_out_filename,$insert_rules);
@@ -278,8 +330,8 @@ sub premake_solr_auxiliary_files
 			 "synonyms.txt", "protwords.txt" );
  
     foreach my $file ( @in_file_list ) {
-	my $in_filename = &util::filename_cat($in_dirname,$file.".in");
-	my $out_filename = &util::filename_cat($out_dirname,$file);
+	my $in_filename = &FileUtils::filenameConcatenate($in_dirname,$file.".in");
+	my $out_filename = &FileUtils::filenameConcatenate($out_dirname,$file);
 	filter_in_out_file($in_filename,$out_filename,[]);
     }
 }
@@ -311,7 +363,7 @@ sub pre_build_indexes
     my $all_metadata_specified = 0; # has the user added a 'metadata' index?
     my $allfields_index = 0;        # do we have an allfields index?
 
-    # Using a hashmap here would duplications, but while more space
+    # Using a hashmap here would avoid duplications, but while more space
     # efficient, it's not entirely clear it would be more computationally
     # efficient
     my @all_fields = ();
@@ -360,13 +412,23 @@ sub pre_build_indexes
 
 	my $buildproc = $self->{'buildproc'};
 	
-	foreach my $field (@all_fields) {
-	    if (!defined $buildproc->{'indexfieldmap'}->{$field}) {
-		my $shortname = $buildproc->create_shortname($field);
-		$buildproc->{'indexfieldmap'}->{$field} = $shortname;
-		$buildproc->{'indexfieldmap'}->{$shortname} = 1;
-	    }
-	}
+      foreach my $field (@all_fields)
+      {
+        if (!defined $buildproc->{'indexfieldmap'}->{$field})
+        {
+          my $shortname = '';
+          if (defined $buildproc->{'fieldnamemap'}->{$field})
+          {
+            $shortname = $buildproc->{'fieldnamemap'}->{$field};
+          }
+          else
+          {
+            $shortname = $buildproc->create_shortname($field);
+          }
+          $buildproc->{'indexfieldmap'}->{$field} = $shortname;
+          $buildproc->{'indexfieldmap'}->{$shortname} = 1;
+        }
+      }
     }
 
     # Write out solr 'schema.xml' (and related) file 
@@ -402,13 +464,13 @@ sub pre_build_indexes
 	    # create cores under temporary core names, corresponding to building directory
 	    $core = "building-".$core; 
 
-	    my $full_index_dir = &util::filename_cat($build_dir,$index_dir);
-	    &util::rm_r($full_index_dir);
-	    &util::mk_dir($full_index_dir);
+	    my $full_index_dir = &FileUtils::filenameConcatenate($build_dir,$index_dir);
+	    &FileUtils::removeFilesRecursive($full_index_dir);
+	    &FileUtils::makeDirectory($full_index_dir);
 
 	    # Solr then wants an "index" folder within this general index area!
-#	    my $full_index_index_dir = &util::filename_cat($full_index_dir,"index");
-#	    &util::mk_dir($full_index_index_dir);
+#	    my $full_index_index_dir = &FileUtils::filenameConcatenate($full_index_dir,"index");
+#	    &FileUtils::makeDirectory($full_index_index_dir);
 
 
 	    # now go on and create new index
@@ -449,7 +511,7 @@ sub build_index {
 
     # get the full index directory path and make sure it exists
     my $indexdir = $self->{'index_mapping'}->{$index};
-    &util::mk_all_dir (&util::filename_cat($build_dir, $indexdir));
+    &FileUtils::makeAllDirectories(&FileUtils::filenameConcatenate($build_dir, $indexdir));
 
     # Find the perl script to call to run solr
     my $solr_passes = $self->{'solr_passes'};
