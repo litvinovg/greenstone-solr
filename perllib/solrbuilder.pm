@@ -290,10 +290,10 @@ sub premake_solr_auxiliary_files
 		{
 			$schema_insert_xml .=   "type=\"location\" ";
 		}
-		elsif ($field ne "ZZ" && $field ne "TX")
-		{
-			$schema_insert_xml .=   "type=\"string\" ";
-		}
+#		elsif ($field ne "ZZ" && $field ne "TX")
+#		{
+#			$schema_insert_xml .=   "type=\"string\" ";
+#		}
 		else
 		{
 			$schema_insert_xml .= "type=\"text_en_splitting\" ";
@@ -614,6 +614,9 @@ sub build_index {
     $self->{'buildproc'}->set_indexing_text (1);
     #$self->{'buildproc'}->set_indexfieldmap ($self->{'indexfieldmap'});
     $self->{'buildproc'}->set_levels ($local_levels);
+    if (defined $self->{'collect_cfg'}->{'sortfields'}) {
+	$self->{'buildproc'}->set_sortfields ($self->{'collect_cfg'}->{'sortfields'});
+    }
     $self->{'buildproc'}->set_db_level($db_level);
     $self->{'buildproc'}->reset();
 

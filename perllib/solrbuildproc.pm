@@ -553,6 +553,50 @@ sub textedit {
 	    }
 	}
 	    
+	# only add sort fields for this section if we are indexing this section, we are doing section level indexing or this is the top section
+	if ($self->{'indexing_text'} && ($sec_tag_name ne "" || $doc_section == 1 )) {
+	# add sort fields if there are any
+	    
+	foreach my $sfield (@{$self->{'sortfields'}}) {
+	    # ignore special field rank
+	    next if $sfield eq "rank";
+	    my $sf_shortname;
+	    if (defined $self->{'sortfieldnamemap'}->{$sfield}) {
+		$sf_shortname = $self->{'sortfieldnamemap'}->{$sfield};
+	    }
+	    else {
+		$sf_shortname = $self->create_sortfield_shortname($sfield);
+		$self->{'sortfieldnamemap'}->{$sfield} = $sf_shortname;
+		$self->{'sortfieldnamemap'}->{$sf_shortname} = 1;
+	    }
+	    my @metadata_list = (); # put any metadata values in here
+	    foreach my $submeta (split /,/, $sfield) {
+		$submeta =~ s/^ex\.([^.]+)$/$1/; #strip off ex. iff it's the only metadata set prefix (will leave ex.dc.* intact)
+	    
+		my @section_metadata = @{$doc_obj->get_metadata ($section, $submeta)};
+		    if ($section ne $doc_obj->get_top_section() && defined ($self->{'sections_sort_on_document_metadata'})) {
+			if ($self->{'sections_sort_on_document_metadata'} eq "always" || ( scalar(@section_metadata) == 0 && $self->{'sections_sort_on_document_metadata'} eq "unless_section_metadata_exists")) {
+			    push (@section_metadata, @{$doc_obj->get_metadata ($doc_obj->get_top_section(), $submeta)});
+			}
+		    }
+		push (@metadata_list, @section_metadata);
+	    }
+	    my $new_text = "";
+	    foreach my $item (@metadata_list) {
+		&ghtml::htmlsafe($item);
+		$new_text .= "$item";
+	    }
+	    if ($new_text =~ /\S/) {
+		#$new_text = "<$sf_shortname index=\"1\" tokenize=\"0\">$new_text</$sf_shortname>";
+		$new_text = "<field name=\"$sf_shortname\">$new_text</field>\n";
+		# filter the text???
+		$text .= "$new_text"; # add it to the main text block
+		print STDERR "adding in sort text $new_text\n";
+		$self->{'actualsortfields'}->{$sfield} = 1;
+	    }
+	}
+	}
+
 	# add in end tag if at top-level doc root, or indexing at the section level
 	$text .= $end_sec if ($sec_tag_name ne "");
 
@@ -564,6 +608,9 @@ sub textedit {
     $text .= $end_doc if ($sec_tag_name eq "");
 
 ##    $text .= "<commit/>\n";
+    open (TEXTOUT, ">text.out");
+    print TEXTOUT "$text";
+    close TEXTOUT;
 
     print $solrhandle $text;
 
