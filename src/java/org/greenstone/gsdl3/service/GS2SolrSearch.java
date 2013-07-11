@@ -121,32 +121,36 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		
 		// 2. Setting up facets
 		Element searchElem = (Element) GSXML.getChildByTagName(extra_info, GSXML.SEARCH_ELEM);
-		NodeList configIndexElems = searchElem.getElementsByTagName(GSXML.INDEX_ELEM);
-
-		ArrayList<String> chosenFacets = new ArrayList<String>();
-		for (int i = 0; i < configIndexElems.getLength(); i++)
-		{
-			Element current = (Element) configIndexElems.item(i);
-			if (current.getAttribute(GSXML.FACET_ATT).equals("true"))
-			{
-				chosenFacets.add(current.getAttribute(GSXML.NAME_ATT));
-			}
+		NodeList facet_list = info.getElementsByTagName("facet");
+		for (int i=0; i<facet_list.getLength(); i++) {
+		  _facets.add(((Element)facet_list.item(i)).getAttribute(GSXML.SHORTNAME_ATT));
 		}
+		// NodeList configIndexElems = searchElem.getElementsByTagName(GSXML.INDEX_ELEM);
 
-		Element indexListElem = (Element) GSXML.getChildByTagName(info, GSXML.INDEX_ELEM + GSXML.LIST_MODIFIER);
-		NodeList buildIndexElems = indexListElem.getElementsByTagName(GSXML.INDEX_ELEM);
+		// ArrayList<String> chosenFacets = new ArrayList<String>();
+		// for (int i = 0; i < configIndexElems.getLength(); i++)
+		// {
+		// 	Element current = (Element) configIndexElems.item(i);
+		// 	if (current.getAttribute(GSXML.FACET_ATT).equals("true"))
+		// 	{
+		// 		chosenFacets.add(current.getAttribute(GSXML.NAME_ATT));
+		// 	}
+		// }
 
-		for (int j = 0; j < buildIndexElems.getLength(); j++)
-		{
-			Element current = (Element) buildIndexElems.item(j);
-			for (int i = 0; i < chosenFacets.size(); i++)
-			{
-				if (current.getAttribute(GSXML.NAME_ATT).equals(chosenFacets.get(i)))
-				{
-					_facets.add(current.getAttribute(GSXML.SHORTNAME_ATT));
-				}
-			}
-		}
+		// Element indexListElem = (Element) GSXML.getChildByTagName(info, GSXML.INDEX_ELEM + GSXML.LIST_MODIFIER);
+		// NodeList buildIndexElems = indexListElem.getElementsByTagName(GSXML.INDEX_ELEM);
+
+		// for (int j = 0; j < buildIndexElems.getLength(); j++)
+		// {
+		// 	Element current = (Element) buildIndexElems.item(j);
+		// 	for (int i = 0; i < chosenFacets.size(); i++)
+		// 	{
+		// 		if (current.getAttribute(GSXML.NAME_ATT).equals(chosenFacets.get(i)))
+		// 		{
+		// 			_facets.add(current.getAttribute(GSXML.SHORTNAME_ATT));
+		// 		}
+		// 	}
+		// }
 
 		return true;
 	}
@@ -448,7 +452,12 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 
 		for (FacetField facet : facets)
 		{
-			newFacetList.add(new SolrFacetWrapper(facet));
+		  SolrFacetWrapper wrap = new SolrFacetWrapper(facet);
+		  String name = wrap.getName();
+		  String display_name = "Poo";
+		  wrap.setDisplayName(display_name);
+		    
+		  newFacetList.add(wrap);
 		}
 
 		return newFacetList;
