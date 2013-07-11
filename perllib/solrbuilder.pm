@@ -617,6 +617,9 @@ sub build_index {
     if (defined $self->{'collect_cfg'}->{'sortfields'}) {
 	$self->{'buildproc'}->set_sortfields ($self->{'collect_cfg'}->{'sortfields'});
     }
+    if (defined $self->{'collect_cfg'}->{'facetfields'}) {
+	$self->{'buildproc'}->set_facetfields ($self->{'collect_cfg'}->{'facetfields'});
+    }
     $self->{'buildproc'}->set_db_level($db_level);
     $self->{'buildproc'}->reset();
 
@@ -658,7 +661,29 @@ sub post_build_indexes {
 
 }    
 
+sub build_cfg_extra {
+    my $self = shift (@_);
+    my ($build_cfg) = @_;
 
+    $self->lucenebuilder::build_cfg_extra($build_cfg);
+
+    # need to add in facet stuff
+    my @facetfields = ();
+    my @facetfieldmap = ();
+
+    foreach my $sf (@{$self->{'buildproc'}->{'facetfields'}}) {
+	if ($sf eq "rank") {
+	    push(@facetfields, $sf);
+	} elsif ($self->{'buildproc'}->{'actualsortfields'}->{$sf}) {
+	    my $shortname = $self->{'buildproc'}->{'sortfieldnamemap'}->{$sf};
+	    push(@facetfields, $shortname);
+	    push (@facetfieldmap, "$sf\-\>$shortname");
+	}
+	
+    }
+    $build_cfg->{'indexfacetfields'} = \@facetfields;
+    $build_cfg->{'indexfacetfieldmap'} = \@facetfieldmap;
+}  
 1;
 
 

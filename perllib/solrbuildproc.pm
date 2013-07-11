@@ -57,6 +57,18 @@ sub new {
     return bless $self, $class;
 }
 
+sub set_facetfields {
+    my $self = shift (@_);
+ 
+    my ($facetfields) = @_;
+    $self->{'facetfields'} = ();
+    # lets just go through and check for text, allfields, metadata which are only valid for indexes, not for facetfields
+    foreach my $s (@$facetfields) {
+	if ($s !~ /^(text|allfields|metadata)$/) {
+	    push (@{$self->{'facetfields'}}, $s);
+	}
+    }
+}
 
 #----
 
@@ -556,10 +568,15 @@ sub textedit {
 	# only add sort fields for this section if we are indexing this section, we are doing section level indexing or this is the top section
 	if ($self->{'indexing_text'} && ($sec_tag_name ne "" || $doc_section == 1 )) {
 	# add sort fields if there are any
-	    
-	foreach my $sfield (@{$self->{'sortfields'}}) {
+	    my $seenfields = {};
+	foreach my $sfield (@{$self->{'sortfields'}}, @{$self->{'facetfields'}}) {
+	    print STDERR "sort/facet field = $sfield\n";
 	    # ignore special field rank
 	    next if $sfield eq "rank";
+	    # ignore any we have already done - we may have duplicates in the sort and facet lists
+	    next if (defined $seenfields->{$sfield});
+	    print STDERR "processing it\n";
+	    $seenfields->{$sfield} = 1;
 	    my $sf_shortname;
 	    if (defined $self->{'sortfieldnamemap'}->{$sfield}) {
 		$sf_shortname = $self->{'sortfieldnamemap'}->{$sfield};
