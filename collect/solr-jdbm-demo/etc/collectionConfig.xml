@@ -100,7 +100,7 @@
 					  </gsf:choose-metadata>  
 					</i>
 					<br/>
-					<tt><gsf:metadata name="FileSize/> bytes</tt>
+					<tt><gsf:metadata name="FileSize"/> bytes</tt>
 				</td>
 
 <!--
