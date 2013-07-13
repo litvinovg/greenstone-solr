@@ -455,7 +455,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		  SolrFacetWrapper wrap = new SolrFacetWrapper(facet);
 		  String name = wrap.getName();
 		  String display_name = "Poo";
-		  wrap.setDisplayName(display_name);
+		  //wrap.setDisplayName(display_name);
 		    
 		  newFacetList.add(wrap);
 		}
