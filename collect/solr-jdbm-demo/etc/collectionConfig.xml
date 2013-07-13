@@ -37,7 +37,7 @@
 		<level name="document">
 			<displayItem lang="en" name="name">book</displayItem>
 		</level>
-		<defaultLevel name="section"/>
+		<defaultLevel name="document"/>
 		<index name="allfields">
 			<displayItem lang="en" name="name">all fields</displayItem>
 		</index>
@@ -53,15 +53,18 @@
 		<index name="dls.Organization"  facet="true">
 			<displayItem lang="en" name="name">organisations</displayItem>
 		</index>
-    <sort name="dls.Organization">
-      <displayItem lang="en" name="name">sort organisations</displayItem>
-    </sort>
-    <sort name="FileSize">
-      <displayItem lang="en" name="name">sort filesize</displayItem>
-    </sort>
-   <facet name="dls.Organization">
-      <displayItem lang="en" name="name">facet organisations</displayItem>
-    </facet>
+
+		<sort name="dls.Organization">
+		  <displayItem lang="en" name="name">sort organisations</displayItem>
+		</sort>
+		<sort name="FileSize">
+		  <displayItem lang="en" name="name">sort filesize</displayItem>
+		</sort>
+
+		<facet name="dls.Organization">
+		  <displayItem lang="en" name="name">facet organisations</displayItem>
+		</facet>
+
 		<indexOption>
 			<option name="accentfold"/>
 			<option name="casefold"/>
@@ -80,6 +83,7 @@
 				<td>
 					<gsf:link type="document">
 						<gsf:choose-metadata>
+							<gsf:metadata name="dls.Title"/>
 							<gsf:metadata name="dc.Title"/>
 							<gsf:metadata name="exp.Title"/>
 							<gsf:metadata name="ex.dc.Title"/>
@@ -87,9 +91,29 @@
 							<gsf:default>Untitled</gsf:default>
 						</gsf:choose-metadata>
 					</gsf:link>
+
+					&#8211; 
+					<i>
+					  <gsf:choose-metadata>
+					    <gsf:metadata name="dls.Organization" select="root"/>
+					    <gsf:metadata name="dls.Organization"/>
+					  </gsf:choose-metadata>  
+					</i>
+					<br/>
+					<tt><gsf:metadata name="FileSize/> bytes</tt>
 				</td>
-	<td>
-<gsf:choose-metadata><gsf:metadata name="dls.Organization" select="root"/><gsf:metadata name="dls.Organization"/></gsf:choose-metadata>  <gsf:metadata name="FileSize"/></td>
+
+<!--
+				<td>
+-->
+
+<!--
+				  <gsf:metadata name="FileSize"/>
+-->
+<!--
+				</td>
+-->
+
 			</gsf:template>
 		</format>
 	</search>
