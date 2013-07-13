@@ -299,7 +299,7 @@ sub copy_solrxml_to_web
 
     #print STDERR "@@@@ Copying $ext_solrxml to $web_solrxml...\n";
 
-    &util::cp($ext_solrxml, $web_solrxml);
+    &FileUtils::copyFiles($ext_solrxml, $web_solrxml);
 }
 
 sub start
