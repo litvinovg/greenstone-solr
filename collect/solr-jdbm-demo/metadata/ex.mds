@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MetadataSet [
+
+  <!-- The outer tag of any metadata set. Contains some number of elements.             -->
+  <!-- @param contact     A contact address for the creator.                            -->
+  <!-- @param creator     The name of the entity resposibly for this set.               -->
+  <!-- @param family      The name of this sets family.                                 -->
+  <!-- @param lastchanged The full date, user name and machine name of the last editor. --> 
+  <!--   uses the form:                                                                 -->
+  <!--   Day Mon(th) dd hh:mm:ss yyyy '-' <username> on <machine>                       -->
+  <!-- @param namespace   The namespace of this metadata set.                           -->
+  <!ELEMENT MetadataSet ((Name|Description|Element)+)>
+  <!ATTLIST MetadataSet
+				contact     CDATA #REQUIRED
+				creator     CDATA #REQUIRED
+				description CDATA #REQUIRED
+            family      CDATA #REQUIRED
+				lastchanged CDATA #REQUIRED
+            name        CDATA #REQUIRED
+				namespace   CDATA #REQUIRED>
+
+  <!-- The name of a metadata set. Is language specific. -->
+  <!ELEMENT Name (#PCDATA)>
+  <!ATTLIST Name
+            language CDATA "en">
+
+  <!-- The description of a metadata set. Is language specific. -->
+  <!ELEMENT Description (#PCDATA)>
+  <!ATTLIST Description
+            language CDATA "en">
+
+  <!-- An element in the metadata set. -->
+  <!ELEMENT Element (Attribute*,OptionList?)>
+  <!ATTLIST Element
+            name       CDATA #REQUIRED
+				occurances CDATA "0">
+
+  <!-- Each element has several attribute children. -->
+  <!ELEMENT Attribute (#PCDATA)>
+  <!ATTLIST Attribute
+            name CDATA #REQUIRED>
+
+  <!-- For listing predefined values for this element. -->
+  <!ELEMENT OptionList (Value+)>
+  <!ATTLIST OptionList
+            restricted (true|false) "false">
+]>
+<MetadataSet contact="nzdl.org" creator="New Zealand Digital Libraries Project: Greenstone" family="Extracted Greenstone" lastchanged="Tue May 20 10:30:32 2003 - jmt12 on narya" namespace="ex">
+    <Name language="en">Extracted Greenstone Metadata 1.0</Name>
+    <Description language="en">This document is the reference description, version 1.0 of the automatically extracted Greenstone Metadata Element Set.</Description>
+    <Element name="Encoding">
+        <Attribute language="en" name="comment">Not always available.</Attribute>
+        <Attribute language="en" name="definition">The encoding of the imported document as extracted by Greenstone.</Attribute>
+        <Attribute language="en" name="identifier">Encoding</Attribute>
+    </Element>
+    <Element name="Language">
+        <Attribute language="en" name="comment">Not always available.</Attribute>
+        <Attribute language="en" name="definition">The language of the imported document as extracted by Greenstone.</Attribute>
+        <Attribute language="en" name="identifier">Language</Attribute>
+    </Element>
+    <Element name="Source">
+        <Attribute language="en" name="comment">Hidden in the Librarian Interface as it already shown by the various file trees.</Attribute>
+        <Attribute language="en" name="definition">The filename of the document imported by Greenstone.</Attribute>
+        <Attribute language="en" name="identifier">Source</Attribute>
+    </Element>
+    <Element name="Title">
+        <Attribute language="en" name="comment">Not always available.</Attribute>
+        <Attribute language="en" name="definition">The title of the imported document as extracted by Greenstone.</Attribute>
+        <Attribute language="en" name="identifier">Title</Attribute>
+    </Element>
+</MetadataSet>

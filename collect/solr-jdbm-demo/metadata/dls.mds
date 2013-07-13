@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MetadataSet SYSTEM "http://www.greenstone.org/dtd/MetadataSet/1.0/MetadataSet.dtd">
+<MetadataSet contact="nzdl.org" creator="New Zealand Digital Libraries Project: Greenstone" family="Development Library Subset" lastchanged="Tue Jun 04 10:35:30 2002 - jmt12 on blackbird" namespace="dls">
+    <Name language="en">Development Library Subset Example Metadata</Name>
+    <Description language="en">A metadata set file for use in The Gatherer, created from original metadata found within the Development Library Subset.</Description>
+    <Element name="Title">
+        <Attribute language="en" name="comment"/>
+        <Attribute language="en" name="definition">The title of this resource.</Attribute>
+        <Attribute language="en" name="identifier">Title</Attribute>
+        <Attribute name="version">1.0</Attribute>
+    </Element>
+    <Element name="Organization">
+        <Attribute language="en" name="comment"/>
+        <Attribute language="en" name="definition">The organization responsible for producing this resource.</Attribute>
+        <Attribute language="en" name="identifier">Organization</Attribute>
+        <Attribute name="version">1.0</Attribute>
+    </Element>
+    <Element name="Subject">
+        <Attribute language="en" name="comment">Currently uses a hierarchy.</Attribute>
+        <Attribute language="en" name="definition">The subject of this resource.</Attribute>
+        <Attribute language="en" name="identifier">Subject And Keywords</Attribute>
+        <Attribute name="version">1.0</Attribute>
+    </Element>
+    <Element name="Keyword">
+        <Attribute language="en" name="comment">Informal.</Attribute>
+        <Attribute language="en" name="definition">A more specific indication of what the resource can be used for.</Attribute>
+        <Attribute language="en" name="identifier">Keyword</Attribute>
+        <Attribute name="version">1.0</Attribute>
+    </Element>
+    <Element name="Language">
+        <Attribute language="en" name="comment"/>
+        <Attribute language="en" name="definition">The language of this resource.</Attribute>
+        <Attribute language="en" name="identifier">Language</Attribute>
+        <Attribute name="version">1.0</Attribute>
+    </Element>
+</MetadataSet>
