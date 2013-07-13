@@ -3,6 +3,7 @@
 
   <!-- DIRECTORY LOCATIONS -->
   <property name="web.home" value="${basedir}/../../web"/>
+  <property name="localsite.collectdir" value="${web.home}/sites/localsite/collect"/>
   <property name="gsdlsrcdir" value="${basedir}/../../src/java/org/greenstone/gsdl3"/>
   <property name="ext.gsdlsrcdir" value="${basedir}/src/java/org/greenstone/gsdl3"/>
   <property name="classesdir" value="${web.home}/WEB-INF/classes"/>
@@ -60,23 +61,23 @@
 	AND ${ext.gsdlsrcdir}/util's files ${java-util-files}</echo>
 	
 	<copy todir="${gsdlsrcdir}/service">
-        <filelist id="java-src-files-service" dir="${ext.gsdlsrcdir}/service" files="${java-service-files}"/> 
-    </copy>
+          <filelist id="java-src-files-service" dir="${ext.gsdlsrcdir}/service" files="${java-service-files}"/> 
+	</copy>
 	<copy todir="${gsdlsrcdir}/util">
-        <filelist id="java-src-files-util" dir="${ext.gsdlsrcdir}/util" files="${java-util-files}"/>		   
-    </copy>
+          <filelist id="java-src-files-util" dir="${ext.gsdlsrcdir}/util" files="${java-util-files}"/>		   
+	</copy>
 	
 	<echo/>
 	<echo>Adding to gsdl3 properties area: properties/${property-files}</echo>
 	<copy todir="${classesdir}">
-        <filelist id="prop-files" dir="properties" files="${property-files}"/>
-    </copy>
+          <filelist id="prop-files" dir="properties" files="${property-files}"/>
+	</copy>
 
 	<echo/>
 	<echo>Adding to gsdl3 web jar lib directory: ${basedir}/lib/java's ${jars}</echo>
 	<copy todir="${jarwebdir}">
-        <filelist id="jar-files" dir="lib/java" files="${jars}"/>
-    </copy>	
+          <filelist id="jar-files" dir="lib/java" files="${jars}"/>
+	</copy>	
 	
 	<echo/>
 	<echo>Creating web extension directory: ${web.extdir}</echo>
@@ -85,11 +86,20 @@
 	<echo/>
 	<echo>Adding to gsdl3 web solr ext directory: ${web-list-files}</echo>
 	<copy todir="${web.extdir}">
-        <filelist id="web-list" dir="${basedir}" files="${web-list-files}"/> 
-    </copy>
+          <filelist id="web-list" dir="${basedir}" files="${web-list-files}"/> 
+	</copy>
 	
+	<echo/>
+	<echo>Adding example solr-jdbm-demo collection to gsdl3/web/sites/localsite/collect</echo>
+	<copy todir="${localsite.collectdir}/solr-jdbm-demo"
+	      preservelastmodified="true"
+	      failonerror="true" >  
+	  <fileset dir="${basedir}/collect/solr-jdbm-demo" includes="**"/>  
+	</copy>
+
 	<!-- copy the content of the web folder (avoiding the top-level .svn directory) -->
-	<available property="ext.web.exists" file="${basedir}/web" type="dir" />	
+	<available property="ext.web.exists" file="${basedir}/web" type="dir" />
+
   </target>
   
   
@@ -99,10 +109,11 @@
 	<echo/>
 	<echo>Copy to gsdl3 web: the content of the ${basedir}/web folder (excluding .svn)</echo>
   	<copy todir="${web.extdir}">
-        <dirset dir="${basedir}/web">
-			<exclude name=".svn"/>
-		</dirset> 
-    </copy>
+          <dirset dir="${basedir}/web">
+	    <exclude name=".svn"/>
+	  </dirset> 
+	</copy>
+
   </target>
   
   <target name="del-service" 
@@ -116,27 +127,31 @@
 	AND ${ext.gsdlsrcdir}/util's files ${java-util-files}</echo>	
 	
 	<delete failonerror="false">
-        <filelist dir="${gsdlsrcdir}/service" files="${java-service-files}"/> 
-    </delete>
+          <filelist dir="${gsdlsrcdir}/service" files="${java-service-files}"/> 
+	</delete>
 	<delete failonerror="false">
-        <filelist dir="${gsdlsrcdir}/util" files="${java-util-files}"/>		   
-    </delete>
+          <filelist dir="${gsdlsrcdir}/util" files="${java-util-files}"/>		   
+	</delete>
 	
 	<echo/>
 	<echo>Removing from  gsdl3 properties area: properties/${property-files}</echo>
 	<delete failonerror="false">
-        <filelist dir="${classesdir}" files="${property-files}"/>
-    </delete>
+          <filelist dir="${classesdir}" files="${property-files}"/>
+	</delete>
 
 	<echo/>
 	<echo>Removing from gsdl3 web jar lib directory: ${basedir}/lib/java's ${jars}</echo>
 	<delete failonerror="false">
-        <filelist dir="${jarwebdir}" files="${jars}"/>
-    </delete>	
+          <filelist dir="${jarwebdir}" files="${jars}"/>
+	</delete>	
 	
 	<echo/>
 	<echo>Removing web solr extension directory: ${web.extdir}</echo>
 	<delete failonerror="false" includeEmptyDirs="true" dir="${web.extdir}"/>	
+
+	<echo/>
+	<echo>Removing solr-jdbm-demo collection from: ${localsite.collectdir}</echo>
+	<delete failonerror="false" includeEmptyDirs="true" dir="${localsite.collectcdir}/solr-jdbm-demo"/>	
 	
   </target>
   
