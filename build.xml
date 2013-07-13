@@ -85,7 +85,11 @@
 	
 	<echo/>
 	<echo>Adding to gsdl3 web solr ext directory: ${web-list-files}</echo>
-	<copy todir="${web.extdir}">
+	<pathconvert targetos="unix" property="src.gsdl3.home.unix">
+	  <path path="../../web"/>
+	</pathconvert>
+	<filter token="gsdl3home" value="${src.gsdl3.home.unix}"/>
+	<copy todir="${web.extdir}" filtering="true" overwrite="true">
           <filelist id="web-list" dir="${basedir}" files="${web-list-files}"/> 
 	</copy>
 	

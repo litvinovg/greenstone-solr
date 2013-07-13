@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <solr persistent="true">
   <cores adminPath="/admin/cores">
-    <core name="localsite-lucene-jdbm-demo-didx" instanceDir="c:\cygwin\home\davidb\research\code\greenstone3-svn-full\web\sites\localsite\collect\lucene-jdbm-demo\etc\" dataDir="c:\cygwin\home\davidb\research\code\greenstone3-svn-full\web\sites\localsite\collect\lucene-jdbm-demo\building\didx"/>
-    <core name="localsite-lucene-jdbm-demo-sidx" instanceDir="c:\cygwin\home\davidb\research\code\greenstone3-svn-full\web\sites\localsite\collect\lucene-jdbm-demo\etc\" dataDir="c:\cygwin\home\davidb\research\code\greenstone3-svn-full\web\sites\localsite\collect\lucene-jdbm-demo\building\sidx"/>
+    <core name="localsite-solr-jdbm-demo-sidx" 
+	  instanceDir="@gsdl3home@/sites/localsite/collect/solr-jdbm-demo/etc/" 
+	  dataDir="@gsdl3home@/sites/localsite/collect/solr-jdbm-demo/index/sidx"/>
+    <core name="localsite-solr-jdbm-demo-didx" 
+	  instanceDir="@gsdl3home@/sites/localsite/collect/solr-jdbm-demo/etc/" 
+	  dataDir="@gsdl3home@/sites/localsite/collect/solr-jdbm-demo/index/didx"/>
   </cores>
 </solr>
