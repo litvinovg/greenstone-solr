@@ -71,10 +71,10 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			// Share one CoreContainer across all sites/collections
 			try
 			{
-				String gsdl3_home = GlobalProperties.getGSDL3Home();
+				String gsdl3_writablehome = GlobalProperties.getGSDL3WritableHome();
 				String solr_ext_name = GlobalProperties.getProperty("gsdlext.solr.dirname", "solr");
 
-				String solr_home_str = GSFile.extHome(gsdl3_home, solr_ext_name);
+				String solr_home_str = GSFile.extHome(gsdl3_writablehome, solr_ext_name);
 
 				all_solr_cores = new CoreContainer(solr_home_str);
 			}
