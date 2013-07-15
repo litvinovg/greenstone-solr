@@ -208,6 +208,88 @@ sub admin_ping_core
     return $ping_status;
 }
 
+sub filtered_copy
+{
+    my $self = shift @_;
+    my ($src_file,$dst_file,$re_substitutions) = @_;
+
+    my $sep = shift @_ || "/";
+    my $flags = shift @_ || "g";
+
+    # $re_substitutions is a hashmap of the form: [re_key] => subst_str
+
+    my $content = "";
+
+    if (open(FIN,'<:utf8',$src_file)) {
+
+	my $line;
+	while (defined($line=<FIN>)) {
+	    $content .= $line;
+	}
+    }
+
+    close(FIN);
+
+    # perform RE string substitutions
+    foreach my $re_key (keys %$re_substitutions) {
+
+	my $subst_str = $re_substitutions->{$re_key};
+
+	# Perform substitution of the form:
+	#  $content =~ s/$re_key/$subst_str/g;
+	# but allow allow separator char (default '/') 
+	# and flags (default 'g') to be parameterized
+
+	my $eval_str = "\$content =~ s$sep$re_key$sep$subst_str$sep$flags";
+
+	eval {
+	    $eval_str;
+	};
+	if ($@) {
+	    print STDERR "Warning: failed to evaluate\n   $eval_str\n$@\n";
+	}
+
+    }
+    
+    if (open(FOUT, '>:utf8', $dst_file)) {
+	print FOUT $content;
+	close(FOUT);
+    }
+    else {
+	print STDERR "Error: Failed to open file '$dst_file' for writing.\n$!\n";
+    }   
+}
+
+sub solr_xml_to_solr_xml_in
+{
+    my $self = shift @_;
+
+    my $gsdl3home = $ENV{'GSDL3HOME'};
+    my $web_solr_ext_dir = &util::filename_cat($gsdl3home, "ext", "solr");
+    my $web_solrxml_in = &util::filename_cat($web_solr_ext_dir, "solr.xml.in");
+    my $web_solrxml = &util::filename_cat($web_solr_ext_dir, "solr.xml");
+
+    my $replacement_map = { "$gsdl3home" => "\\\@gsdl3home\\\@" };
+ 
+    $self->filtered_copy($web_solrxml,$web_solrxml_in,$replacement_map, "^", "g");
+}
+
+
+sub solr_xml_in_to_solr_xml
+{
+    my $self = shift @_;
+
+    my $gsdl3home = $ENV{'GSDL3HOME'};
+    my $web_solr_ext_dir = &util::filename_cat($gsdl3home, "ext", "solr");
+    my $web_solrxml_in = &util::filename_cat($web_solr_ext_dir, "solr.xml.in");
+    my $web_solrxml = &util::filename_cat($web_solr_ext_dir, "solr.xml");
+    
+    my $replacement_map = { "\\\@gsdl3home\\\@" => "$gsdl3home" };
+ 
+    $self->filtered_copy($web_solrxml_in,$web_solrxml,$replacement_map, "^", "g");
+}
+
+
 # Some of the Solr CoreAdmin API calls available. 
 # See http://wiki.apache.org/solr/CoreAdmin
 sub admin_reload_core
@@ -218,6 +300,8 @@ sub admin_reload_core
     my $cgi_get_args = "action=RELOAD&core=$core";
 
     $self->_admin_service($cgi_get_args);
+
+    $self->solr_xml_to_solr_xml_in();
 }
 
 sub admin_rename_core
@@ -228,6 +312,8 @@ sub admin_rename_core
     my $cgi_get_args = "action=RENAME&core=$oldcore&other=$newcore";
 
     $self->_admin_service($cgi_get_args);
+
+    $self->solr_xml_to_solr_xml_in();
 }
 
 sub admin_swap_core
@@ -238,6 +324,8 @@ sub admin_swap_core
     my $cgi_get_args = "action=SWAP&core=$oldcore&other=$newcore";
 
     $self->_admin_service($cgi_get_args);
+
+    $self->solr_xml_to_solr_xml_in();
 }
 
 # The ALIAS action is not supported in our version of solr (despite it
@@ -250,6 +338,8 @@ sub admin_alias_core
     my $cgi_get_args = "action=ALIAS&core=$oldcore&other=$newcore";
 
     $self->_admin_service($cgi_get_args);
+
+    $self->solr_xml_to_solr_xml_in();
 }
 
 sub admin_create_core
@@ -274,6 +364,8 @@ sub admin_create_core
     $cgi_get_args .= "&dataDir=$idx_dirname";
 
     $self->_admin_service($cgi_get_args);
+
+    $self->solr_xml_to_solr_xml_in();
 }
 
 # removes (unloads) core from the ext/solr/sorl.xml config file
@@ -288,18 +380,22 @@ sub admin_unload_core
     }
 
     $self->_admin_service($cgi_get_args);
+
+    $self->solr_xml_to_solr_xml_in();
 }
 
 sub copy_solrxml_to_web
 {
     my $self = shift @_;
 
-    my $ext_solrxml = &util::filename_cat($ENV{'GEXT_SOLR'}, "solr.xml");
-    my $web_solrxml = &util::filename_cat($ENV{'GSDL3HOME'}, "ext", "solr", "solr.xml");
+    my $ext_solrxml = &util::filename_cat($ENV{'GEXT_SOLR'}, "solr.xml.in");
+    my $web_solrxml = &util::filename_cat($ENV{'GSDL3HOME'}, "ext", "solr", "solr.xml.in");
 
     #print STDERR "@@@@ Copying $ext_solrxml to $web_solrxml...\n";
 
     &FileUtils::copyFiles($ext_solrxml, $web_solrxml);
+
+    $self->solr_xml_in_to_solr_xml();
 }
 
 sub start
