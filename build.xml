@@ -9,7 +9,6 @@
   <property name="classesdir" value="${web.home}/WEB-INF/classes"/>
   <property name="jarwebdir" value="${web.home}/WEB-INF/lib"/>  
   <property name="web.extdir" value="${web.home}/ext/solr"/>
-  <property name="web.list" value="solr.xml"/>
   
   <!-- FILE LISTINGS.-->
   <!-- Created as property elements rather than as filelist elements, since
@@ -40,9 +39,6 @@
   
   <property name="property-files" 
 			value="SharedSoleneGS2FieldSearch.properties"/>  
-
-  <property name="web-list-files" 
-			value="solr.xml"/>
 
 			
   <!-- TARGETS -->
@@ -84,14 +80,12 @@
 	<mkdir dir="${web.extdir}"/>
 	
 	<echo/>
-	<echo>Adding to gsdl3 web solr ext directory: ${web-list-files}</echo>
+	<echo>Adding to gsdl3 web solr ext directory: solr.xml</echo>
 	<pathconvert targetos="unix" property="src.gsdl3.home.unix">
 	  <path path="../../web"/>
 	</pathconvert>
 	<filter token="gsdl3home" value="${src.gsdl3.home.unix}"/>
-	<copy todir="${web.extdir}" filtering="true" overwrite="true">
-          <filelist id="web-list" dir="${basedir}" files="${web-list-files}"/> 
-	</copy>
+	<copy file="solr.xml.in" tofile="${web.extdir}/solr.xml" filtering="true" overwrite="true"/>
 	
 	<echo/>
 	<echo>Adding example solr-jdbm-demo collection to gsdl3/web/sites/localsite/collect</echo>
