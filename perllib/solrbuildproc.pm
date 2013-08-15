@@ -570,12 +570,10 @@ sub textedit {
 	# add sort fields if there are any
 	    my $seenfields = {};
 	foreach my $sfield (@{$self->{'sortfields'}}, @{$self->{'facetfields'}}) {
-	    print STDERR "sort/facet field = $sfield\n";
-	    # ignore special field rank
-	    next if $sfield eq "rank";
+	    # ignore special field rank/none
+	    next if $sfield eq "rank" || $sfield eq "none";
 	    # ignore any we have already done - we may have duplicates in the sort and facet lists
 	    next if (defined $seenfields->{$sfield});
-	    print STDERR "processing it\n";
 	    $seenfields->{$sfield} = 1;
 	    my $sf_shortname;
 	    if (defined $self->{'sortfieldnamemap'}->{$sfield}) {
@@ -601,14 +599,12 @@ sub textedit {
 	    my $new_text = "";
 	    foreach my $item (@metadata_list) {
 		&ghtml::htmlsafe($item);
-		$new_text .= "$item";
+		$new_text .= "$item ";
 	    }
 	    if ($new_text =~ /\S/) {
-		#$new_text = "<$sf_shortname index=\"1\" tokenize=\"0\">$new_text</$sf_shortname>";
 		$new_text = "<field name=\"$sf_shortname\">$new_text</field>\n";
 		# filter the text???
 		$text .= "$new_text"; # add it to the main text block
-		print STDERR "adding in sort text $new_text\n";
 		$self->{'actualsortfields'}->{$sfield} = 1;
 	    }
 	}
