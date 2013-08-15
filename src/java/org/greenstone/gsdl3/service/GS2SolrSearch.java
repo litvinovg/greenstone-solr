@@ -120,6 +120,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		}
 		
 		// 2. Setting up facets
+		// TODO - get these from build config, in case some haven't built
 		Element searchElem = (Element) GSXML.getChildByTagName(extra_info, GSXML.SEARCH_ELEM);
 		NodeList facet_list = info.getElementsByTagName("facet");
 		for (int i=0; i<facet_list.getLength(); i++) {
@@ -198,11 +199,10 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			}
 		    }
 		}
-
+		
 		// 3. if there are no more solr cores in Greenstone, then all_solr_cores will be empty, null the CoreContainer
 		// All going well, this will happen when we're ant stopping the Greenstone server and the last Solr collection
 		// is being deactivated
-
 		if (all_solr_cores!=null) {
 		    Collection<String> coreNamesRemaining = all_solr_cores.getCoreNames();
 		    if(coreNamesRemaining.isEmpty()) {
@@ -273,12 +273,22 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			}
 			else if (name.equals(RANK_PARAM))
 			{
-				if (value.equals(RANK_PARAM_RANK_VALUE))
+				if (value.equals(RANK_PARAM_RANK))
 				{
-					value = null;
-				}
+				  value = SolrQueryWrapper.SORT_BY_RANK;
+				} else if (value.equals(RANK_PARAM_NONE)) {
+				    value = SolrQueryWrapper.SORT_BY_INDEX_ORDER;
+				  }
+		       
 				this.solr_src.setSortField(value);
 			}
+			else if (name.equals(SORT_ORDER_PARAM)) {
+			    if (value.equals(SORT_ORDER_DESCENDING)) {
+			      this.solr_src.setSortOrder(SolrQueryWrapper.SORT_DESCENDING);
+			    } else {
+			      this.solr_src.setSortOrder(SolrQueryWrapper.SORT_ASCENDING);
+			    }
+			  }
 			else if (name.equals(LEVEL_PARAM))
 			{
 				if (value.toUpperCase().equals("SEC"))
@@ -290,6 +300,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 					index = "didx";
 				}
 			}
+			// Would facets ever come in through params???
 			else if (name.equals("facets") && value.length() > 0)
 			{
 				String[] facets = value.split(",");
@@ -458,9 +469,9 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		for (FacetField facet : facets)
 		{
 		  SolrFacetWrapper wrap = new SolrFacetWrapper(facet);
-		  String name = wrap.getName();
-		  String display_name = "Poo";
-		  //wrap.setDisplayName(display_name);
+		  // String name = wrap.getName();
+		  // String display_name = "Poo";
+		  // wrap.setDisplayName(display_name);
 		    
 		  newFacetList.add(wrap);
 		}
