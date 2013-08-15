@@ -46,8 +46,14 @@ import com.google.gson.reflect.TypeToken;
 
 public class SolrQueryWrapper extends SharedSoleneQuery
 {
+  public static String SORT_ASCENDING = "asc";
+  public static String SORT_DESCENDING = "desc";
+  public static String SORT_BY_RANK = "score";
+  public static String SORT_BY_INDEX_ORDER = "_docid_";
+
 	static Logger logger = Logger.getLogger(org.greenstone.gsdl3.util.SolrQueryWrapper.class.getName());
 	protected int max_docs = 100;
+  protected String sort_order = SORT_DESCENDING;
 	protected ArrayList<String> _facets = new ArrayList<String>();
 	protected ArrayList<String> _facetQueries = new ArrayList<String>();
 	SolrServer solr_core = null;
@@ -67,7 +73,11 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 	{
 		this.solr_core = solr_core;
 	}
-
+  
+  public void setSortOrder(String order)
+  {
+    this.sort_order = order;
+  }
 	public void addFacet(String facet)
 	{
 		if (!_facets.contains(facet))
@@ -189,17 +199,26 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 
 		ModifiableSolrParams solrParams = new ModifiableSolrParams();
 		solrParams.set("q", query_string);
+		// sort param, like "score desc" or "byORG asc"
+		solrParams.set("sort", this.sort_field+" "+this.sort_order);
+		// which result to start from
 		solrParams.set("start", start_results);
+		// how many results per "page"
 		solrParams.set("rows", (end_results - start_results) + 1);
+		// which fields to return for each document
 		solrParams.set("fl", "docOID score");
+		// turn on the termsComponent
 		solrParams.set("terms", true);
+		// which field to get the terms from
 		solrParams.set("terms.fl", "ZZ");
 
 		if (_facets.size() > 0)
 		{
+		  // enable facet counts in the query response
 			solrParams.set("facet", "true");
 			for (int i = 0; i < _facets.size(); i++)
 			{
+			  // add this field as a facet
 				solrParams.add("facet.field", _facets.get(i));
 			}
 		}
