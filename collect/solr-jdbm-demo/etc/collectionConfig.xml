@@ -37,7 +37,7 @@
 		<level name="document">
 			<displayItem lang="en" name="name">book</displayItem>
 		</level>
-		<defaultLevel name="document"/>
+		<defaultLevel name="section"/>
 		<index name="allfields">
 			<displayItem lang="en" name="name">all fields</displayItem>
 		</index>
@@ -47,29 +47,27 @@
 		<index name="dc.Title,Title">
 			<displayItem lang="en" name="name">titles</displayItem>
 		</index>
-		<index name="dc.Subject" facet="true">
+		<index name="dc.Subject">
 			<displayItem lang="en" name="name">subjects</displayItem>
 		</index>
-		<index name="dls.Organization"  facet="true">
+		<index name="dls.Organization">
 			<displayItem lang="en" name="name">organisations</displayItem>
 		</index>
-
-		<sort name="dls.Organization">
-		  <displayItem lang="en" name="name">sort organisations</displayItem>
-		</sort>
-		<sort name="FileSize">
-		  <displayItem lang="en" name="name">sort filesize</displayItem>
-		</sort>
-
-		<facet name="dls.Organization">
-		  <displayItem lang="en" name="name">facet organisations</displayItem>
-		</facet>
-
-		<indexOption>
-			<option name="accentfold"/>
-			<option name="casefold"/>
-			<option name="stem"/>
-		</indexOption>
+    <sort name="rank">
+      <displayItem lang="en" name="name">rank</displayItem>
+    </sort>
+    <sort name="dls.Organization">
+      <displayItem lang="en" name="name">organisations</displayItem>
+    </sort>
+    <sort name="FileSize">
+      <displayItem lang="en" name="name">filesize</displayItem>
+    </sort>
+    <sort name="none">
+      <displayItem lang="en" name="name">build order</displayItem>
+    </sort>
+   <facet name="dls.Organization">
+      <displayItem lang="en" name="name">organisations</displayItem>
+    </facet>
 		<searchType name="plain"/>
 		<searchType name="simpleform"/>
 		<searchType name="advancedform"/>
@@ -83,7 +81,6 @@
 				<td>
 					<gsf:link type="document">
 						<gsf:choose-metadata>
-							<gsf:metadata name="dls.Title"/>
 							<gsf:metadata name="dc.Title"/>
 							<gsf:metadata name="exp.Title"/>
 							<gsf:metadata name="ex.dc.Title"/>
@@ -91,29 +88,9 @@
 							<gsf:default>Untitled</gsf:default>
 						</gsf:choose-metadata>
 					</gsf:link>
-
-					&#8211; 
-					<i>
-					  <gsf:choose-metadata>
-					    <gsf:metadata name="dls.Organization" select="root"/>
-					    <gsf:metadata name="dls.Organization"/>
-					  </gsf:choose-metadata>  
-					</i>
-					<br/>
-					<tt><gsf:metadata name="FileSize"/> bytes</tt>
 				</td>
-
-<!--
-				<td>
--->
-
-<!--
-				  <gsf:metadata name="FileSize"/>
--->
-<!--
-				</td>
--->
-
+	<td>
+<gsf:choose-metadata><gsf:metadata name="dls.Organization" select="root"/><gsf:metadata name="dls.Organization"/></gsf:choose-metadata> (<gsf:metadata name="FileSize"/> bytes)</td>
 			</gsf:template>
 		</format>
 	</search>
@@ -130,7 +107,7 @@
 		</pluginList>
 	</import>
   <importOption name="OIDtype" value="dirname"/>
-  <buildOption name="sections_index_document_metadata" value="unless_section_metadata_exists"/>
+  <buildOption name="sections_sort_on_document_metadata" value="unless_section_metadata_exists"/>
 	<browse>
 		<classifier name="List">
 			<option name="-metadata" value="dc.Title"/>
