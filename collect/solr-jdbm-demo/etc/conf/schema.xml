@@ -599,8 +599,8 @@
    <dynamicField name="attr_*" type="text_general" indexed="true" stored="true" multiValued="true"/>
 
    <dynamicField name="random_*" type="random" />
-<!-- dynamic field for sort/facet fields, which are strings by default. ie not tokenised -->
-    <dynamicField name="by*" type="string" indexed="true" stored="false" multiValued="true" />
+<!-- dynamic field for sort/facet fields, which are strings by default. ie not tokenised. Can't be multivalued - ie can only have one value per document -->
+    <dynamicField name="by*" type="string" indexed="true" stored="false" multiValued="false" />
    <!-- uncomment the following to ignore any fields that don't already match an existing 
         field name or dynamic field, rather than reporting them as an error. 
         alternately, change the type="ignored" to some other type e.g. "text" if you want 
