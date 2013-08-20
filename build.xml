@@ -117,6 +117,8 @@
 	      failonerror="true" >  
 	  <fileset dir="${basedir}/collect/solr-jdbm-demo" includes="**"/>  
 	</copy>
+    <echo>Unzipping pre-built index</echo>
+    <unzip dest="${localsite.collectdir}/solr-jdbm-demo" src="${localsite.collectdir}/solr-jdbm-demo/index.zip" />
 
 	<!-- copy the content of the web folder (avoiding the top-level .svn directory) -->
 	<available property="ext.web.exists" file="${basedir}/web" type="dir" />
