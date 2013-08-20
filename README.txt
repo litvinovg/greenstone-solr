@@ -21,11 +21,7 @@ $gs3> svn co http://svn.greenstone.org/gs3-extensions/solr/trunk/src solr
 $gs3/ext> cd solr
 $gs3/ext/solr> ant add-service
 
-
-3. Compile up Greenstone 3's core java classes:
-$gs3/ext/solr> cd ../..
-$gs3> ant compile-core
-
+3. The solr-jdbm-demo collection is copied into localsite's collect folder as part of the install.
 
 4. Edit a collection's etc/collectionConfig.xml, setting the search type to be solr.
 
@@ -118,7 +114,7 @@ The above posts the solr-jdbm-demo collection's didx (document-level) index fold
 
 ADDING NEW JAVA CLASSES INTO THE SOLR EXTENSION
 
-1. Create the Java classes and place them into their package within the ext/solr location. 
+1. Create the Java classes and place them into their package within the ext/solr/src/java location. They can then be compiled by running 'ant compile' in the ext/solr folder.
 
-2. Adjust the ant build file in the solr extension (ext/solr/build.xml) to take these java source files into account during the setup process that takes place when the ant target 'add-service' is executed. The relevant portions of this build.xml file are likely to be the property 'java-service-files' and the property 'java-util-files'.
+
 
