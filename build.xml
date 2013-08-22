@@ -16,6 +16,7 @@
   <path id="compile.classpath">
     <!-- gs3 jar files we need -->
     <pathelement location="${web.libdir}/gsdl3.jar"/>
+    <pathelement location="${web.libdir}/gutil.jar"/>
     <pathelement location="${web.libdir}/LuceneWrapper3.jar"/>
     <pathelement location="${web.libdir}/gson-1.7.1.jar"/>
     <!-- local jar files -->
