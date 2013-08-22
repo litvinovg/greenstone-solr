@@ -90,7 +90,7 @@
 					</gsf:link>
 				</td>
 	<td>
-<gsf:choose-metadata><gsf:metadata name="dls.Organization" select="root"/><gsf:metadata name="dls.Organization"/></gsf:choose-metadata> (<gsf:metadata name="FileSize"/> bytes)</td>
+<gsf:choose-metadata><gsf:metadata name="dls.Organization" select="root"/><gsf:metadata name="dls.Organization"/></gsf:choose-metadata> <gsf:if-metadata-exists><gsf:metadata name="FileSize"/><gsf:if>  (<gsf:metadata name="FileSize"/> bytes)</gsf:if></gsf:if-metadata-exists></td>
 			</gsf:template>
 		</format>
 	</search>
