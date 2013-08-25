@@ -67,8 +67,7 @@
   
   <target name="compile" description="Compile up the solr java classes, jar them up, and install gs3-solr.jar into Greenstone's web/WEB-INF/lib dir">
     <mkdir dir="${build.home}"/>
-    <javac srcdir="${src.home}"
-      destdir="${build.home}">
+    <javac srcdir="${src.home}" destdir="${build.home}" debug="true">
       <classpath>
 	<path refid="compile.classpath"/>
       </classpath>
