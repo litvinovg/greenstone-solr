@@ -53,7 +53,7 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 
 	static Logger logger = Logger.getLogger(org.greenstone.gsdl3.util.SolrQueryWrapper.class.getName());
 	protected int max_docs = 100;
-  protected String sort_order = SORT_DESCENDING;
+	protected String sort_order = SORT_DESCENDING;
 	protected ArrayList<String> _facets = new ArrayList<String>();
 	protected ArrayList<String> _facetQueries = new ArrayList<String>();
 	SolrServer solr_core = null;
@@ -200,7 +200,11 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		ModifiableSolrParams solrParams = new ModifiableSolrParams();
 		solrParams.set("q", query_string);
 		// sort param, like "score desc" or "byORG asc"
-		solrParams.set("sort", this.sort_field+" "+this.sort_order);
+
+		if (this.sort_field != null) {
+		    solrParams.set("sort", this.sort_field+" "+this.sort_order);
+		}
+
 		// which result to start from
 		solrParams.set("start", start_results);
 		// how many results per "page"
