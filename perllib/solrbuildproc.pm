@@ -621,9 +621,13 @@ sub textedit {
     $text .= $end_doc if ($sec_tag_name eq "");
 
 ##    $text .= "<commit/>\n";
-    open (TEXTOUT, ">text.out");
-    print TEXTOUT "$text";
-    close TEXTOUT;
+
+# The following code looks like it's for debugging purposes, but
+# committed by accident.  Commenting out for now ...
+
+#    open(TEXTOUT, '>:utf8', "text.out");
+#    print TEXTOUT "$text";
+#    close TEXTOUT;
 
     print $solrhandle $text;
 
