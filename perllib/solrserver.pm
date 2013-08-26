@@ -211,13 +211,13 @@ sub admin_ping_core
 sub filtered_copy
 {
     my $self = shift @_;
-    my ($src_file,$dst_file,$re_substitutions) = @_;
 
-    my $sep = shift @_ || "/";
-    my $flags = shift @_ || "g";
+    my $src_file = shift @_;
+    my $dst_file = shift @_;
+    my $re_substitutions = shift @_;
 
     # $re_substitutions is a hashmap of the form: [re_key] => subst_str
-
+    
     my $content = "";
 
     if (open(FIN,'<:utf8',$src_file)) {
@@ -240,15 +240,7 @@ sub filtered_copy
 	# but allow allow separator char (default '/') 
 	# and flags (default 'g') to be parameterized
 
-	my $eval_str = "\$content =~ s$sep$re_key$sep$subst_str$sep$flags";
-
-	eval {
-	    $eval_str;
-	};
-	if ($@) {
-	    print STDERR "Warning: failed to evaluate\n   $eval_str\n$@\n";
-	}
-
+	$content =~ s/$re_key/$subst_str/g;
     }
     
     if (open(FOUT, '>:utf8', $dst_file)) {
@@ -269,9 +261,11 @@ sub solr_xml_to_solr_xml_in
     my $web_solrxml_in = &util::filename_cat($web_solr_ext_dir, "solr.xml.in");
     my $web_solrxml = &util::filename_cat($web_solr_ext_dir, "solr.xml");
 
-    my $replacement_map = { "$gsdl3home" => "\\\@gsdl3home\\\@" };
- 
-    $self->filtered_copy($web_solrxml,$web_solrxml_in,$replacement_map, "^", "g");
+    my $gsdl3home_re = &util::filename_to_regex($gsdl3home);
+
+    my $replacement_map = { qr/$gsdl3home_re/ => "\@gsdl3home\@" };
+
+    $self->filtered_copy($web_solrxml,$web_solrxml_in,$replacement_map);
 }
 
 
@@ -284,9 +278,11 @@ sub solr_xml_in_to_solr_xml
     my $web_solrxml_in = &util::filename_cat($web_solr_ext_dir, "solr.xml.in");
     my $web_solrxml = &util::filename_cat($web_solr_ext_dir, "solr.xml");
     
-    my $replacement_map = { "\\\@gsdl3home\\\@" => "$gsdl3home" };
- 
-    $self->filtered_copy($web_solrxml_in,$web_solrxml,$replacement_map, "^", "g");
+    my $gsdl3home_re = &util::filename_to_regex($gsdl3home);
+
+    my $replacement_map = { qr/\@gsdl3home\@/ => $gsdl3home_re };
+
+    $self->filtered_copy($web_solrxml_in,$web_solrxml,$replacement_map);
 }
 
 
