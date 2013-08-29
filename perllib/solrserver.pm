@@ -255,34 +255,43 @@ sub filtered_copy
 sub solr_xml_to_solr_xml_in
 {
     my $self = shift @_;
-
+    my ($solr_xml_dir) = @_;
+    
     my $gsdl3home = $ENV{'GSDL3HOME'};
-    my $web_solr_ext_dir = &util::filename_cat($gsdl3home, "ext", "solr");
-    my $web_solrxml_in = &util::filename_cat($web_solr_ext_dir, "solr.xml.in");
-    my $web_solrxml = &util::filename_cat($web_solr_ext_dir, "solr.xml");
+    
+    if (!defined $solr_xml_dir || !-d $solr_xml_dir) {
+	# if not passed in, use stored solr_live_home
+	$solr_xml_dir = $self->{'solr_live_home'};
+    }
+    my $solrxml_in = &util::filename_cat($solr_xml_dir, "solr.xml.in");
+    my $solrxml = &util::filename_cat($solr_xml_dir, "solr.xml");
 
     my $gsdl3home_re = &util::filename_to_regex($gsdl3home);
 
     my $replacement_map = { qr/$gsdl3home_re/ => "\@gsdl3home\@" };
 
-    $self->filtered_copy($web_solrxml,$web_solrxml_in,$replacement_map);
+    $self->filtered_copy($solrxml,$solrxml_in,$replacement_map);
 }
 
 
 sub solr_xml_in_to_solr_xml
 {
     my $self = shift @_;
+    my ($solr_xml_dir) = @_;
 
     my $gsdl3home = $ENV{'GSDL3HOME'};
-    my $web_solr_ext_dir = &util::filename_cat($gsdl3home, "ext", "solr");
-    my $web_solrxml_in = &util::filename_cat($web_solr_ext_dir, "solr.xml.in");
-    my $web_solrxml = &util::filename_cat($web_solr_ext_dir, "solr.xml");
+    if (!defined $solr_xml_dir || !-d $solr_xml_dir) {
+	# if not passed in, use stored solr home
+	$solr_xml_dir = $self->{'solr_live_home'};
+    }
+    my $solrxml_in = &util::filename_cat($solr_xml_dir, "solr.xml.in");
+    my $solrxml = &util::filename_cat($solr_xml_dir, "solr.xml");
     
     my $gsdl3home_re = &util::filename_to_regex($gsdl3home);
 
     my $replacement_map = { qr/\@gsdl3home\@/ => $gsdl3home_re };
 
-    $self->filtered_copy($web_solrxml_in,$web_solrxml,$replacement_map);
+    $self->filtered_copy($solrxml_in,$solrxml,$replacement_map);
 }
 
 
@@ -297,7 +306,6 @@ sub admin_reload_core
 
     $self->_admin_service($cgi_get_args);
 
-    $self->solr_xml_to_solr_xml_in();
 }
 
 sub admin_rename_core
@@ -309,7 +317,6 @@ sub admin_rename_core
 
     $self->_admin_service($cgi_get_args);
 
-    $self->solr_xml_to_solr_xml_in();
 }
 
 sub admin_swap_core
@@ -321,7 +328,6 @@ sub admin_swap_core
 
     $self->_admin_service($cgi_get_args);
 
-    $self->solr_xml_to_solr_xml_in();
 }
 
 # The ALIAS action is not supported in our version of solr (despite it
@@ -335,7 +341,6 @@ sub admin_alias_core
 
     $self->_admin_service($cgi_get_args);
 
-    $self->solr_xml_to_solr_xml_in();
 }
 
 sub admin_create_core
@@ -361,7 +366,6 @@ sub admin_create_core
 
     $self->_admin_service($cgi_get_args);
 
-    $self->solr_xml_to_solr_xml_in();
 }
 
 # removes (unloads) core from the ext/solr/sorl.xml config file
@@ -377,21 +381,6 @@ sub admin_unload_core
 
     $self->_admin_service($cgi_get_args);
 
-    $self->solr_xml_to_solr_xml_in();
-}
-
-sub copy_solrxml_to_web
-{
-    my $self = shift @_;
-
-    my $ext_solrxml = &util::filename_cat($ENV{'GEXT_SOLR'}, "solr.xml.in");
-    my $web_solrxml = &util::filename_cat($ENV{'GSDL3HOME'}, "ext", "solr", "solr.xml.in");
-
-    #print STDERR "@@@@ Copying $ext_solrxml to $web_solrxml...\n";
-
-    &FileUtils::copyFiles($ext_solrxml, $web_solrxml);
-
-    $self->solr_xml_in_to_solr_xml();
 }
 
 sub start
@@ -402,17 +391,19 @@ sub start
     $verbosity = 1 unless defined $verbosity;
 
     my $solr_home         = $ENV{'GEXT_SOLR'};
+    my $solr_live_home    = &util::filename_cat($ENV{'GSDL3HOME'}, "ext", "solr");
     my $jetty_stop_port   = $ENV{'JETTY_STOP_PORT'};
     my $jetty_server_port = $ENV{'SOLR_JETTY_PORT'};
 
     chdir($solr_home);
-    
+    #$self->{'solr_home'} = $solr_home;
+    $self->{'solr_live_home'} = $solr_live_home;
 ##    my $solr_etc = &util::filename_cat($solr_home,"etc");
 
     my $server_props = "-DSTOP.PORT=$jetty_stop_port";
     $server_props .= " -DSTOP.KEY=".$self->{'jetty_stop_key'};
-    $server_props .= " -Dsolr.solr.home=$solr_home";
-
+    #$server_props .= " -Dsolr.solr.home=$solr_home";
+$server_props .= " -Dsolr.solr.home=$solr_live_home";
     my $full_server_jar = $self->{'full_server_jar'};
     
     my $server_java_cmd = "java $server_props -jar \"$full_server_jar\"";
