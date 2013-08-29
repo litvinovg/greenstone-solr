@@ -23,19 +23,12 @@ $gs3/ext/solr> ant add-service
 
 3. The solr-jdbm-demo collection is copied into localsite's collect folder as part of the install.
 
-4. Edit a collection's etc/collectionConfig.xml, setting the search type to be solr.
-
-For instance, copy the (Lucene) Demo Collection of Greenstone 3 and rename it as Solr-JDBM-Demo. Next open etc/collectionConfig.xml in an editor and adjust the display name of the collection and then set the search type attribute to solr:
-
-<displayItem assigned="true" lang="en" name="name">Solr/JDBM demo</displayItem>
-<search type="solr">
-
-(For this collection, references to dc.Title in the collectionConfig.xml may need to become or be preceded by references to dls.Title)
-
+4. Alternatively, edit an existing collection's etc/collectionConfig.xml, setting the search type to be solr. You may want to set up sort fields and facet fields, see solr-jdbm-demo collectionConfig.xml for examples.
 
 5. Run the GS3 tomcat server:
 $gs3> ant start
 
+6. View your SOLR collections.
 
 IMPORTING AND (RE-)BUILDING A COLLECTION WITH SOLR
 
