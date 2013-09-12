@@ -103,7 +103,8 @@
 	<mkdir dir="${web.extdir}"/>
 	
 	<echo/>
-	<echo>Adding to gsdl3 web solr ext directory: solr.xml</echo>
+	<echo>Adding to gsdl3 web solr ext directory: solr.xml and solr.xml.in</echo>
+	<copy file="solr.xml.in" tofile="${web.extdir}/solr.xml.in"/>
 	<pathconvert targetos="unix" property="src.gsdl3.home.unix">
 	  <path path="../../web"/>
 	</pathconvert>
