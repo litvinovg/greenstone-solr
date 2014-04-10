@@ -178,9 +178,10 @@ public class SolrSearch extends LuceneSearch {
     /** Process a text query - implemented by concrete subclasses */
     protected Element processTextQuery(Element request) {
 
-	Element result = this.doc.createElement(GSXML.RESPONSE_ELEM);
-	Element doc_node_list = this.doc.createElement(GSXML.DOC_NODE_ELEM+GSXML.LIST_MODIFIER);
-	Element metadata_list = this.doc.createElement(GSXML.METADATA_ELEM+GSXML.LIST_MODIFIER);
+      Document result_doc = XMLConverter.newDOM();
+	Element result = result_doc.createElement(GSXML.RESPONSE_ELEM);
+	Element doc_node_list = result_doc.createElement(GSXML.DOC_NODE_ELEM+GSXML.LIST_MODIFIER);
+	Element metadata_list = result_doc.createElement(GSXML.METADATA_ELEM+GSXML.LIST_MODIFIER);
 	initResultElement(result,doc_node_list,metadata_list);
 
 	if (!hasParamList(request,metadata_list)) {
@@ -219,7 +220,7 @@ public class SolrSearch extends LuceneSearch {
 
 	    if (hits != null) {
 		// or should this be docs.getNumFound() ??
-		GSXML.addMetadata(this.doc, metadata_list, "numDocsMatched", ""+hits.size());
+		GSXML.addMetadata(metadata_list, "numDocsMatched", ""+hits.size());
 
 		System.err.println(hits.getNumFound() + " documents found, "
 				   + hits.size() + " returned : ");
@@ -228,7 +229,7 @@ public class SolrSearch extends LuceneSearch {
 		    SolrDocument solr_doc = hits.get(i);
 
 		    String node_id = (String)solr_doc.get("docOID");
-		    Element node = this.doc.createElement(GSXML.DOC_NODE_ELEM);
+		    Element node = result_doc.createElement(GSXML.DOC_NODE_ELEM);
 		    node.setAttribute(GSXML.NODE_ID_ATT, node_id);
 		    doc_node_list.appendChild(node);
 
