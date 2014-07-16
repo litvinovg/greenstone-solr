@@ -145,7 +145,8 @@ public class SolrSearch extends LuceneSearch {
 		    File solr_home = new File(solr_home_str);
 		    File solr_xml = new File( solr_home,"solr.xml" );
 		    
-		    solr_cores.load(solr_home_str,solr_xml);			
+		    //solr_cores.load(solr_home_str,solr_xml);			
+		    solr_cores.load();
 		} catch (Exception e) {
 		    logger.error("Exception in SolrSearch.configure(): " + e.getMessage());
 		    e.printStackTrace();

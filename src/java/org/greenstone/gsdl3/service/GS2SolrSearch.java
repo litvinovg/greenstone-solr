@@ -34,7 +34,7 @@ import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.core.CoreContainer;
 import org.apache.solr.core.SolrCore;
-import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
+import org.greenstone.LuceneWrapper4.SharedSoleneQueryResult;
 import org.greenstone.gsdl3.util.FacetWrapper;
 import org.greenstone.gsdl3.util.GSFile;
 import org.greenstone.gsdl3.util.GSXML;
@@ -108,7 +108,8 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		    File solr_home = new File(solr_home_str);
 		    File solr_xml = new File( solr_home,"solr.xml" );
 		    
-		    all_solr_cores.load(solr_home_str,solr_xml);
+		    //all_solr_cores.load(solr_home_str,solr_xml);
+		    all_solr_cores.load();
 
 		} catch (Exception e) {
 		    logger.error("Exception in GS2SolrSearch.configure(): " + e.getMessage());
@@ -183,17 +184,17 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			    String solrCoreName = coreIterator.next();		
 			    if(solrCoreName.startsWith(collection_core_name_prefix)) {
 				
-				logger.error("**** Removing collection-specific core: " + solrCoreName + " from CoreContainer");
+				logger.info("**** Removing collection-specific core: " + solrCoreName + " from CoreContainer");
 				
 				// CoreContainer.remove(String name): removes and returns registered core w/o decrementing it's reference count
 				// http://lucene.apache.org/solr/api/index.html?org/apache/solr/core/CoreContainer.html
 				SolrCore solr_core = all_solr_cores.remove(solrCoreName);
 				while(!solr_core.isClosed()) {
-				    logger.error("@@@@@@ " + solrCoreName + " was not closed. Closing....");
+				    logger.warn("@@@@@@ " + solrCoreName + " was not closed. Closing....");
 				    solr_core.close(); // http://lucene.apache.org/solr/api/org/apache/solr/core/SolrCore.html
 				} 
 				if(solr_core.isClosed()) {
-				    logger.error("@@@@@@ " + solrCoreName + " is closed.");
+				    logger.info("@@@@@@ " + solrCoreName + " is closed.");
 				}
 				solr_core = null;
 			    }
@@ -207,7 +208,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		if (all_solr_cores!=null) {
 		    Collection<String> coreNamesRemaining = all_solr_cores.getCoreNames();
 		    if(coreNamesRemaining.isEmpty()) {
-			logger.error("**** CoreContainer contains 0 solrCores. Shutting down...");
+			logger.info("**** CoreContainer contains 0 solrCores. Shutting down...");
 			
 			all_solr_cores.shutdown(); // wouldn't do anything anyway for 0 cores I think
 			all_solr_cores = null;

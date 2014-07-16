@@ -157,7 +157,7 @@ sub server_running
 
     my $have_error = defined $output->{'error'};
 
-    my $running = !$have_error;
+    my $running = ($have_error) ? 0 : 1;
 
     return $running;
 }
@@ -406,7 +406,10 @@ sub start
 $server_props .= " -Dsolr.solr.home=$solr_live_home";
     my $full_server_jar = $self->{'full_server_jar'};
     
-    my $server_java_cmd = "java $server_props -jar \"$full_server_jar\"";
+    # https://wiki.apache.org/solr/SolrLogging
+    my $solr_slf4j    = &util::filename_cat($solr_home, "lib", "ext");
+    my $solr_log4j    = &util::filename_cat($solr_home, "conf", "log4j.properties");
+    my $server_java_cmd = "java -Dlog4j.configuration=file://$solr_log4j -classpath \"$solr_home/lib/java/*:$solr_slf4j/*\" $server_props -jar \"$full_server_jar\"";
 
 
     my $server_status = "unknown";
@@ -430,7 +433,7 @@ $server_props .= " -Dsolr.solr.home=$solr_live_home";
 		print "Jetty startup: $line";
 	    }
 	    
-	    if ($line =~ m/WARN::failed SocketConnector/) {
+	    if ($line =~ m/WARN.*failed SocketConnector/) {
 		if ($line =~ m/Address already in use/) {
 		    $server_status = "already-running";
 		}
@@ -440,7 +443,7 @@ $server_props .= " -Dsolr.solr.home=$solr_live_home";
 		last;
 	    }
 	    
-	    if ($line =~ m/INFO::Started SocketConnector/) {
+	    if ($line =~ m/INFO.*Started SocketConnector/) {
 		$server_status = "explicitly-started";
 		last;
 	    }

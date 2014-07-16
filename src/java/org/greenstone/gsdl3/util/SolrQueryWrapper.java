@@ -38,8 +38,8 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.ModifiableSolrParams;
-import org.greenstone.LuceneWrapper3.SharedSoleneQuery;
-import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
+import org.greenstone.LuceneWrapper4.SharedSoleneQuery;
+import org.greenstone.LuceneWrapper4.SharedSoleneQueryResult;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

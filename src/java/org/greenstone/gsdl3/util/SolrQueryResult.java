@@ -29,7 +29,7 @@ package org.greenstone.gsdl3.util;
 import java.util.List;
 
 import org.apache.solr.client.solrj.response.FacetField;
-import org.greenstone.LuceneWrapper3.SharedSoleneQueryResult;
+import org.greenstone.LuceneWrapper4.SharedSoleneQueryResult;
 
 /**
  * Opportunity to fine tune QueryResult for solr search, such as facets,

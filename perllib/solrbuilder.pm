@@ -317,7 +317,7 @@ sub premake_solr_auxiliary_files
     my $schema_out_filename = &FileUtils::filenameConcatenate($out_dirname,"schema.xml");
     
     # make sure output conf directory exists
-    if (!FileUtils::directoryExists($out_dirname)) {
+    if (!&FileUtils::directoryExists($out_dirname)) {
 	&FileUtils::makeDirectory($out_dirname);
     }
 
@@ -327,12 +327,25 @@ sub premake_solr_auxiliary_files
     # these are simpler, as they currently do not need any filtering
 
     my @in_file_list = ( "solrconfig.xml", "stopwords.txt", "stopwords_en.txt",
-			 "synonyms.txt", "protwords.txt" );
+			 "synonyms.txt", "protwords.txt", "currency.xml", "elevate.xml" );
  
     foreach my $file ( @in_file_list ) {
 	my $in_filename = &FileUtils::filenameConcatenate($in_dirname,$file.".in");
 	my $out_filename = &FileUtils::filenameConcatenate($out_dirname,$file);
-	filter_in_out_file($in_filename,$out_filename,[]);
+
+	if(&FileUtils::fileExists($in_filename)) {
+	    filter_in_out_file($in_filename,$out_filename,[]);
+	}
+    }
+
+    my @in_dir_list = ( "lang" );
+    foreach my $dir ( @in_dir_list ) {
+	
+	my $full_subdir_name = &FileUtils::filenameConcatenate($in_dirname,$dir);
+
+	if(&FileUtils::directoryExists($full_subdir_name)) {
+	    &FileUtils::copyFilesRecursiveNoSVN($full_subdir_name, $out_dirname);
+	}
     }
 }
 
@@ -467,6 +480,9 @@ sub pre_build_indexes
 	    my $full_index_dir = &FileUtils::filenameConcatenate($build_dir,$index_dir);
 	    &FileUtils::removeFilesRecursive($full_index_dir);
 	    &FileUtils::makeDirectory($full_index_dir);
+
+	    my $full_tlog_dir = &FileUtils::filenameConcatenate($full_index_dir, "tlog");
+	    &FileUtils::makeDirectory($full_tlog_dir);
 
 	    # Solr then wants an "index" folder within this general index area!
 #	    my $full_index_index_dir = &FileUtils::filenameConcatenate($full_index_dir,"index");
