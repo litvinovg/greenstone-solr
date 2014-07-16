@@ -9,7 +9,7 @@
   <!-- greenstone3 paths -->
   <property name="web.home" value="${basedir}/../../web"/>
   <property name="localsite.collectdir" value="${web.home}/sites/localsite/collect"/>
- <property name="web.classesdir" value="${web.home}/WEB-INF/classes"/>
+  <property name="web.classesdir" value="${web.home}/WEB-INF/classes"/>
   <property name="web.libdir" value="${web.home}/WEB-INF/lib"/>  
   <property name="web.extdir" value="${web.home}/ext/solr"/>
 
@@ -17,7 +17,7 @@
     <!-- gs3 jar files we need -->
     <pathelement location="${web.libdir}/gsdl3.jar"/>
     <pathelement location="${web.libdir}/gutil.jar"/>
-    <pathelement location="${web.libdir}/LuceneWrapper3.jar"/>
+    <pathelement location="${web.libdir}/LuceneWrapper4.jar"/>
     <pathelement location="${web.libdir}/gson-1.7.1.jar"/>
     <!-- local jar files -->
     <fileset dir="lib/java">
@@ -29,19 +29,47 @@
   <!-- Created as property elements rather than as filelist elements, since
 	they can then be reused for the add-service and delete-service targets. -->
   <property name="jars" 
-		value="apache-solr-core-3.3.0.jar
-		apache-solr-solrj-3.3.0.jar
-		lucene-spatial-3.3.0.jar
-		lucene-spellchecker-3.3.0.jar
-		lucene-analyzers-3.3.0.jar
-		lucene-highlighter-3.3.0.jar
-		commons-io-1.4.jar
+		value="solr-core-4.7.2.jar
+		solr-solrj-4.7.2.jar
+		lucene-core-4.7.2.jar
+		lucene-analyzers-common-4.7.2.jar
+		lucene-analyzers-kuromoji-4.7.2.jar
+		lucene-analyzers-phonetic-4.7.2.jar
+		lucene-grouping-4.7.2.jar
+		lucene-highlighter-4.7.2.jar
+		lucene-queries-4.7.2.jar
+		lucene-queryparser-4.7.2.jar
+		lucene-memory-4.7.2.jar
+		lucene-misc-4.7.2.jar
+		lucene-spatial-4.7.2.jar
+		lucene-suggest-4.7.2.jar
+		httpclient-4.3.1.jar
+		httpcore-4.3.jar
+		httpmime-4.3.1.jar
 		commons-fileupload-1.2.1.jar
+		commons-io-2.1.jar
+		commons-lang-2.6.jar
 		velocity-1.6.1.jar
-		log4j-over-slf4j-1.6.1.jar
-		slf4j-api-1.6.1.jar
-		slf4j-jdk14-1.6.1.jar"/>
-  
+		log4j-over-slf4j-1.6.6.jar
+		slf4j-api-1.6.6.jar
+		slf4j-jdk14-1.6.6.jar
+		spatial4j-0.4.1.jar
+		zookeeper-3.4.5.jar
+		guava 14.0.1"/>
+<!-- 		jcl-over-slf4j-1.6.6.jar
+		jul-to-slf4j-1.6.6.jar
+		log4j-1.2.16.jar
+		wstx-asl-3.2.7.jar
+-->
+<!-- 
+   lucene-spellchecker-3.3.0.jar replaced with lucene-suggest-4.7.2.jar, since both contain packages org/.../spell and org/.../suggest 
+   
+   commons-fileupload-1.2.1.jar - in solr war file
+   velocity-1.6.1.jar
+   log4j-over-slf4j-1.6.1.jar - have to download slf4j jar file for version 1.6.6 
+   slf4j-jdk14-1.6.1.jar - have to download slf4j jar file for version 1.6.6 
+  -->
+
   <property name="java-service-files" 
     value="SolrSearch.java		   	
     GS2SolrSearch.java
@@ -126,9 +154,8 @@
 
   </target>
   
-  
-  <target name="add-service" depends="copy-files,compile" if="ext.web.exists"
-	description="Run this target to setup the Solr extension for Greenstone3">
+  <target name="add-service" depends="copy-files,compile" 
+	description="Run this target to setup the Solr extension for Greenstone3"> <!--if="ext.web.exists"-->
 	
 	<echo/>
 	<echo>Copy to gsdl3 web: the content of the ${basedir}/web folder (excluding .svn)</echo>

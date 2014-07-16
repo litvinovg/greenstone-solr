@@ -1,5 +1,6 @@
 service/SolrSearch.java
 service/GS2SolrSearch.java
 service/GS2SolrRetrieve.java
+util/SolrFacetWrapper.java
 util/SolrQueryWrapper.java
 util/SolrQueryResult.java 
