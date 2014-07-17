@@ -5,6 +5,7 @@
   <!-- local ext paths -->
   <property name="src.home" value="${basedir}/src/java"/>
   <property name="build.home" value="${basedir}/build"/>
+  <available property="ext.web.exists" file="${basedir}/web" type="dir" />
 
   <!-- greenstone3 paths -->
   <property name="web.home" value="${basedir}/../../web"/>
@@ -149,23 +150,23 @@
     <echo>Unzipping pre-built index</echo>
     <unzip dest="${localsite.collectdir}/solr-jdbm-demo" src="${localsite.collectdir}/solr-jdbm-demo/index.zip" />
 
-	<!-- copy the content of the web folder (avoiding the top-level .svn directory) -->
-	<available property="ext.web.exists" file="${basedir}/web" type="dir" />
 
   </target>
   
-  <target name="add-service" depends="copy-files,compile" 
-	description="Run this target to setup the Solr extension for Greenstone3"> <!--if="ext.web.exists"-->
-	
-	<echo/>
-	<echo>Copy to gsdl3 web: the content of the ${basedir}/web folder (excluding .svn)</echo>
-  	<copy todir="${web.extdir}">
-          <dirset dir="${basedir}/web">
-	    <exclude name=".svn"/>
-	  </dirset> 
-	</copy>
 
+  <!-- copy the content of the web folder (avoiding the top-level .svn directory) -->
+  <target name="copy-solr-web" if="ext.web.exists">
+    <echo/>
+    <echo>Copy to gsdl3 web: the content of the ${basedir}/web folder (excluding .svn)</echo>
+    <copy todir="${web.extdir}">
+      <dirset dir="${basedir}/web">
+	<exclude name=".svn"/>
+      </dirset> 
+    </copy>
   </target>
+
+  <target name="add-service" depends="copy-solr-web,copy-files,compile" description="Run this target to setup the Solr extension for Greenstone3" />
+
   
   <target name="del-service" 
 	description="Run this target to unset the Solr extension for Greenstone3">	
