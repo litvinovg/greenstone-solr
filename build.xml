@@ -56,7 +56,8 @@
 		slf4j-jdk14-1.6.6.jar
 		spatial4j-0.4.1.jar
 		zookeeper-3.4.5.jar
-		guava-14.0.1.jar"/>
+		guava-14.0.1.jar
+		noggit-0.5.jar"/>
 <!-- 		jcl-over-slf4j-1.6.6.jar
 		jul-to-slf4j-1.6.6.jar
 		log4j-1.2.16.jar
