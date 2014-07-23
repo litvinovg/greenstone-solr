@@ -412,12 +412,13 @@ $server_props .= " -Dsolr.solr.home=$solr_live_home";
     my $solr_jar_dep = &util::pathname_cat($solr_lib_java, $solr_slf4j);
 	
 	my $solr_log4j    = &util::filename_cat($solr_home, "conf", "log4j.properties");	
+	if (defined $ENV{'GSDLOS'} && (($ENV{'GSDLOS'} =~ m/windows/) && ($^O ne "cygwin"))) {
+		$solr_log4j =~ s@\\@\/@g;
+		$solr_log4j = "/$solr_log4j"; # Three slashes on windows: file///c:/path/to/log4j.properties
+	}
 	
-    #my $server_java_cmd = "java -Dlog4j.configuration=file://$solr_log4j -classpath \"$solr_home/lib/java/*:$solr_slf4j/*\" $server_props -jar \"$full_server_jar\"";	
-	my $prefix = (defined $ENV{'GSDLOS'} && (($ENV{'GSDLOS'} =~ m/windows/) && ($^O ne "cygwin"))) ? "file:/" : "file://";
-	my $server_java_cmd = "java -Dlog4j.configuration=$prefix$solr_log4j -classpath \"$solr_jar_dep\" $server_props -jar \"$full_server_jar\"";
-
-
+	#my $server_java_cmd = "java -Dlog4j.configuration=file://$solr_log4j -classpath \"$solr_home/lib/java/*:$solr_slf4j/*\" $server_props -jar \"$full_server_jar\"";
+	my $server_java_cmd = "java -Dlog4j.configuration=file://$solr_log4j -classpath \"$solr_jar_dep\" $server_props -jar \"$full_server_jar\"";
     my $server_status = "unknown";
 
     if ($self->server_running()) {
