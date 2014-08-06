@@ -250,6 +250,8 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			String name = (String) m.getKey();
 			String value = (String) m.getValue();
 
+			///System.err.println("### GS2SolrSearch.java: name " + name + " - value " + value);
+
 			if (name.equals(MAXDOCS_PARAM) && !value.equals(""))
 			{
 				maxdocs = Integer.parseInt(value);
