@@ -281,7 +281,7 @@ sub premake_solr_auxiliary_files
 
     foreach my $ifm (@{$self->{'build_cfg'}->{'indexfieldmap'}}) {
 
-		my ($field) = ($ifm =~ m/^.*->(.*)$/);
+		my ($fullfieldname, $field) = ($ifm =~ m/^(.*)->(.*)$/);
 
 		$schema_insert_xml .= "    "; # indent
 		$schema_insert_xml .= "<field name=\"$field\" ";
@@ -296,7 +296,16 @@ sub premake_solr_auxiliary_files
 #		}
 		else
 		{
-			$schema_insert_xml .= "type=\"text_en_splitting\" ";
+		    #$schema_insert_xml .= "type=\"text_en_splitting\" ";
+
+		    # original default solr field type for all fields is text_en_splitting
+		    my $solrfieldtype = "text_en_splitting";
+		    if(defined $self->{'collect_cfg'}->{'indexfieldoptions'}->{$fullfieldname}->{'solrfieldtype'}) {	
+			$solrfieldtype = $self->{'collect_cfg'}->{'indexfieldoptions'}->{$fullfieldname}->{'solrfieldtype'};
+			#print STDERR "@@@@#### found TYPE: $solrfieldtype\n";
+		    }
+		    $schema_insert_xml .= "type=\"$solrfieldtype\" ";
+			
 		}
 		# set termVectors=\"true\" when term vectors info is required, 
 		# see TermsResponse termResponse = solrResponse.getTermsResponse(); 
