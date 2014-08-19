@@ -77,6 +77,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 	protected ArrayList<String> _facetQueries = new ArrayList<String>();
 	SolrServer solr_core = null;
 
+    String collection_core_name_prefix = null;
+
 	public SolrQueryWrapper()
 	{
 		super();
@@ -92,6 +94,11 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 	{
 		this.solr_core = solr_core;
 	}
+
+    public void setCollectionCoreNamePrefix(String colCoreNamePrefix) {
+	this.collection_core_name_prefix = colCoreNamePrefix;
+    }
+
   // make sure its not null.
   public void setSortField(String sort_field) {
     if (sort_field != null) {
@@ -157,10 +164,18 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 	    if(!solrCores.isEmpty()) {
 		Iterator<SolrCore> coreIterator = solrCores.iterator();
 
-		// Just use the first core, since the term frequency of any term is the same regardless of core
-		if(coreIterator.hasNext()) {
+		// Just use the first core that matches the collection name, since the term 
+		// frequency of any term is the same regardless of whether its didx or sidx core
+		boolean foundCore = false;
+		while(coreIterator.hasNext() && !foundCore) {
 		    SolrCore solrCore = coreIterator.next();
-		    
+		    if(!solrCore.getName().startsWith(this.collection_core_name_prefix)) {
+			//logger.error("### Skipping core not of this collection: " + solrCore.getName());
+			continue;
+		    }
+
+		    //logger.error("### Found core " + solrCore.getName() + " of this collection " + this.collection_core_name_prefix);
+		    foundCore = true;
 		    
 		    LocalSolrQueryRequest solrQueryRequest = new LocalSolrQueryRequest(solrCore, solrQuery);
 		    Query parsedQuery = null;
