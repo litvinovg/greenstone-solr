@@ -169,9 +169,14 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		boolean foundCore = false;
 		while(coreIterator.hasNext() && !foundCore) {
 		    SolrCore solrCore = coreIterator.next();
-		    if(!solrCore.getName().startsWith(this.collection_core_name_prefix)) {
-			//logger.error("### Skipping core not of this collection: " + solrCore.getName());
-			continue;
+		    if(this.collection_core_name_prefix != null) {
+			if(!solrCore.getName().startsWith(this.collection_core_name_prefix)) {
+			    //logger.error("### Skipping core not of this collection: " + solrCore.getName());
+			    continue;
+			}
+		    } else {
+			logger.error("### Collection_core_name_prefix not set. Won't try to find terms");
+			break;
 		    }
 
 		    //logger.error("### Found core " + solrCore.getName() + " of this collection " + this.collection_core_name_prefix);
