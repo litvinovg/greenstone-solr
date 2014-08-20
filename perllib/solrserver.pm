@@ -72,6 +72,8 @@ sub _wget_service
     my $full_url = $url;
 
     $url .= "?$cgi_get_args" if (defined $cgi_get_args);
+
+##    print STDERR "\n\n**** _wget_service SOLR WEB URL: $url\n\n";
     
     my $cmd = "wget -O - \"$url\" 2>&1";
 
@@ -117,6 +119,10 @@ sub _wget_service
     else {
 	$error_output = "Error: failed to run $cmd\n";
 	$error_output .= "  $!\n";
+    }
+
+    if(defined $error_output) {
+	print STDERR "\n\n**** WGET_SERVICE got an error: $error_output\n\n";
     }
 
     my $output = { 'url'      => $full_url,
