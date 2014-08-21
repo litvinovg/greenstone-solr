@@ -368,6 +368,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		}
 
 		this.solr_src.setSolrCore(solr_core);
+		this.solr_src.setCollectionCoreNamePrefix(getCollectionCoreNamePrefix());
 		this.solr_src.initialise();
 		return true;
 	}
