@@ -31,7 +31,6 @@ no strict 'refs';
 
 use lucenebuilder;
 use solrserver;
-use Config; # for getting the perlpath in the recommended way
 
 sub BEGIN {
     @solrbuilder::ISA = ('lucenebuilder');
@@ -49,7 +48,7 @@ sub new {
 
     $self->{'solr_passes'} = "$solr_passes_script";
     # Tack perl on the beginning to ensure execution
-    $self->{'solr_passes_exe'} = "\"$Config{perlpath}\" -S \"$solr_passes_script\"";
+    $self->{'solr_passes_exe'} = "\"".&util::get_perl_exec()."\" -S \"$solr_passes_script\"";
     return $self;
 }
 
