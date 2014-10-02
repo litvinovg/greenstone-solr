@@ -75,6 +75,9 @@ sub _wget_service
 
 ##    print STDERR "\n\n**** _wget_service SOLR WEB URL: $url\n\n";
     
+    # the wget binary is dependent on the gnomelib_env (particularly lib/libiconv2.dylib) being set, particularly on Mac Lion binaries (android too?)
+    &util::set_gnomelib_env(); # this will set the gnomelib env once for each subshell launched, by first checking if GEXTGNOME is not already set
+
     my $cmd = "wget -O - \"$url\" 2>&1";
 
     my $preamble_output = "";    
