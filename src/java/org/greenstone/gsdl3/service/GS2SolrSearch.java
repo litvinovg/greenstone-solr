@@ -163,6 +163,25 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		super.cleanUp();
 		this.solr_src.cleanUp();
 
+
+		// 1. clear the map keeping track of the solrcores' EmbeddedSolrServers in this collection
+		solr_core_cache.clear();
+
+		// 2. For solr 4.7.2., GLI (and ant stop from cmd) is unable to shutdown the tomcat server fully, 
+		// IF any collection has been previewed AND if there are any solr collections in the collect folder.
+		// This is because although the GS3 server seems to have stopped running at this stage, running a
+		// `ps aux | grep tomcat` reveals that some part of tomcat is still running. It seems to be still 
+		// holding on to the cores. Doing an all_cores.shutdown() here, stops GS3 from hanging on to the cores
+		// while still preserving the core desciptions in web/ext/solr.xml as needed when restarting the GS3 server.
+
+		// Need GS3 server (tomcat) to release the cores, else a part of tomcat is still running in the background 
+		// on ant stop, holding a lock on the cores. Doing shutdown() preserves core descriptions in solr.xml
+		all_solr_cores.shutdown();
+		all_solr_cores = null;
+		
+		// For solr 3.3.0's jetty server, but not for solr 4.7.2's jetty server:
+		/*
+
 		// When cleaning up, not only do we need to empty the solr_core_cache map, but we also need to remove all
 		// references to this collection's sorlcores in the CoreContainer object, which can be more SolrCores than
 		// the EmbeddedSolrServers instantiated and added to the solr_core_cache, since the cache does lazy loading 
@@ -220,6 +239,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			}
 		    }
 		}
+		*/
 	}
 
 	/** methods to handle actually doing the query */

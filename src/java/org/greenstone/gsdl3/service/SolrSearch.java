@@ -78,6 +78,13 @@ public class SolrSearch extends LuceneSearch {
 		// 1. clear the map keeping track of the solrcores' EmbeddedSolrServers in this collection
 		solr_server.clear();
 
+		// 2. Need GS3 server (tomcat) to release the cores, else a part of tomcat is still running in the background 
+		// on ant stop, holding a lock on the cores. Doing shutdown() preserves core descriptions in solr.xml
+		solr_cores.shutdown();
+		solr_cores = null;
+
+		// For solr 3.3.0's jetty server, but not for solr 4.7.2's jetty server
+		/*
 		// 2. Remove all SolrCores in the CoreContainer (solr_cores) that are specific to this collection
 		String collection_core_name_prefix = getCollectionCoreNamePrefix();
 
@@ -122,7 +129,7 @@ public class SolrSearch extends LuceneSearch {
 			logger.error("**** Core: " + coreIterator.next() + " still exists in CoreContainer");
 		    }
 		}
-	
+		*/
     }
 
 	
@@ -145,7 +152,7 @@ public class SolrSearch extends LuceneSearch {
 		    File solr_home = new File(solr_home_str);
 		    File solr_xml = new File( solr_home,"solr.xml" );
 		    
-		    //solr_cores.load(solr_home_str,solr_xml);			
+		    //solr_cores.load(solr_home_str,solr_xml);
 		    solr_cores.load();
 		} catch (Exception e) {
 		    logger.error("Exception in SolrSearch.configure(): " + e.getMessage());
