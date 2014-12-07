@@ -48,6 +48,11 @@ import org.w3c.dom.NodeList;
 
 public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 {
+
+  protected static final String SORT_ORDER_PARAM = "sortOrder";
+  protected static final String SORT_ORDER_DESCENDING = "1";
+  protected static final String SORT_ORDER_ASCENDING = "0";
+
 	static Logger logger = Logger.getLogger(org.greenstone.gsdl3.service.GS2SolrSearch.class.getName());
 
 	static protected CoreContainer all_solr_cores = null;
@@ -59,6 +64,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 
 	public GS2SolrSearch()
 	{
+                paramDefaults.put(SORT_ORDER_PARAM, SORT_ORDER_DESCENDING);
 		does_faceting = true;
 		// Used to store the solr cores that match the required 'level' 
 		// of search (e.g. either document-level=>didx, or 
@@ -242,6 +248,44 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		*/
 	}
 
+	/** add in the SOLR specific params to TextQuery */
+	protected void addCustomQueryParams(Element param_list, String lang)
+	{
+		super.addCustomQueryParams(param_list, lang);
+		/** Add in the sort order asc/desc param */
+		createParameter(SORT_ORDER_PARAM, param_list, lang);
+	}
+  /** add in SOLR specific params for AdvancedFieldQuery */
+  protected void addCustomQueryParamsAdvField(Element param_list, String lang)
+	{
+		super.addCustomQueryParamsAdvField(param_list, lang);
+		createParameter(SORT_ORDER_PARAM, param_list, lang);
+		
+	}
+	/** create a param and add to the list */
+  protected void createParameter(String name, Element param_list, String lang)
+  {
+    Document doc = param_list.getOwnerDocument();
+    Element param = null;
+    String param_default = paramDefaults.get(name);
+    if (name.equals(SORT_ORDER_PARAM)) {
+        String[] vals = { SORT_ORDER_ASCENDING, SORT_ORDER_DESCENDING }; 
+	String[] vals_texts = { getTextString("param." + SORT_ORDER_PARAM + "." + SORT_ORDER_ASCENDING, lang), getTextString("param." + SORT_ORDER_PARAM + "." + SORT_ORDER_DESCENDING, lang) }; 	    
+	
+	param = GSXML.createParameterDescription(doc, SORT_ORDER_PARAM, getTextString("param." + SORT_ORDER_PARAM, lang), GSXML.PARAM_TYPE_ENUM_SINGLE, param_default, vals, vals_texts);
+    }
+
+    if (param != null)
+      {
+	param_list.appendChild(param);
+      }
+    else
+      {
+	super.createParameter(name, param_list, lang);
+      }
+    
+  }
+  
 	/** methods to handle actually doing the query */
 
 	/** do any initialisation of the query object */

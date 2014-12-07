@@ -82,8 +82,8 @@
     SolrQueryWrapper.java			
     SolrQueryResult.java"/>  		   
   
- <!-- <property name="property-files" 
-    value=""/>  -->
+ <property name="property-files" 
+    value="GS2SolrSearch.properties"/>  
 
 			
   <!-- TARGETS -->
@@ -115,13 +115,11 @@
   
   <target name="copy-files" description="Helper-target: copy files across for add-service target">
   	
-    <!-- May want this back if we add in Solr .properties files-->
-<!--	<echo/>
+    <echo/>
 	<echo>Adding to gsdl3 properties area: properties/${property-files}</echo>
-	<copy todir="${classesdir}">
+	<copy todir="${web.classesdir}">
           <filelist id="prop-files" dir="properties" files="${property-files}"/>
 	</copy>
--->
 	<echo/>
 	<echo>Adding to gsdl3 web jar lib directory: ${basedir}/lib/java's ${jars}</echo>
 	<copy todir="${web.libdir}">
@@ -176,13 +174,13 @@
 	and can't be deleted therefore -->
 	
 
-<!--	
+
 	<echo/>
 	<echo>Removing from  gsdl3 properties area: properties/${property-files}</echo>
 	<delete failonerror="false">
-          <filelist dir="${classesdir}" files="${property-files}"/>
+          <filelist dir="${web.classesdir}" files="${property-files}"/>
 	</delete>
--->
+
 	<echo/>
 	<echo>Removing from gsdl3 web jar lib directory: ${basedir}/lib/java's ${jars} gs3-solr.jar</echo>
 	<delete failonerror="false">
