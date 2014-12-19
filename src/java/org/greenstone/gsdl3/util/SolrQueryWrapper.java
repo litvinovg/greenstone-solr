@@ -230,6 +230,9 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 			System.err.println("#### Query type was: " + parsedQuery.getClass());
 			logger.error("#### Query type was: " + parsedQuery.getClass());
 		    }
+		    // http://lucene.apache.org/solr/4_7_2/solr-core/org/apache/solr/request/SolrQueryRequestBase.html#close%28%29
+		    // close() must be called when the object is no longer in use. Frees resources associated with this request
+		    solrQueryRequest.close();
 		}
 		
 	    } else {
