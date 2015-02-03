@@ -184,68 +184,6 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		// on ant stop, holding a lock on the cores. Doing shutdown() preserves core descriptions in solr.xml
 		all_solr_cores.shutdown();
 		all_solr_cores = null;
-		
-		// For solr 3.3.0's jetty server, but not for solr 4.7.2's jetty server:
-		/*
-
-		// When cleaning up, not only do we need to empty the solr_core_cache map, but we also need to remove all
-		// references to this collection's sorlcores in the CoreContainer object, which can be more SolrCores than
-		// the EmbeddedSolrServers instantiated and added to the solr_core_cache, since the cache does lazy loading 
-		// while the CoreContainer contains all the cores defined in solr.xml, which includes all *possible* cores
-		// for this collection even if EmbeddedSolrServers for these were not added to the solr_core_cache_map.
-
-		// 1. clear the map keeping track of the solrcores' EmbeddedSolrServers in this collection
-		solr_core_cache.clear();
-
-		// 2. Remove all SolrCores in the CoreContainer (all_solr_cores) that are specific to this collection
-		String collection_core_name_prefix = getCollectionCoreNamePrefix();
-
-		if (all_solr_cores!=null) {
-		    Collection<String> coreNames = all_solr_cores.getCoreNames();
-		    if(!coreNames.isEmpty()) {
-			Iterator<String> coreIterator = coreNames.iterator();
-			while(coreIterator.hasNext()) {
-			    
-			    String solrCoreName = coreIterator.next();		
-			    if(solrCoreName.startsWith(collection_core_name_prefix)) {
-				
-				logger.info("**** Removing collection-specific core: " + solrCoreName + " from CoreContainer");
-				
-				// CoreContainer.remove(String name): removes and returns registered core w/o decrementing it's reference count
-				// http://lucene.apache.org/solr/api/index.html?org/apache/solr/core/CoreContainer.html
-				SolrCore solr_core = all_solr_cores.remove(solrCoreName);
-				while(!solr_core.isClosed()) {
-				    logger.warn("@@@@@@ " + solrCoreName + " was not closed. Closing....");
-				    solr_core.close(); // http://lucene.apache.org/solr/api/org/apache/solr/core/SolrCore.html
-				} 
-				if(solr_core.isClosed()) {
-				    logger.info("@@@@@@ " + solrCoreName + " is closed.");
-				}
-				solr_core = null;
-			    }
-			}
-		    }
-		}
-		
-		// 3. if there are no more solr cores in Greenstone, then all_solr_cores will be empty, null the CoreContainer
-		// All going well, this will happen when we're ant stopping the Greenstone server and the last Solr collection
-		// is being deactivated
-		if (all_solr_cores!=null) {
-		    Collection<String> coreNamesRemaining = all_solr_cores.getCoreNames();
-		    if(coreNamesRemaining.isEmpty()) {
-			logger.info("**** CoreContainer contains 0 solrCores. Shutting down...");
-			
-			all_solr_cores.shutdown(); // wouldn't do anything anyway for 0 cores I think
-			all_solr_cores = null;
-		    } 
-		    else { // else part is just for debugging
-			Iterator coreIterator = coreNamesRemaining.iterator();
-			while(coreIterator.hasNext()) {
-			    logger.error("**** Core: " + coreIterator.next() + " still exists in CoreContainer");
-			}
-		    }
-		}
-		*/
 	}
 
 	/** add in the SOLR specific params to TextQuery */

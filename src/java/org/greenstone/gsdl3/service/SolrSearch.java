@@ -82,54 +82,6 @@ public class SolrSearch extends LuceneSearch {
 		// on ant stop, holding a lock on the cores. Doing shutdown() preserves core descriptions in solr.xml
 		solr_cores.shutdown();
 		solr_cores = null;
-
-		// For solr 3.3.0's jetty server, but not for solr 4.7.2's jetty server
-		/*
-		// 2. Remove all SolrCores in the CoreContainer (solr_cores) that are specific to this collection
-		String collection_core_name_prefix = getCollectionCoreNamePrefix();
-
-		Collection<String> coreNames = solr_cores.getCoreNames();
-		if(!coreNames.isEmpty()) {
-		    Iterator<String> coreIterator = coreNames.iterator();
-		    while(coreIterator.hasNext()) {
-
-			String solrCoreName = coreIterator.next();		
-			if(solrCoreName.startsWith(collection_core_name_prefix)) {
-
-			    logger.error("**** Removing collection-specific core: " + solrCoreName + " from CoreContainer");
-
-			    // CoreContainer.remove(String name): removes and returns registered core w/o decrementing it's reference count
-			    // http://lucene.apache.org/solr/api/index.html?org/apache/solr/core/CoreContainer.html
-			    SolrCore solr_core = solr_cores.remove(solrCoreName);
-			    while(!solr_core.isClosed()) {
-				logger.error("@@@@@@ " + solrCoreName + " was not closed. Closing....");
-				solr_core.close(); // http://lucene.apache.org/solr/api/org/apache/solr/core/SolrCore.html
-			    } 
-			    if(solr_core.isClosed()) {
-				logger.error("@@@@@@ " + solrCoreName + " is closed.");
-			    }
-			    solr_core = null;
-			}
-		    }
-		}
-
-		// 3. if there are no more solr cores in Greenstone, then solr_cores will be empty, null the CoreContainer
-		// All going well, this will happen when we're ant stopping the Greenstone server and the last Solr collection
-		// is being deactivated
-		Collection<String> coreNamesRemaining = solr_cores.getCoreNames();
-		if(coreNamesRemaining.isEmpty()) {
-		    logger.error("**** CoreContainer contains 0 solrCores. Shutting down...");
-
-		    solr_cores.shutdown(); // wouldn't do anything anyway for 0 cores I think
-		    solr_cores = null;
-		} 
-		else { // else part is just for debugging
-		    Iterator coreIterator = coreNamesRemaining.iterator();
-		    while(coreIterator.hasNext()) {
-			logger.error("**** Core: " + coreIterator.next() + " still exists in CoreContainer");
-		    }
-		}
-		*/
     }
 
 	
