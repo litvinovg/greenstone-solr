@@ -8,11 +8,17 @@
   <available property="ext.web.exists" file="${basedir}/web" type="dir" />
 
   <!-- greenstone3 paths -->
-  <property name="web.home" value="${basedir}/../../web"/>
+  <!-- http://stackoverflow.com/questions/3136849/how-do-i-convert-a-relative-path-in-ant-to-an-absolute-path 
+    http://stackoverflow.com/questions/8295860/pathconvert-with-relative-file-names -->
+  <property name="web.home" location="${basedir}/../../web"/> <!-- location property creates an absolute path -->
   <property name="localsite.collectdir" value="${web.home}/sites/localsite/collect"/>
   <property name="web.classesdir" value="${web.home}/WEB-INF/classes"/>
   <property name="web.libdir" value="${web.home}/WEB-INF/lib"/>  
   <property name="web.extdir" value="${web.home}/ext/solr"/>
+
+  <property name="tomcat.dir" location="${basedir}/../../packages/tomcat"/> <!-- location property creates an absolute path -->
+  <property name="tomcat.lib.dir" value="${tomcat.dir}/lib"/>
+  <property name="tomcat.context.dir" value="${tomcat.dir}/conf/Catalina/localhost"/>
 
   <path id="compile.classpath">
     <!-- gs3 jar files we need -->
@@ -24,7 +30,9 @@
     <fileset dir="lib/java">
       <include name="*.jar"/>
     </fileset>
+    <pathelement location="lib/servlet-api-3.0.jar"/>
   </path>
+
 
   <!-- FILE LISTINGS.-->
   <!-- Created as property elements rather than as filelist elements, since
@@ -148,10 +156,51 @@
 	</copy>
     <echo>Unzipping pre-built index</echo>
     <unzip dest="${localsite.collectdir}/solr-jdbm-demo" src="${localsite.collectdir}/solr-jdbm-demo/index.zip" />
-
-
   </target>
-  
+
+  <!-- Setting up solr to work with tomcat server instead of jetty server -->
+  <target name="solr-for-tomcat" description="Helper-target: setting up solr to work tomcat">
+    
+    <echo>Copying solr jars needed for running solr with tomcat: ${basedir}/lib/ext</echo>	
+    <copy todir="${tomcat.lib.dir}">	  
+      <fileset dir="lib/ext">
+	<include name="*.jar"/>
+      </fileset>
+    </copy>
+    
+    <!-- slf4j and commons logging bridge needed to avoid exception about incompatibility in tomcat log files-->
+    <echo>Copying ${basedir}/lib/ext/jcl-over-slf4j-1.6.6.jar again to ${web.libdir}</echo>
+    <copy todir="${web.libdir}">
+      <filelist id="logging-bridge" dir="lib/ext" files="jcl-over-slf4j-1.6.6.jar"/>
+    </copy>	
+
+    <echo>Moving xalan related jar files from  ${web.libdir} to ${tomcat.lib.dir}, to share with solr</echo>
+    <move todir="${tomcat.lib.dir}">
+      <filelist dir="${web.libdir}">
+	<file name="xalan.jar"/>
+	<file name="xercesImpl.jar"/>
+	<file name="xml-apis.jar"/>
+	<file name="xsltc.jar"/>
+	<file name="serializer.jar"/>
+      </filelist>
+    </move>
+    
+    <echo>Copying ${basedir}/webapps/solr.war to ${tomcat.dir}/webapps</echo>
+    <copy todir="${tomcat.dir}/webapps" file="webapps/solr.war" />
+    <echo>Generating solr context file in ${tomcat.context.dir}</echo>
+    
+    <!-- we want unix paths (forward slashes) in the tomcat context file -->
+    <pathconvert targetos="unix" property="gsdl3.web.home">
+      <path path="${web.home}"/><!-- creates an absolute path-->
+    </pathconvert>
+    <pathconvert targetos="unix" property="tomcat.home">
+      <path path="${tomcat.dir}"/><!-- creates an absolute path-->
+    </pathconvert>
+    <filter token="gsdl3home" value="${gsdl3.web.home}"/>
+    <filter token="tomcathome" value="${tomcat.home}"/>
+    <copy file="solr-tomcat-context.xml.in" tofile="${tomcat.context.dir}/solr.xml" filtering="true" overwrite="true"/>
+
+  </target>  
 
   <!-- copy the content of the web folder (avoiding the top-level .svn directory) -->
   <target name="copy-solr-web" if="ext.web.exists">
@@ -164,19 +213,19 @@
     </copy>
   </target>
 
-  <target name="add-service" depends="copy-solr-web,copy-files,compile" description="Run this target to setup the Solr extension for Greenstone3" />
 
+  <target name="add-service" depends="copy-solr-web,copy-files,solr-for-tomcat,compile" description="Run this target to setup the Solr extension for Greenstone3" />
   
-  <target name="del-service" 
-	description="Run this target to unset the Solr extension for Greenstone3">	
-	
+  <target name="del-service" depends="del-files,del-solr-for-tomcat"
+	description="Run this target to unset the Solr extension for Greenstone3" />
+
+
+  <target name="del-files" description="Helper-target to delete files for del-service target">
 	<!-- failonerror is set to false in case some files don't exist 
 	and can't be deleted therefore -->
-	
-
 
 	<echo/>
-	<echo>Removing from  gsdl3 properties area: properties/${property-files}</echo>
+	<echo>Removing from gsdl3 properties area: properties/${property-files}</echo>
 	<delete failonerror="false">
           <filelist dir="${web.classesdir}" files="${property-files}"/>
 	</delete>
@@ -193,8 +242,47 @@
 
 	<echo/>
 	<echo>Removing solr-jdbm-demo collection from: ${localsite.collectdir}</echo>
-	<delete failonerror="false" includeEmptyDirs="true" dir="${localsite.collectcdir}/solr-jdbm-demo"/>	
-	
+	<delete failonerror="false" includeEmptyDirs="true" dir="${localsite.collectcdir}/solr-jdbm-demo"/>
+
+  </target>
+  
+  <target name="del-solr-for-tomcat" description="Helper-target to remove files for getting solr to work with tomcat">
+
+	<echo/>
+	<echo>Removing solr modifications to tomcat: context file, solr.war and deployed version, jar files</echo>
+
+	<!-- Actually need to ensure tomcat is not running at this point
+	     But if solr.war is deleted first, it can't be re-deployed when deleting the solr folder subsequently
+	  -->
+	<delete failonerror="false" file="${tomcat.dir}/webapps/solr.war"/>
+	<delete failonerror="false" includeEmptyDirs="true" dir="${tomcat.dir}/webapps/solr"/>
+
+	<delete failonerror="false" file="${tomcat.context.dir}/solr.xml"/>
+
+	<!-- delete all the jar files in tomcat/lib that were copied from ext/solr/lib/ext
+	     which are all the jar files that are present in both tomcat/lib and ext/solr/lib/ext
+	     https://ant.apache.org/manual/Types/selectors.html#presentselect -->
+	<delete failonerror="false">	  
+	  <fileset dir="${tomcat.lib.dir}" includes="**/*.jar">	    
+	    <present present="both" targetdir="lib/ext"/>
+	  </fileset>
+	</delete>
+
+	<!-- remove logging bridge jar file that was added into greenstone 3 web lib area -->
+	<delete failonerror="false" file="${web.libdir}/jcl-over-slf4j-1.6.6.jar"/>
+
+	<!-- moving shared xalan related jar files back from tomcat lib to GS3 web lib -->
+	<move todir="${web.libdir}">
+	  <filelist dir="${tomcat.lib.dir}">
+	    <file name="xalan.jar"/>
+	    <file name="xercesImpl.jar"/>
+	    <file name="xml-apis.jar"/>
+	    <file name="xsltc.jar"/>
+	    <file name="serializer.jar"/>
+	  </filelist>
+	</move>
+
+	<!--http://stackoverflow.com/questions/2140637/how-do-i-build-a-list-of-file-names-->
   </target>
   
 </project>

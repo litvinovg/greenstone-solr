@@ -675,7 +675,7 @@ sub post_build_indexes {
     # as this has been done in our pre_build_indexes() phase for solr
 
 
-    # Also need to stop the Solr/jetty server if it was explicitly started
+    # Also need to stop the Solr server (be it tomcat or jetty) if it was explicitly started
     # in pre_build_indexes()
     
     my $solr_server = $self->{'solr_server'};

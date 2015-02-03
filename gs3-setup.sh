@@ -10,6 +10,26 @@ fulldir=${fulldir%/.}
 # with existing services on your computer
 #--
 
+# If using tomcat, read the tomcat host and port from the toplevel GS3 build.properties
+# http://en.kioskea.net/faq/1757-how-to-read-a-file-line-by-line
+# The following sets the field separator IFS to the = sign, then reads the file line by 
+# line, setting propname and propval (which are fields separated by '=') for each line read
+SOLR_PORT=8983
+SOLR_HOST=localhost
+file=$GSDL3SRCHOME/build.properties
+while IFS== read propname propval; do
+    if [ "x$propname" = "xtomcat.server" ] ; then
+	SOLR_HOST=$propval
+    fi
+    if [ "x$propname" = "xtomcat.port" ] ; then
+	SOLR_PORT=$propval
+    fi          
+done < $file
+
+echo "Tomcat port: $SOLR_PORT"
+echo "Tomcat host: $SOLR_HOST"
+
+# If using jetty:
 # The port Jetty runs on:
 SOLR_JETTY_PORT=8983
 
@@ -60,6 +80,8 @@ if [ "x$GEXT_SOLR" = "x" ] ; then
 
   export SOLR_JETTY_PORT
   export JETTY_STOP_PORT
+  export SOLR_PORT
+  export SOLR_HOST
   first_time=1
 
   echo "+Your environment is now setup for $extdesc"

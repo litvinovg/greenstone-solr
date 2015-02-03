@@ -71,10 +71,11 @@ sub open_post_pipe
     my $post_jar   = &util::filename_cat("lib","java","solr-post.jar");
     my $full_post_jar   = solrutil::locate_file($search_path,$post_jar);
     
-    my $jetty_port = $ENV{'SOLR_JETTY_PORT'};
+    my $server_port = $ENV{'SOLR_PORT'}; # tomcat
+    my $server_host = $ENV{'SOLR_HOST'};
     
     # Now run solr-post command
-    my $post_props = "-Durl=http://localhost:$jetty_port/solr/$core/update";
+    my $post_props = "-Durl=http://$server_host:$server_port/solr/$core/update";
     $post_props .= " -Ddata=stdin";
     $post_props .= " -Dcommit=yes";
     

@@ -19,21 +19,19 @@
 package org.greenstone.gsdl3.service;
 
 // Greenstone classes
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.core.CoreContainer;
-import org.apache.solr.core.SolrCore;
 import org.greenstone.LuceneWrapper4.SharedSoleneQueryResult;
 import org.greenstone.gsdl3.util.FacetWrapper;
 import org.greenstone.gsdl3.util.GSFile;
@@ -49,15 +47,15 @@ import org.w3c.dom.NodeList;
 public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 {
 
+  public static final String SOLR_SERVLET_SUFFIX = "/solr";
   protected static final String SORT_ORDER_PARAM = "sortOrder";
   protected static final String SORT_ORDER_DESCENDING = "1";
   protected static final String SORT_ORDER_ASCENDING = "0";
 
 	static Logger logger = Logger.getLogger(org.greenstone.gsdl3.service.GS2SolrSearch.class.getName());
 
-	static protected CoreContainer all_solr_cores = null;
-
-	protected HashMap solr_core_cache;
+        protected String solr_servlet_base_url;
+	protected HashMap<String, SolrServer> solr_core_cache;
 	protected SolrQueryWrapper solr_src = null;
 
 	protected ArrayList<String> _facets = new ArrayList<String>();
@@ -71,27 +69,24 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		// section-level=>sidx.  The hashmap is filled out on demand
 		// based on 'level' parameter passed in to 'setUpQueryer()'
 
-		solr_core_cache = new HashMap();
+		solr_core_cache = new HashMap<String, SolrServer>();
 
-		if (all_solr_cores == null)
-		{
-			// Share one CoreContainer across all sites/collections
-			try
-			{
-				String gsdl3_writablehome = GlobalProperties.getGSDL3WritableHome();
-				String solr_ext_name = GlobalProperties.getProperty("gsdlext.solr.dirname", "solr");
+		this.solr_src = new SolrQueryWrapper();		
 
-				String solr_home_str = GSFile.extHome(gsdl3_writablehome, solr_ext_name);
-
-				all_solr_cores = new CoreContainer(solr_home_str);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
+		// Create the solr servlet url on GS3's tomcat. By default it's "http://localhost:8383/solr"
+		// Don't do this in configure(), since the tomcat url will remain unchanged while tomcat is running
+		try {
+		    Properties globalProperties = new Properties();
+		    globalProperties.load(Class.forName("org.greenstone.util.GlobalProperties").getClassLoader().getResourceAsStream("global.properties"));
+		    String host = globalProperties.getProperty("tomcat.server", "localhost");
+		    String port = globalProperties.getProperty("tomcat.port", "8383");
+		    String protocol = globalProperties.getProperty("tomcat.protocol", "http");
+		    
+		    String portStr = port.equals("80") ? "" : ":"+port;
+		    solr_servlet_base_url = protocol+"://"+host+portStr+SOLR_SERVLET_SUFFIX;
+		} catch(Exception e) {
+		    logger.error("Error reading greenstone's tomcat solr server properties from global.properties", e);
 		}
-
-		this.solr_src = new SolrQueryWrapper();
 	}
 
 	/** configure this service */
@@ -99,35 +94,14 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 	{
 		boolean success = super.configure(info, extra_info);
 
-		// 1. Make the CoreContainer reload solr.xml
-		// This is particularly needed for when activate.pl is executed during
-		// a running GS3 server. At that point, the solr collection is reactivated and 
-		// we need to tell Greenstone that the solr index has changed. This requires
-		// the CoreContainer to reload the solr.xml file, and it all works again.
+		// clear the map of solr cores for this collection added to the map upon querying
+		solr_core_cache.clear(); 
 
-		solr_core_cache.clear(); // clear the map of solr cores for this collection added to the map upon querying
-	    
-		// Reload the updated solr.xml into the CoreContainer
-		// (Doing an all_solr_cores.shutdown() first doesn't seem to be required)
-		try { 	
-		    String solr_home_str = all_solr_cores.getSolrHome();
-		    File solr_home = new File(solr_home_str);
-		    File solr_xml = new File( solr_home,"solr.xml" );
-		    
-		    //all_solr_cores.load(solr_home_str,solr_xml);
-		    all_solr_cores.load();
-
-		} catch (Exception e) {
-		    logger.error("Exception in GS2SolrSearch.configure(): " + e.getMessage());
-		    e.printStackTrace();
-		    return false;
-		}
-		
 		if(!success) {
 		    return false;
 		}
 		
-		// 2. Setting up facets
+		// Setting up facets
 		// TODO - get these from build config, in case some haven't built
 		Element searchElem = (Element) GSXML.getChildByTagName(extra_info, GSXML.SEARCH_ELEM);
 		NodeList facet_list = info.getElementsByTagName("facet");
@@ -169,21 +143,8 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		super.cleanUp();
 		this.solr_src.cleanUp();
 
-
-		// 1. clear the map keeping track of the solrcores' EmbeddedSolrServers in this collection
+		// clear the map keeping track of the SolrServers in this collection
 		solr_core_cache.clear();
-
-		// 2. For solr 4.7.2., GLI (and ant stop from cmd) is unable to shutdown the tomcat server fully, 
-		// IF any collection has been previewed AND if there are any solr collections in the collect folder.
-		// This is because although the GS3 server seems to have stopped running at this stage, running a
-		// `ps aux | grep tomcat` reveals that some part of tomcat is still running. It seems to be still 
-		// holding on to the cores. Doing an all_cores.shutdown() here, stops GS3 from hanging on to the cores
-		// while still preserving the core desciptions in web/ext/solr.xml as needed when restarting the GS3 server.
-
-		// Need GS3 server (tomcat) to release the cores, else a part of tomcat is still running in the background 
-		// on ant stop, holding a lock on the cores. Doing shutdown() preserves core descriptions in solr.xml
-		all_solr_cores.shutdown();
-		all_solr_cores = null;
 	}
 
 	/** add in the SOLR specific params to TextQuery */
@@ -355,18 +316,17 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		// now we know the index level, we can dig out the required
 		// solr-core, (caching the result in 'solr_core_cache')
 		String core_name = getCollectionCoreNamePrefix() + "-" + index;
-
-		EmbeddedSolrServer solr_core = null;
+		
+		SolrServer solr_core = null;
 
 		if (!solr_core_cache.containsKey(core_name))
-		{
-			solr_core = new EmbeddedSolrServer(all_solr_cores, core_name);
-
-			solr_core_cache.put(core_name, solr_core);
+		{		    
+		    solr_core = new HttpSolrServer(this.solr_servlet_base_url+"/"+core_name);
+		    solr_core_cache.put(core_name, solr_core);		    
 		}
 		else
 		{
-			solr_core = (EmbeddedSolrServer) solr_core_cache.get(core_name);
+		    solr_core = solr_core_cache.get(core_name);
 		}
 
 		this.solr_src.setSolrCore(solr_core);
@@ -380,7 +340,6 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 	{
 		try
 		{
-			//SharedSoleneQueryResult sqr = this.solr_src.runQuery(query);
 			SharedSoleneQueryResult sqr = this.solr_src.runQuery(query);
 
 			return sqr;

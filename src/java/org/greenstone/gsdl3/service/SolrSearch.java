@@ -12,57 +12,47 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList; 
 
-import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Properties;
 
-
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.params.ModifiableSolrParams;
-import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
 import org.apache.solr.servlet.SolrRequestParsers;
-import org.apache.solr.core.CoreContainer;
-import org.apache.solr.core.SolrCore;
-
-import java.io.File;
-import java.util.Collection;
-
-
-import org.apache.log4j.*;
 
 
 public class SolrSearch extends LuceneSearch {
 
+    public static final String SOLR_SERVLET_SUFFIX = "/solr";
     static Logger logger = Logger.getLogger(org.greenstone.gsdl3.service.SolrSearch.class.getName());
 
-    static protected CoreContainer solr_cores = null;
-    protected HashMap solr_server;
+    protected String solr_servlet_base_url;
+    protected HashMap<String, SolrServer> solr_server;
 
     public SolrSearch()
     {
-	solr_server = new HashMap();
+	solr_server = new HashMap<String, SolrServer>();	
 
-	if (solr_cores == null) {
-	    // Share one CoreContainer across all sites/collections
-	    try { 
-		
-		String gsdl3_home = GlobalProperties.getGSDL3Home();
-		String solr_ext_name = GlobalProperties.getProperty("gsdlext.solr.dirname","solr");
-		
-		String solr_home_str = GSFile.extHome(gsdl3_home,solr_ext_name);
-
-		solr_cores = new CoreContainer(solr_home_str);
-	    }
-	    catch (Exception e) {
-		e.printStackTrace();
-	    }
+	// Create the solr servlet url on GS3's tomcat. By default it's "http://localhost:8383/solr"
+	// Don't do this in configure(), since the tomcat url will remain unchanged while tomcat is running
+	try {
+	    Properties globalProperties = new Properties();
+	    globalProperties.load(Class.forName("org.greenstone.util.GlobalProperties").getClassLoader().getResourceAsStream("global.properties"));
+	    String host = globalProperties.getProperty("tomcat.server", "localhost");
+	    String port = globalProperties.getProperty("tomcat.port", "8383");
+	    String protocol = globalProperties.getProperty("tomcat.protocol", "http");
+	    
+	    String portStr = port.equals("80") ? "" : ":"+port;
+	    solr_servlet_base_url = protocol+"://"+host+portStr+SOLR_SERVLET_SUFFIX;
+	} catch(Exception e) {
+	    logger.error("Error reading greenstone's tomcat solr server properties from global.properties", e);
 	}
     }
 	
@@ -75,42 +65,21 @@ public class SolrSearch extends LuceneSearch {
     public void cleanUp() {
 	super.cleanUp();
 	
-		// 1. clear the map keeping track of the solrcores' EmbeddedSolrServers in this collection
-		solr_server.clear();
-
-		// 2. Need GS3 server (tomcat) to release the cores, else a part of tomcat is still running in the background 
-		// on ant stop, holding a lock on the cores. Doing shutdown() preserves core descriptions in solr.xml
-		solr_cores.shutdown();
-		solr_cores = null;
+	// clear the map keeping track of the SolrServers in this collection
+	solr_server.clear();
     }
 
 	
 	// adjusted configure to bring it up to speed with changes in GS2SolrSearch (for activate.pl) - not yet tested
     public boolean configure(Element info, Element extra_info) {
-		boolean success = super.configure(info, extra_info);
+	boolean success = super.configure(info, extra_info);
 	
-		// 1. Make the CoreContainer reload solr.xml
-		// This is particularly needed for when activate.pl is executed during
-		// a running GS3 server. At that point, the solr collection is reactivated and 
-		// we need to tell Greenstone that the solr index has changed. This requires
-		// the CoreContainer to reload the solr.xml file, and it all works again.
-
-		solr_server.clear(); // clear the map of solr cores for this collection added to the map upon querying
-	    
-		// Reload the updated solr.xml into the CoreContainer
-		// (Doing a solr_cores.shutdown() first doesn't seem to be required)
-		try { 	
-		    String solr_home_str = solr_cores.getSolrHome();
-		    File solr_home = new File(solr_home_str);
-		    File solr_xml = new File( solr_home,"solr.xml" );
-		    
-		    //solr_cores.load(solr_home_str,solr_xml);
-		    solr_cores.load();
-		} catch (Exception e) {
-		    logger.error("Exception in SolrSearch.configure(): " + e.getMessage());
-		    e.printStackTrace();
-		    return false;
-		}
+	// clear the map of solr cores for this collection added to the map upon querying
+	solr_server.clear();
+	
+	if(!success) {
+	    return false;
+	}
 
 	// initialize required number of SolrCores based on values
 	// in 'index_ids' that are set by LuceneSearch::configure()
@@ -122,11 +91,10 @@ public class SolrSearch extends LuceneSearch {
 	    String idx_name = (String)index_ids.get(i);
 	    String core_name = core_name_prefix + "-" + idx_name;
 
-	    EmbeddedSolrServer solr_core
-		= new EmbeddedSolrServer(solr_cores,core_name);	
-
+	    SolrServer solr_core = new HttpSolrServer(this.solr_servlet_base_url+"/"+core_name);
 	    solr_server.put(core_name,solr_core);
 	}
+	
 
 	return success;
     }
@@ -164,16 +132,21 @@ public class SolrSearch extends LuceneSearch {
 	}
 
         try {
+	    
+	    // Use SolrQuery with HttpSolrServer instead of ModifiableSolrParams, 
+	    // see http://stackoverflow.com/questions/13944567/querying-solr-server-using-solrj	    
+	    SolrQuery solrParams = new SolrQuery(query_string); // initialised with q url-parameter
+	    //solrparams.setRequestHandler("/select"); // default. Or try "select"
 
-	    ModifiableSolrParams solrParams = new ModifiableSolrParams();
-	    solrParams.set("q", query_string);
-	    //solrParams.set("start", start);
-	    //solrParams.set("rows", nbDocuments);
+	    ///solrParams.set("start", start);
+	    ///solrParams.set("rows", nbDocuments);
+
 
 	    String core_name = getCollectionCoreNamePrefix() + "-" + index;
 
-	    EmbeddedSolrServer solr_core = (EmbeddedSolrServer)solr_server.get(core_name);
-
+	    // http://stackoverflow.com/questions/17026530/accessing-a-cores-default-handler-through-solrj-using-setquerytype
+	    // default request handler is /select, see http://wiki.apache.org/solr/CoreQueryParameters
+	    SolrServer solr_core = solr_server.get(core_name);
 	    QueryResponse solrResponse = solr_core.query(solrParams);
 
 	    SolrDocumentList hits = solrResponse.getResults();

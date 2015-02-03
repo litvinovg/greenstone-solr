@@ -240,8 +240,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		logger.error("#### CoreContainer is empty");
 	    }
 	} else {
-	    System.err.println("#### Not an EmbeddedSolrServer. This shouldn't happen." + solr_core.getClass());
-	    logger.error("#### Not an EmbeddedSolrServer. This shouldn't happen."  + solr_core.getClass());
+	    System.err.println("#### Not an EmbeddedSolrServer. SolrQueryWrapper.getTerms() not yet implemented for " + solr_core.getClass());
+	    logger.error("#### Not an EmbeddedSolrServer. SolrQueryWrapper.getTerms() not yet implemented for "  + solr_core.getClass());
 	}
     
 	
