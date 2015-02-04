@@ -80,6 +80,13 @@
    slf4j-jdk14-1.6.1.jar - have to download slf4j jar file for version 1.6.6 
   -->
 
+  <property name="shared-xalan-jars"
+	    value="xalan.jar
+		   xercesImpl.jar
+		   xml-apis.jar
+		   xsltc.jar
+		   serializer.jar"/>
+
   <property name="java-service-files" 
     value="SolrSearch.java		   	
     GS2SolrSearch.java
@@ -176,13 +183,7 @@
 
     <echo>Moving xalan related jar files from  ${web.libdir} to ${tomcat.lib.dir}, to share with solr</echo>
     <move todir="${tomcat.lib.dir}">
-      <filelist dir="${web.libdir}">
-	<file name="xalan.jar"/>
-	<file name="xercesImpl.jar"/>
-	<file name="xml-apis.jar"/>
-	<file name="xsltc.jar"/>
-	<file name="serializer.jar"/>
-      </filelist>
+      <filelist dir="${web.libdir}" files="${shared-xalan-jars}" />
     </move>
     
     <echo>Copying ${basedir}/webapps/solr.war to ${tomcat.dir}/webapps</echo>
@@ -273,16 +274,16 @@
 
 	<!-- moving shared xalan related jar files back from tomcat lib to GS3 web lib -->
 	<move todir="${web.libdir}">
-	  <filelist dir="${tomcat.lib.dir}">
-	    <file name="xalan.jar"/>
-	    <file name="xercesImpl.jar"/>
-	    <file name="xml-apis.jar"/>
-	    <file name="xsltc.jar"/>
-	    <file name="serializer.jar"/>
-	  </filelist>
+	  <filelist dir="${tomcat.lib.dir}" files="${shared-xalan-jars}" />
 	</move>
 
 	<!--http://stackoverflow.com/questions/2140637/how-do-i-build-a-list-of-file-names-->
+  </target>
+
+  <target name="tmp" description="temptarget">
+    <move todir="${tomcat.lib.dir}">
+      <filelist dir="${web.libdir}" files="${shared-xalan-jars}" />
+    </move>
   </target>
   
 </project>
