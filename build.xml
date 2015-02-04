@@ -279,11 +279,5 @@
 
 	<!--http://stackoverflow.com/questions/2140637/how-do-i-build-a-list-of-file-names-->
   </target>
-
-  <target name="tmp" description="temptarget">
-    <move todir="${tomcat.lib.dir}">
-      <filelist dir="${web.libdir}" files="${shared-xalan-jars}" />
-    </move>
-  </target>
   
 </project>
