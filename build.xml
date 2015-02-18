@@ -179,15 +179,19 @@
     <echo>Copying ${basedir}/lib/ext/jcl-over-slf4j-1.6.6.jar again to ${web.libdir}</echo>
     <copy todir="${web.libdir}">
       <filelist id="logging-bridge" dir="lib/ext" files="jcl-over-slf4j-1.6.6.jar"/>
-    </copy>	
-
-    <echo>Moving xalan related jar files from  ${web.libdir} to ${tomcat.lib.dir}, to share with solr</echo>
-    <move todir="${tomcat.lib.dir}">
-      <filelist dir="${web.libdir}" files="${shared-xalan-jars}" />
-    </move>
+    </copy>
     
     <echo>Copying ${basedir}/webapps/solr.war to ${tomcat.dir}/webapps</echo>
     <copy todir="${tomcat.dir}/webapps" file="webapps/solr.war" />
+	<unwar src="${tomcat.dir}/webapps/solr.war" dest="${tomcat.dir}/webapps/solr"/>
+	<echo>Copying xalan related jar files from  ${web.libdir} into ${tomcat.dir}/webapps/solr.war</echo>
+    <copy todir="${tomcat.dir}/webapps/solr/WEB-INF/lib">
+      <filelist dir="${web.libdir}" files="${shared-xalan-jars}" />
+    </copy>
+	<jar destfile="${tomcat.dir}/webapps/solr.war" basedir="${tomcat.dir}/webapps/solr" />
+	<!-- delete the webapps\solr temporary dir: tomcat will unpack the modified war file on startup-->
+	<delete failonerror="true" dir="${tomcat.dir}/webapps/solr" />
+	
     <echo>Generating solr context file in ${tomcat.context.dir}</echo>
     
     <!-- we want unix paths (forward slashes) in the tomcat context file -->
@@ -271,11 +275,6 @@
 
 	<!-- remove logging bridge jar file that was added into greenstone 3 web lib area -->
 	<delete failonerror="false" file="${web.libdir}/jcl-over-slf4j-1.6.6.jar"/>
-
-	<!-- moving shared xalan related jar files back from tomcat lib to GS3 web lib -->
-	<move todir="${web.libdir}">
-	  <filelist dir="${tomcat.lib.dir}" files="${shared-xalan-jars}" />
-	</move>
 
 	<!--http://stackoverflow.com/questions/2140637/how-do-i-build-a-list-of-file-names-->
   </target>
