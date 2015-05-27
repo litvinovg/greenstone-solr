@@ -86,6 +86,9 @@
 		   xml-apis.jar
 		   xsltc.jar
 		   serializer.jar"/>
+  <property name="russian-morph-jars"
+            value="russian-4.7.2.jar
+                   morph-4.7.2.jar"/>
 
   <property name="java-service-files" 
     value="SolrSearch.java		   	
@@ -187,6 +190,7 @@
 	<echo>Copying xalan related jar files from  ${web.libdir} into ${tomcat.dir}/webapps/solr.war</echo>
     <copy todir="${tomcat.dir}/webapps/solr/WEB-INF/lib">
       <filelist dir="${web.libdir}" files="${shared-xalan-jars}" />
+      <filelist dir="lib/russianmorphology" files="${russian-morph-jars}" />
     </copy>
 	<jar destfile="${tomcat.dir}/webapps/solr.war" basedir="${tomcat.dir}/webapps/solr" />
 	<!-- delete the webapps\solr temporary dir: tomcat will unpack the modified war file on startup-->
