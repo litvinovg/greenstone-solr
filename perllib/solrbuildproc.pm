@@ -293,6 +293,12 @@ sub textedit {
 	$start_doc .= "    <id>$gs2_docOID</id>\n";
 
 	$end_doc    = "  </delete>\n"; 
+
+	# for delete mode, we need to specify just the docOID to delete and we're done
+	my $text = $start_doc;
+	$text .= $end_doc;
+	print $solrhandle $text;
+	return;
     }
 
     # add/update, delete
@@ -341,6 +347,13 @@ sub textedit {
 	    $start_sec .= "    <id>$sec_gs2_docOID</id>\n";
 
 	    $end_sec    = "  </delete>\n"; 
+
+	    # for delete mode, should specify only this section's docOID to delete, then move on to the next section
+	    my $text = $start_sec;
+	    $text .= $end_sec;
+	    print $solrhandle $text;
+	    $section = $doc_obj->get_next_section($section);
+	    next;
 	}
 
 
@@ -641,7 +654,11 @@ sub textreindex
     my $self = shift (@_);
     my ($doc_obj,$file) = @_;
 
-    $self->textedit($doc_obj,$file,"update");
+    # the update command does not exist in solrbuildproc
+    # reindexing consists of deleting and then adding the same file
+    #$self->textedit($doc_obj,$file,"update");
+    $self->textedit($doc_obj,$file,"delete");
+    $self->textedit($doc_obj,$file,"add");
 }
 
 
