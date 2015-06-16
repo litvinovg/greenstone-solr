@@ -1098,7 +1098,16 @@
         <!-- less aggressive: <filter class="solr.RussianLightStemFilterFactory"/> -->
       </analyzer>
     </fieldType>
-    
+<!-- Russian with morphology-->
+    <fieldType name="text_ru_morph" class="solr.TextField" positionIncrementGap="100">
+          <analyzer>
+          <tokenizer class="solr.StandardTokenizerFactory"/>
+          <filter class="solr.LowerCaseFilterFactory"/>
+          <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ru.txt" format="snowball" />
+          <filter class="org.apache.lucene.morphology.russian.RussianFilterFactory"/>
+          </analyzer>
+    </fieldType>
+
     <!-- Swedish -->
     <fieldType name="text_sv" class="solr.TextField" positionIncrementGap="100">
       <analyzer> 
