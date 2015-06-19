@@ -129,6 +129,22 @@
       </manifest>
     </jar>
     <copy file="${build.home}/gs3-solr.jar" todir="${web.libdir}"/>
+
+    <!-- customisations to the http solr server -->
+    <jar destfile="${build.home}/gs3-solrserver.jar">
+      <fileset dir="${build.home}">
+        <include name="org/greenstone/solrserver/**"/>
+      </fileset>
+      <manifest>
+        <attribute name="Built-By" value="greenstone3" />
+      </manifest>
+    </jar>
+    <!--<copy file="${build.home}/gs3-solrserver.jar" todir="${tomcat.dir}/webapps/solr/WEB-INF/lib"/>
+
+	      But there's no guarantee the destination will exist at the beginning.
+	      The jar file also needs to go into solr.war. Which is taken care of in the add-service task.
+	      Instead, for testing, call ant compile-gs3-solrserver, which will copy it across to solr webapp. 
+      -->
   </target>
   
   <target name="copy-files" description="Helper-target: copy files across for add-service target">
@@ -187,9 +203,10 @@
     <echo>Copying ${basedir}/webapps/solr.war to ${tomcat.dir}/webapps</echo>
     <copy todir="${tomcat.dir}/webapps" file="webapps/solr.war" />
 	<unwar src="${tomcat.dir}/webapps/solr.war" dest="${tomcat.dir}/webapps/solr"/>
-	<echo>Copying xalan related jar files from  ${web.libdir} into ${tomcat.dir}/webapps/solr.war</echo>
+	<echo>Copying xalan related jar files, morphology and gs3-solrserver jars from ${web.libdir} into ${tomcat.dir}/webapps/solr.war</echo>
     <copy todir="${tomcat.dir}/webapps/solr/WEB-INF/lib">
       <filelist dir="${web.libdir}" files="${shared-xalan-jars}" />
+      <file file="${build.home}/gs3-solrserver.jar" />
       <filelist dir="lib/russianmorphology" files="${russian-morph-jars}" />
     </copy>
 	<jar destfile="${tomcat.dir}/webapps/solr.war" basedir="${tomcat.dir}/webapps/solr" />
@@ -223,7 +240,7 @@
   </target>
 
 
-  <target name="add-service" depends="copy-solr-web,copy-files,solr-for-tomcat,compile" description="Run this target to setup the Solr extension for Greenstone3" />
+  <target name="add-service" depends="copy-solr-web,copy-files,compile,solr-for-tomcat" description="Run this target to setup the Solr extension for Greenstone3" />
   
   <target name="del-service" depends="del-files,del-solr-for-tomcat"
 	description="Run this target to unset the Solr extension for Greenstone3" />
@@ -283,4 +300,11 @@
 	<!--http://stackoverflow.com/questions/2140637/how-do-i-build-a-list-of-file-names-->
   </target>
   
+  <target name="compile-gs3-solrserver" description="TEST Target to compile the solr server side gs3-solserver.jar for testing">
+    <delete dir="build/org/greenstone/solrserver" />
+    <delete file="build/gs3-solrserver.jar" />
+    <antcall target="compile" />
+    <copy file="${build.home}/gs3-solrserver.jar" todir="${tomcat.dir}/webapps/solr/WEB-INF/lib" />
+  </target>
+
 </project>

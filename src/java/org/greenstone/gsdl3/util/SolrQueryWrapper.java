@@ -35,6 +35,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery; // subclass of ModifiableSolrParams
 import org.apache.solr.client.solrj.SolrServer;
@@ -148,7 +151,17 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 	}
 
 
-    /** Extracts the query terms from the query string. The query string can be a boolean 
+    /**
+     * UNUSED.
+     * Back when we used the EmbeddedSolrServer, this getTerms method would expand the terms of a query.
+     * Because of Solr/Lucene Index locking exceptions, we switched over to the HttpSolrServer instead
+     * of the Embedded kind. 
+     *
+     * The functionality of getTerms has been moved to 
+     * ../solrserver/Greenstone3SearchHandler.java, which will sit on the solrserver side (inside 
+     * tomcat's solr webapp).
+     *
+     * Extracts the query terms from the query string. The query string can be a boolean 
      * combination of the various search fields with their search terms or phrases
      */
     public Term[] getTerms(SolrQuery solrQuery, String query_string) 
@@ -370,19 +383,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 			}
 		}
 
+		// the solrserver will now
 		// get the individual terms that make up the query, then request solr to return the totaltermfreq for each term
-		Term[] terms = getTerms(solrQuery, query_string);
-		if(terms != null) {
-		    for(int i = 0; i < terms.length; i++) {
-			Term term = terms[i];
-			String field = term.field();
-			String queryTerm = term.text();
-			// totaltermfreq(TI, 'farming') termfreq(TI, 'farming')
-			
-			solrQuery.addField("totaltermfreq(" + field + ",'" + queryTerm + "')");
-			solrQuery.addField("termfreq(" + field + ",'" + queryTerm + "')");
-		    }
-		}
 
 		// do the query
 		try
@@ -432,26 +434,49 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 					
 					// solr returns each term's totaltermfreq, ttf, at the document level, even though 
 					// the ttf is the same for each document. So extract this information just for the first document
-					if(i == 0) { // first document
-					    
-					    if(terms != null) {
-						for(int j = 0; j < terms.length; j++) {
-						    Term term = terms[j];
-						    String field = term.field();
-						    String queryTerm = term.text();
+					if(i == 0) { // first document, all others repeat the same termfreq data
+					    boolean foundTermInfo = false;
 
-						    // totaltermfreq(TI, 'farming') termfreq(TI, 'farming')
-						    Long totaltermfreq = (Long)doc.get("totaltermfreq("+field+",'"+queryTerm+"')");
-						    Integer termfreq = (Integer)doc.get("termfreq("+field+",'"+queryTerm+"')");
-
-						    //System.err.println("**** ttf = " + totaltermfreq); 
-						    //System.err.println("**** tf = " + termfreq);
-						    //logger.info("**** ttf = " + totaltermfreq); 
-						    //logger.info("**** tf = " + termfreq);
+					    Collection<String> fieldNames = doc.getFieldNames();
+					    for(Iterator<String> it = fieldNames.iterator(); it.hasNext(); ) {
+						String fieldName = it.next(); // e.g. looking for totaltermfreq(ZZ,'economically')
+						//logger.info("@@@@ found fieldName " + fieldName);
 						
-						    solr_query_result.addTerm(queryTerm, field, (int) hits.getNumFound(), totaltermfreq.intValue()); // long totaltermfreq to int
-						}
-					    } else { // no terms extracted from query_string
+
+						if(fieldName.startsWith("totaltermfreq")) {
+						   //|| fieldName.startsWith("termfreq")) {
+						    
+						    foundTermInfo = true;
+
+						    // e.g. totaltermfreq(TI,'farming') 
+						    // e.g. termfreq(TI,'farming')
+						    Pattern pattern = Pattern.compile("(.*?termfreq)\\((.*?),'(.*?)'\\)");
+						    Matcher matcher = pattern.matcher(fieldName);
+						    String metaField, indexField, queryTerm;
+						    while (matcher.find()) {
+							metaField = matcher.group(1); // termfreq or totaltermfreq
+							indexField = matcher.group(2); //ZZ, TI
+							queryTerm = matcher.group(3);
+
+							//logger.info("\t@@@@ found field " + indexField);
+							//logger.info("\t@@@@ queryTerm " + queryTerm);
+
+							// Finally, can ask for the totaltermfreq value for this
+							// searchterm in its indexed field:
+							// e.g. totaltermfreq(TI,'farming'), e.g. termfreq(TI,'farming')
+							Long totaltermfreq = (Long)doc.get("totaltermfreq("+indexField+",'"+queryTerm+"')");
+							
+							Integer termfreq = (Integer)doc.get("termfreq("+indexField+",'"+queryTerm+"')");
+							
+							//System.err.println("**** ttf = " + totaltermfreq); 
+							//System.err.println("**** tf = " + termfreq);
+							//logger.info("**** ttf = " + totaltermfreq); 
+							//logger.info("**** tf = " + termfreq);
+							solr_query_result.addTerm(queryTerm, indexField, (int) hits.getNumFound(), totaltermfreq.intValue()); // long totaltermfreq to int
+						    }
+						}						
+					    }
+					    if(!foundTermInfo) { // no terms extracted from query_string
 						solr_query_result.addTerm(query_string, defaultField, (int) hits.getNumFound(), -1); // no terms
 					    }
 					}
