@@ -87,9 +87,9 @@ public class Greenstone3SearchHandler extends SearchHandler
         // which is less CPU intensive than MultiTermQuery.SCORING_BOOLEAN_QUERY_REWRITE) 
 
     // This recursive method calls setRewriteMethod on any MultiTermQueries inside the given (boolean)query,
-    // since by default PrefixQueries get rewritten to ConstantScoreQueries and don't get expanded.
+    // since by default PrefixQueries like farm* get rewritten to ConstantScoreQueries and don't get expanded.
     // Calling setRewriteMethod on each MultiTermQuery in query here is useful to later ensure that any 
-    // MultiTermQueries like PrefixQueries and WildcareQueries can get expanded, 
+    // MultiTermQueries like PrefixQueries and WildcardQueries can get expanded, 
     // including when embedded in BooleanQueries.
     protected Query getSimplified(Query query) 
     {

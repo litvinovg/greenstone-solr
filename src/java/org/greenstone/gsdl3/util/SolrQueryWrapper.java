@@ -434,6 +434,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 					
 					// solr returns each term's totaltermfreq, ttf, at the document level, even though 
 					// the ttf is the same for each document. So extract this information just for the first document
+					// https://wiki.apache.org/solr/FunctionQuery#docfreq
+
 					if(i == 0) { // first document, all others repeat the same termfreq data
 					    boolean foundTermInfo = false;
 
