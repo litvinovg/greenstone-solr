@@ -76,7 +76,7 @@ import java.util.HashSet;
 // https://wiki.apache.org/solr/SolrPlugins
 public class Greenstone3SearchHandler extends SearchHandler
 {
-    // IMPORTANT NOTE: Logging doesn't work in this calss either with log4j or slf4j, 
+    // IMPORTANT NOTE: Logging doesn't work in this class either with log4j or slf4j, 
     // but System.err goes to catalina.out.
 
     //protected static Logger log = LoggerFactory.getLogger(Greenstone3SearchHandler.class);
@@ -127,10 +127,10 @@ public class Greenstone3SearchHandler extends SearchHandler
     protected Query expandQuery(SolrQueryRequest req, Query parsedQuery) throws Exception {
 
 	// calls setRewriteMethod on any MultiTermQueries inside the given (boolean)query,
-	// doing so ensures MultiTermQueries like PrefixQueries and WildcareQueries can get expanded
+	// doing so ensures MultiTermQueries like PrefixQueries and WildcardQueries can get expanded
 	parsedQuery = getSimplified(parsedQuery); // can throw exception
 	
-	// now finally rewrite the query to any expand Prefix- and WildCareQueries contained in here
+	// now finally rewrite the query to any expanded Prefix- and WildCardQueries contained in here
 	SolrIndexSearcher searcher = req.getSearcher();
 	IndexReader indexReader = searcher.getIndexReader(); // returns a DirectoryReader
 	parsedQuery = parsedQuery.rewrite(indexReader); // used to get rewritten to ConstantScoreQuery
