@@ -823,7 +823,8 @@
        of SearchComponents (see below) and supports distributed
        queries across multiple shards
     -->
-  <requestHandler name="/select" class="solr.SearchHandler">
+  <!--<requestHandler name="/select" class="solr.SearchHandler">-->
+  <requestHandler name="/select" class="org.greenstone.solrserver.Greenstone3SearchHandler">
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
       -->
@@ -887,7 +888,8 @@
     </requestHandler>
 
   <!-- A request handler that returns indented JSON by default -->
-  <requestHandler name="/query" class="solr.SearchHandler">
+  <!--<requestHandler name="/query" class="solr.SearchHandler">-->
+  <requestHandler name="/query" class="org.greenstone.solrserver.Greenstone3SearchHandler">
      <lst name="defaults">
        <str name="echoParams">explicit</str>
        <str name="wt">json</str>
