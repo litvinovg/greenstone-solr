@@ -222,7 +222,7 @@
     <pathconvert targetos="unix" property="tomcat.home">
       <path path="${tomcat.dir}"/><!-- creates an absolute path-->
     </pathconvert>
-    <filter token="gsdl3home" value="${gsdl3.web.home}"/>
+    <filter token="gsdl3webhome" value="${gsdl3.web.home}"/>
     <filter token="tomcathome" value="${tomcat.home}"/>
     <copy file="solr-tomcat-context.xml.in" tofile="${tomcat.context.dir}/solr.xml" filtering="true" overwrite="true"/>
 
