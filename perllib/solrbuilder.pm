@@ -309,7 +309,7 @@ sub premake_solr_auxiliary_files
 		# set termVectors=\"true\" when term vectors info is required, 
 		# see TermsResponse termResponse = solrResponse.getTermsResponse(); 
 		#$schema_insert_xml .=  "indexed=\"true\" stored=\"false\" termVectors=\"true\" multiValued=\"true\" />\n";
-		$schema_insert_xml .=  "indexed=\"true\" stored=\"false\" multiValued=\"true\" />\n";
+		$schema_insert_xml .=  "indexed=\"true\" stored=\"true\" multiValued=\"true\" />\n";
                 #$schema_insert_xml .=  "indexed=\"true\" stored=\"true\" multiValued=\"true\" />\n";
     }
 

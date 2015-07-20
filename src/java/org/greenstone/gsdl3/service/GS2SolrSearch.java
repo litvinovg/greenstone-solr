@@ -64,6 +64,8 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 	{
                 paramDefaults.put(SORT_ORDER_PARAM, SORT_ORDER_DESCENDING);
 		does_faceting = true;
+		does_highlight_snippets = true;
+		does_full_field_highlighting = true;
 		// Used to store the solr cores that match the required 'level' 
 		// of search (e.g. either document-level=>didx, or 
 		// section-level=>sidx.  The hashmap is filled out on demand
@@ -340,6 +342,13 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 	{
 		try
 		{
+			//if it is a Highlighting Query - execute it
+			this.solr_src.setHighlightField(indexField);
+			if(hldocOID != null)
+			{
+				String rslt = this.solr_src.runHighlightingQuery(query,hldocOID);
+				return rslt;
+			}
 			SharedSoleneQueryResult sqr = this.solr_src.runQuery(query);
 
 			return sqr;
@@ -351,7 +360,8 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 
 		return null;
 	}
-
+	
+	
 	/** get the total number of docs that match */
 	protected long numDocsMatched(Object query_result)
 	{
@@ -444,6 +454,18 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		}
 
 		return newFacetList;
+	}
+	@Override
+	protected Map<String, Map<String, List<String>>> getHighlightSnippets(Object query_result)
+	{
+		if (!(query_result instanceof SolrQueryResult))
+		{
+			return null;
+		}
+
+		SolrQueryResult result = (SolrQueryResult) query_result;
+		
+		return result.getHighlightResults();
 	}
 
 

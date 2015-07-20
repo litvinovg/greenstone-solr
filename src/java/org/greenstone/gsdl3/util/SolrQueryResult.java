@@ -27,6 +27,7 @@
 package org.greenstone.gsdl3.util;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.solr.client.solrj.response.FacetField;
 import org.greenstone.LuceneWrapper4.SharedSoleneQueryResult;
@@ -40,11 +41,11 @@ import org.greenstone.LuceneWrapper4.SharedSoleneQueryResult;
 public class SolrQueryResult extends SharedSoleneQueryResult
 {
 	protected List<FacetField> _facetResults = null;
+	protected Map<String,Map<String,List<String>>> _highlightResults = null;
 	SolrQueryResult()
 	{
 		super();
 	}
-	
 	public void setFacetResults(List<FacetField> facetResults)
 	{
 		_facetResults = facetResults;
@@ -54,4 +55,13 @@ public class SolrQueryResult extends SharedSoleneQueryResult
 	{
 		return _facetResults;
 	}
+	//Save highlighting snippets
+	public void setHighlightResults(Map<String,Map<String,List<String>>> highlightResults){
+		_highlightResults = highlightResults;
+	}
+	//Extract highlighting snippets
+	public Map<String,Map<String,List<String>>> getHighlightResults(){
+		return _highlightResults;
+	}
+	
 }

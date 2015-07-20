@@ -32,9 +32,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -45,16 +45,13 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.embedded.EmbeddedSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.TermsResponse;
-
 import org.apache.solr.core.CoreContainer;
 import org.apache.solr.core.SolrCore;
-
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.ModifiableSolrParams;
 import org.greenstone.LuceneWrapper4.SharedSoleneQuery;
 import org.greenstone.LuceneWrapper4.SharedSoleneQueryResult;
-
 import org.apache.lucene.search.Query; // Query, TermQuery, BooleanQuery, BooleanClause and more
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
@@ -80,6 +77,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 	protected ArrayList<String> _facetQueries = new ArrayList<String>();
 	SolrServer solr_core = null;
 
+	protected String highlight_field = null;
+	
     String collection_core_name_prefix = null;
 
 	public SolrQueryWrapper()
@@ -108,7 +107,10 @@ public class SolrQueryWrapper extends SharedSoleneQuery
       this.sort_field = sort_field;
     }
   }
-
+  public void setHighlightField(String hl_field)
+  {
+    this.highlight_field = hl_field;
+  }
   public void setSortOrder(String order)
   {
     this.sort_order = order;
@@ -359,6 +361,16 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		// fl=docOID score termfreq(TI,'farming') totaltermfreq(TI,'farming')
 		solrQuery.setFields("docOID", "score"); //solrParams.set("fl", "docOID score totaltermfreq(field,'queryterm')"); 
 		
+		//Turn on highlighting
+		solrQuery.setHighlight(true);
+		//Return 3 snippets for each document
+		solrQuery.setParam("hl.snippets", "3");
+		solrQuery.setParam("hl.fl", highlight_field);
+		solrQuery.setHighlightSimplePre("&lt;span class=\"snippetText\"&gt;");
+		
+		//Set text which appears after highlighted term
+		solrQuery.setHighlightSimplePost("&lt;/span&gt;");
+		
 		//solrQuery.setTerms(true); // turn on the termsComponent		
 		//solrQuery.set("terms.fl", "ZZ"); // which field to get the terms from. ModifiableSolrParams method
 		
@@ -391,6 +403,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		{
 			QueryResponse solrResponse = solr_core.query(solrQuery); //solr_core.query(solrParams);
 			SolrDocumentList hits = solrResponse.getResults();
+			Map<String, Map<String, List<String>>> hlResponse = solrResponse.getHighlighting();
+			solr_query_result.setHighlightResults(hlResponse);
 			//TermsResponse termResponse = solrResponse.getTermsResponse(); // null unless termvectors=true in schema.xml
 
 			if (hits != null)
@@ -409,8 +423,7 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 
 				solr_query_result.setStartResults(start_results);
 				solr_query_result.setEndResults(start_results + hits.size());
-
-				
+					
 				// get the first field we're searching in, this will be the fallback field
 				int sepIndex = query_string.indexOf(":");
 				String defaultField = query_string.substring(0, sepIndex);
@@ -503,6 +516,59 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		}
 
 		return solr_query_result;
+	}
+// Highlighting query. Returns full highlighted text for document
+	public String runHighlightingQuery(String query,String hldocOID)
+	{
+					
+		SolrQueryResult solr_query_result = new SolrQueryResult();
+		solr_query_result.clear();
+
+		
+		/* Create Query*/
+		
+		SolrQuery solrQuery = new SolrQuery(query);
+		
+		/* Set Query Parameters*/
+		
+		//Turn on highlighting
+		solrQuery.setHighlight(true);
+		//Extract default field from query
+		
+		//Set field for highlighting
+		solrQuery.setParam("hl.fl", highlight_field);
+		
+		//Get whole highlighted field
+		solrQuery.setHighlightFragsize(0);
+		
+		//Return only required document by docOID
+		solrQuery.setFilterQueries("docOID:"+ hldocOID);
+		
+		//Set text which appears before highlighted term
+		//solrQuery.setHighlightSimplePre("<annotation type=\"query_term\">");
+		solrQuery.setHighlightSimplePre("<span class=\"termHighlight\">");
+		//Set text which appears after highlighted term
+		//solrQuery.setHighlightSimplePost("</annotation>");
+		solrQuery.setHighlightSimplePost("</span>");
+		//Prepare results
+		String text = null;
+		// do the query
+		try
+		{
+			QueryResponse solrResponse = solr_core.query(solrQuery); //solr_core.query(solrParams);
+			//Get highliting results
+			Map<String,Map<String,List<String>>> highlightingResults = solrResponse.getHighlighting();
+			//Get highlited document text
+			text = highlightingResults.get(hldocOID).get(highlight_field).get(0);
+			
+												
+		}
+		catch (SolrServerException server_exception)
+		{
+			server_exception.printStackTrace();
+			
+		}
+		return text;
 	}
 
 	//Greenstone universe operates with a base of 1 for "start_results"

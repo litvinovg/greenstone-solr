@@ -429,7 +429,8 @@ sub textedit {
 			$section_text = $doc_obj->get_text($section);
 			if ($self->{'indexing_text'}) {
 			    # we always strip html
-			    $section_text = $self->preprocess_text($section_text, 1, "");
+			    &ghtml::htmlsafe($section_text);
+			    #$section_text = $self->preprocess_text($section_text, 1, "");
 			}
 			else { 
 			    # leave html stuff in, but escape the tags
