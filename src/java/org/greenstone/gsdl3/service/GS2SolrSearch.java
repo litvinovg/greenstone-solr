@@ -347,7 +347,13 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			if(hldocOID != null)
 			{
 				String rslt = this.solr_src.runHighlightingQuery(query,hldocOID);
+				// Check result
+				if (rslt != null)
+				{
 				return rslt;
+				}
+				//Highlighting request failed. Do standard request.
+				hldocOID = null;
 			}
 			SharedSoleneQueryResult sqr = this.solr_src.runQuery(query);
 

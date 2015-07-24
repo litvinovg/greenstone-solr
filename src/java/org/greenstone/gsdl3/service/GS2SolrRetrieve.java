@@ -19,6 +19,11 @@
 package org.greenstone.gsdl3.service;
 
 import org.apache.log4j.Logger;
+import org.greenstone.gsdl3.core.GSException;
+import org.greenstone.gsdl3.util.GSXML;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 /** Does excatly the same as GS2LuceneRetrieve.  Wrap up in a bit of
  *  inheritance so logging messages are more appropriate */
@@ -36,5 +41,24 @@ public class GS2SolrRetrieve
     public GS2SolrRetrieve() {
 	super();
     }
+    @Override
+    protected Element getNodeContent(Document doc, String doc_id, String lang) throws GSException
+   	{
+     // IF we need only process our content by macro resolver
+    	if (highlightedNode != null) 
+    	{
+    		String highlightedTextContent = highlightedNode.getTextContent();
+    		
+    		//Process text
+    		highlightedTextContent = resolveTextMacros(highlightedTextContent, doc_id, lang);
+    		//Create result element
+    		Element highlighted_node = doc.createElement(GSXML.NODE_CONTENT_ELEM);
+    		Text hlt = doc.createTextNode(highlightedTextContent);
+       		highlighted_node.appendChild(hlt);
+       		return highlighted_node;
+    	}
+    	return super.getNodeContent(doc, doc_id, lang);
+ 	
+   	}
 }
 

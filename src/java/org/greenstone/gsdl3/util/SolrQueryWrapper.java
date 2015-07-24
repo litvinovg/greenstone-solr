@@ -558,10 +558,12 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 			QueryResponse solrResponse = solr_core.query(solrQuery); //solr_core.query(solrParams);
 			//Get highliting results
 			Map<String,Map<String,List<String>>> highlightingResults = solrResponse.getHighlighting();
-			//Get highlited document text
-			text = highlightingResults.get(hldocOID).get(highlight_field).get(0);
-			
-												
+			// Check for existing highlighting results
+			if (highlightingResults != null && highlightingResults.get(hldocOID) != null && highlightingResults.get(hldocOID).get(highlight_field) != null) 
+			{
+				//Get highlited document text
+				text = highlightingResults.get(hldocOID).get(highlight_field).get(0);
+			}
 		}
 		catch (SolrServerException server_exception)
 		{
