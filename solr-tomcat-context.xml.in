@@ -8,6 +8,6 @@
   <!--<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="localhost_access_log." suffix=".txt" pattern="common"/>-->
   
   <!-- Allow this machine: 127.0.0.1 (IPv4) and 0:0:0:0:0:0:0:1 (IPv6, needed on the windows we tested this on) -->
-  <Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="(127\.0\.0\.1|0:0:0:0:0:0:0:1@IPv4@)"/>
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="(127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1(%\d)?@IPv4@)"/>
   
 </Context>
