@@ -201,6 +201,9 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		}
 
 		String index = "didx";
+		if (this.default_level.toUpperCase().equals("SEC")) {
+		  index = "sidx";
+		}
 		String physical_index_language_name = null;
 		String physical_sub_index_name = null;
 		int maxdocs = 100;
