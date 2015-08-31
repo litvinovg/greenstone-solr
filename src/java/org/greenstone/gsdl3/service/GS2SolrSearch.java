@@ -296,10 +296,10 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			} // ignore any others
 		}
 		// set up start and end results if necessary
-		int start_results = 1;
+		int start_results = 0;
 		if (start_page != 1)
 		{
-			start_results = ((start_page - 1) * hits_per_page) + 1;
+			start_results = ((start_page - 1) * hits_per_page) ;
 		}
 		int end_results = hits_per_page * start_page;
 		this.solr_src.setStartResults(start_results);
