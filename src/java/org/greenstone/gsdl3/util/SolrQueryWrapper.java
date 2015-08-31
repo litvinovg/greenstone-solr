@@ -349,7 +349,7 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		SolrQuery solrQuery = new SolrQuery(query_string);
 		solrQuery.addSort(this.sort_field, SolrQuery.ORDER.valueOf(this.sort_order)); // sort param, like "score desc" or "byORG asc"
 		solrQuery.setStart(start_results); // which result to start from
-		solrQuery.setRows((end_results - start_results) + 1); // how many results per "page"
+		solrQuery.setRows(end_results - start_results);  // how many results per "page"
 
 		// http://lucene.472066.n3.nabble.com/get-term-frequency-just-only-keywords-search-td4084510.html
 		// WORKS (search didx core):
@@ -573,15 +573,14 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		return text;
 	}
 
-	//Greenstone universe operates with a base of 1 for "start_results"
-	//But Solr operates from 0
+  // start results always from 0
 	public void setStartResults(int start_results)
 	{
 		if (start_results < 0)
 		{
 			start_results = 0;
 		}
-		this.start_results = start_results - 1;
+		this.start_results = start_results; 
 	}
 
 	public void cleanUp()
