@@ -15,7 +15,7 @@ set SOLR_PORT=8983
 set SOLR_HOST=localhost
 :: Loosely based on 
 :: http://stackoverflow.com/questions/7708681/how-to-read-from-a-properties-file-using-batch-script 
-FOR /F "tokens=1,2 delims==" %%G IN ("%GSDL3SRCHOME%\build.properties") DO ( 
+FOR /F "tokens=1,2 delims==" %%G IN (%GSDL3SRCHOME%\build.properties) DO ( 
 	if "%%G"=="tomcat.server" set SOLR_HOST=%%H
 	if "%%G"=="tomcat.port" set SOLR_PORT=%%H
 )
