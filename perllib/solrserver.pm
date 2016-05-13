@@ -414,10 +414,16 @@ sub start
 	my $line;
 	while (defined($line=<STARTIN>)) {	   
 	
-	    #if ($line =~ m/^(BUILD FAILED/) {
+	    #if ($line =~ m/^(BUILD FAILED)/) {
 	    print "Tomcat startup: $line";
 	    #}
+		if ($line =~ m/^BUILD SUCCESSFUL/) {
+			last;
+		}
 	}
+
+	close(STARTIN);
+	
 	if ($self->server_running()) {
 	    $server_status = "explicitly-started";
 	    #print STDERR "\n*** Tomcat server has started up now.\n\n";
@@ -455,25 +461,7 @@ sub start
 	print "Tomcat server ready and listening for connections at ";
 	print " $server_host:$server_port\n";
 	    
-	# now we know the server is ready to accept connections, fork a
-	# child process that continues to listen to the output and
-	# prints out any lines that are not INFO lines
-
-	if (fork()==0) {
-	    # child process
-
-	    my $line;
-	    while (defined ($line = <STARTIN>)) {
-
-		# if here, then some non-trival message has been logged
-		print "Tomcat/Solr processing: $line";
-	    }
-	    close(STARTIN);
-		
-	    # And now stop nicely
-	    exit 0;
-	}
-	# otherwise let the parent continue on
+	# now we know the server is ready to accept connections
     }
     elsif ($server_status eq "already-running") {
 	print STDERR "Using existing tomcat server detected at $server_host:$server_port\n";
