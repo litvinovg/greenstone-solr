@@ -8,9 +8,9 @@
 	</metadataList>
 
 	<displayItemList>
-		<displayItem assigned="true" lang="en" name="name">SOLR Demo</displayItem> 
-		<displayItem assigned="true" lang="en" name="description">This is a demonstration collection for the Greenstone3 digital library software. It contains a small subset (11 books) of the Humanitarian and Development Libraries. It is similar to the Lucene demo collection, using JDBM for the database but uses SOLR instead for indexing. SOLR offers faceted browsing of search results.</displayItem>
-		<displayItem lang="en" name="shortDescription">Demonstration collection containing a few books from the Humanitarian and Development Libraries. Uses Solr and JDBM.</displayItem> 
+		<displayItem assigned="true" lang="en" name="name">Solr Demo</displayItem> 
+		<displayItem assigned="true" lang="en" name="description">This is a demonstration collection for the Greenstone3 digital library software. It contains a small subset (11 books) from the Humanity Development Library. It is similar to the Lucene demo collection, using JDBM for the database but uses Solr instead for indexing. Solr offers faceted browsing of search results.</displayItem>
+		<displayItem lang="en" name="shortDescription">Demonstration collection using Solr as the indexer and JDBM as the metadata database.</displayItem> 
 	</displayItemList>
 
 	<format>
@@ -186,8 +186,8 @@
 	  <serviceRack name="RSSRetrieve"/>
 	  <!-- comment out the following serviceRack if you want to disable OAI for this collection -->
 	  <serviceRack name="OAIPMH">
-	    <setName>SOLR demo collection</setName>
-	    <setDescription>A demo collection for greenstone, using SOLR and JDBM.</setDescription>
+	    <setName>Solr demo collection</setName>
+	    <setDescription>A demo collection for Greenstone3, using Solr and JDBM.</setDescription>
 	    <!-- uncomment the following and set the name attribute if you want this
 		 collection to be part of a super set. -->
 	    <!--<oaiSuperSet name="xxx"/>-->
