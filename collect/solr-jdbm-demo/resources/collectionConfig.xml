@@ -1,0 +1,4 @@
+solr-jdm-demo.name=Solr Demo
+solr-jdm-demo.description=This is a demonstration collection for the Greenstone3 digital library software. It contains a small subset (11 books) from the Humanity Development Library. It is similar to the Lucene demo collection, using JDBM for the database but uses Solr instead for indexing. Solr offers faceted browsing of search results.
+solr-jdbm-demo.shortDescription=Demonstration collection using Solr as the indexer and JDBM as the metadata database.
+
