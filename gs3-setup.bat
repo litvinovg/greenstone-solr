@@ -18,7 +18,9 @@ setlocal enabledelayedexpansion
 set FOUNDPROPS=
 :: Loosely based on 
 :: http://stackoverflow.com/questions/7708681/how-to-read-from-a-properties-file-using-batch-script 
-FOR /F "tokens=1,2 delims==" %%G IN (%GSDL3SRCHOME%\build.properties) DO ( 
+:: for with usebackq option allows spaces in filepath to be protected with double quotes 
+:: (backquotes will be used for executing the commands)
+FOR /F "usebackq tokens=1,2 delims==" %%G IN ("%GSDL3SRCHOME%\build.properties") DO ( 
 	if "%%G"=="tomcat.server" set SOLR_HOST=%%H& set FOUNDPROPS=!FOUNDPROPS!found
 	if "%%G"=="tomcat.port" set SOLR_PORT=%%H& set FOUNDPROPS=!FOUNDPROPS!found
 	:: break out of the loop as soon as both properties are found
