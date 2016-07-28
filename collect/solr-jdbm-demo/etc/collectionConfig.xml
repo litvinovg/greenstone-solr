@@ -2,11 +2,10 @@
 <CollectionConfig xmlns:gsf="http://www.greenstone.org/greenstone3/schema/ConfigFormat" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <metadataList>
-    <metadata lang="en" name="creator"/>
-    <metadata lang="en" name="maintainer"/>
+    <metadata lang="en" name="creator">Greenstone Project</metadata>
+    <metadata lang="en" name="maintainer">Greenstone Project</metadata>
     <metadata lang="en" name="public">true</metadata>
   </metadataList>
-
   <displayItemList>
     <displayItem assigned="true" lang="en" name="name">Solr Demo</displayItem> 
     <displayItem assigned="true" lang="en" name="description">This is a demonstration collection for the Greenstone3 digital library software. It contains a small subset (11 books) from the Humanity Development Library. It is similar to the Lucene demo collection, using JDBM for the database but uses Solr instead for indexing. Solr offers faceted browsing of search results.</displayItem>
@@ -24,38 +23,24 @@
 
   <search type="solr">
     <level name="section">
-      <displayItem lang="en" name="name">chapter</displayItem>
+      <displayItem name="name" key="level.chapter"/>
     </level>
     <level name="document">
-      <displayItem lang="en" name="name">book</displayItem>
+      <displayItem name="name" key="level.book"/>
     </level>
     <defaultLevel name="section"/>
-    <index name="allfields">
-      <displayItem lang="en" name="name">all fields</displayItem>
-    </index>
-    <index name="text">
-      <displayItem lang="en" name="name">text</displayItem>
-    </index>
-    <index name="dc.Title,Title">
-      <displayItem lang="en" name="name">titles</displayItem>
-    </index>
-    <index name="dc.Subject">
-      <displayItem lang="en" name="name">subjects</displayItem>
-    </index>
-    <index name="dls.Organization">
-      <displayItem lang="en" name="name">organisations</displayItem>
-    </index>
-    <sort name="rank">
-      <displayItem lang="en" name="name">rank</displayItem>
-    </sort>
+    <index name="allfields"/>
+    <index name="text"/>
+    <index name="dc.Title,Title"/>
+    <index name="dc.Subject"/>
+    <index name="dls.Organization"/>
+    <sort name="rank"/>
     <sort name="dls.Organization">
-      <displayItem lang="en" name="name">organisations</displayItem>
+      <displayItem name="name" key="Organization.buttonname"/>
     </sort>
-    <sort name="none">
-      <displayItem lang="en" name="name">build order</displayItem>
-    </sort>
+    <sort name="none"/>
     <facet name="dls.Organization">
-      <displayItem lang="en" name="name">organisations</displayItem>
+      <displayItem name="name" key="Organisation.buttonname"/>
     </facet>
     <searchType name="plain"/>
     <searchType name="simpleform"/>
