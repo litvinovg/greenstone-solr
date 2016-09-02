@@ -26,9 +26,9 @@ FOR /F "usebackq tokens=1,2 delims==" %%G IN ("%GSDL3SRCHOME%\build.properties")
 	:: break out of the loop as soon as both properties are found
 	if "!FOUNDPROPS!" == "foundfound" goto foundall
 )
-endlocal
 
 :foundall
+endlocal& set SOLR_HOST=%SOLR_HOST%& set SOLR_PORT=%SOLR_PORT%
 echo Tomcat host: %SOLR_HOST%
 echo Tomcat port: %SOLR_PORT%
 
