@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE Archive SYSTEM "http://greenstone.org/dtd/Archive/1.0/Archive.dtd">
+<Archive>
+<Section>
+  <Description>
+    <Metadata name="gsdlsourcefilename">import/fb34fe/fb34fe.htm</Metadata>
+    <Metadata name="gsdldoctype">indexed_doc</Metadata>
+    <Metadata name="Plugin">HTMLPlugin</Metadata>
+    <Metadata name="FileSize">31730</Metadata>
+    <Metadata name="Source">fb34fe.htm</Metadata>
+    <Metadata name="SourceFile">fb34fe.htm</Metadata>
+    <Metadata name="Language">en</Metadata>
+    <Metadata name="Encoding">windows_1252</Metadata>
+    <Metadata name="URL">http://fb34fe/fb34fe.htm</Metadata>
+    <Metadata name="UTF8URL">http://fb34fe/fb34fe.htm</Metadata>
+    <Metadata name="Title">Farming snails 2: Choosing snails; Care and harvesting; Further improvement</Metadata>
+    <Metadata name="hascover">1</Metadata>
+    <Metadata name="dc.Language">English</Metadata>
+    <Metadata name="dc.Subject">Agriculture and Food Processing|Better Farming series of FAO and INADES - 46 booklets</Metadata>
+    <Metadata name="dc.Subject">Settlements, Housing, Building - Infrastructure Construction (Roads etc)|Settlements and housing: general works incl. low- cost housing, planning techniques, surveying, etc.</Metadata>
+    <Metadata name="dc.Title">Farming snails 2: Choosing snails; Care and harvesting; Further improvement (fb34fe)</Metadata>
+    <Metadata name="dls.Keyword">farm snails</Metadata>
+    <Metadata name="dls.Organization">FAO Better Farming series</Metadata>
+    <Metadata name="Identifier">fb34fe</Metadata>
+    <Metadata name="lastmodified">1479280714</Metadata>
+    <Metadata name="lastmodifieddate">20161116</Metadata>
+    <Metadata name="oailastmodified">1479689659</Metadata>
+    <Metadata name="oailastmodifieddate">20161121</Metadata>
+    <Metadata name="assocfilepath">fb34fe.dir</Metadata>
+    <Metadata name="gsdlassocfile">f34p093a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p094a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p094b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p095a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p095b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p095c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p096a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p096b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p096c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p097a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p097b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p098a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p099a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p099b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p101a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p101b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p102a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p103a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p103b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p104a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p104b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p105a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p105b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p105c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p106a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p106b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p106c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p106d.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p107a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p107b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p107c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p108a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p108b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p109a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p109b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p110a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p110b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p111a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f34p111b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">cover.jpg:image/jpeg:</Metadata>
+  </Description>
+  <Content>
+
+&lt;B&gt;&lt;FONT FACE=&quot;Arial&quot; SIZE=2&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;FOOD AND AGRICULTURE ORGANIZATION OF THE UNITED NATIONS&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Rome 1986&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;P-69&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;ISBN 92-5-102397-2&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;© FAO 1986&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">Preface</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;The first twenty- six volumes in FAO's Better Farming Series were based on the Cours d'apprentissage agricole prepared in Côte d'Ivoire by the Institut africain de développement économique et social for use by extension workers. Later volumes, beginning with No. 27, have been prepared by FAO for use in agricultural development at the farm and family level. The approach has deliberately been a general one, the intention being to constitute basic prototype outlines to be modified or expanded in each area according to local conditions of agriculture.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Many of the booklets deal with specific crops and techniques, while others are intended to give the farmer more general information which can help him to understand why he does what he does, so that he will be able to do it better. Booklets No. 33 and 34 were added to the series owing to a growing interest in small- scale snail farming for food and profit in many countries where FAO's Better Farming Series is widely used.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Adaptations of the series, or of individual volumes in it, have been published in Amharic, Arabic, Bengali, Creole, Hindi, Igala, Indonesian, Kiswahili, Malagasy, SiSwati, Thai and Turkish.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Requests for permission to issue this manual in other languages and to adapt it according to local climatic and ecological conditions are welcomed. They should be addressed to the Director, Publications Division, Food and Agriculture Organization of the United Nations, Via delle Terme di Caracalla, 00100 Rome, Italy.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">The snails</Metadata>
+  </Description>
+  <Content>
+
+
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">Choosing your snails</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;123. All of the snails that you choose for your pen must be of the same kind.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p093a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ All of the snails that you farm must be the same kind&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;124. You may have found one of the kinds of snails shown on pages 8 to 11 in the last booklet living in your area. You may also have found a different kind of snail.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;125. Now you must learn to choose the beat of the kinds of snails that you have found. When you first begin you will need fully grown snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;126. Remember, that all snails are both male and female and all snails lay eggs. So, when you are looking for snails, you can choose any one that is fully grown.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;127. You can tell that a snail is fully grown because it has a lip on the mouth of its shell. The drawings below show two fully grown snails with lips.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p094a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snails which fill and which does not fill their cells&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;128. Look at the drawings again. Notice that although both snails are fully grown, one of them fills its shell and one of them does not.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;129. The snail that does not fill its shell may be sick or it may have lost its water because of dry weather. This snail may not grow well.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;130. Choose only snails that fill their shells. Snails that fill their shells will usually grow well.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;131. Choose snails that have good, strong shells. Strong shells protect snails from their enemies, and snails with strong shells sell better at the market.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;132. Choose the largest of the fully grown snails that you can find from the kind of snail that you are going to farm.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p094b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Choose the largest snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;133. The larger snails of any kind of snail will be better and healthier and lay more eggs than a snail that is smaller.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;134. In addition, the eggs of large, healthy snails hatch better and the baby snails grow bigger and faster.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;135. Later, when you have more experience in choosing snails, you will learn just how large a fully grown snail should be. You will also learn the different colours of the kind of snail that you are farming.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;136. Then you can choose snails that are the same size and colour that you want your baby snails to be.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;As you collect your snails, handle them very gently and put them carefully into a container such as a basket so that you can carry them to the pen without hurting them.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p095a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Handle your snails carefully&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Putting your snails in the pen</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;137. Just before you put your snails in the pen, take out all the grass, the creeping grass and the weeds that may have grown while the food and shelter plants were growing.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p095b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Take out all grass, creeping grass and weeds&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;138. Never put snails in a pen in the morning or during the day when the sun is hot. Always put them in the evening when it is cool. This is when they begin to move about and to eat.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p095c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Always put snacks in the pen in the evening&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;139. If there is no dew and leaves of the plants and the ground are dry, wet them. Items 160 to 165 in this booklet will tell you how.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p096a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Wet the plants&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;140. When you put snails in the pen, put an equal number of them in four different places.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;141. In the last booklet you were told that for a 5 x 5 metre pen you would need 150 snails if you use the small kind, and 25 snails if you use the large kind. So, if you need&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• 150 snails, put 35 to 40 snails in four places&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• 25 snails, put 6 snails in three places and 7 snails in one place.&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;142. The arrows in the drawing at the top of the next page will show you where to put snails in a 5 x 5 metre pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p096b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Where to put the snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;When you put snails in a pen, never put them near the fence or in a corner of the fence. If you put them near the fence it is easier for them to get out than it is if you put them near the centre of the pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p096c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Do not put snails in the corner or near the fence&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;143. The morning after you have put your snails in the pen, look to see that they have all moved. If any of them have not moved, put them under shelter plants.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;144. If any snails die, take them out and put in the same number of new snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p097a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Take out the dead snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;145. At first your snails will try to crawl out of the pen. During this time, go around the pen each morning and put them back.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;146. After about two weeks your snails will become used to their new home and most of them will not try to crawl out.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;147. However, it is a good idea, even after the first two weeks, to check from time to time and put back any of the snails that may have got out of the pen.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">When to take out the fully grown snails</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;148. When you see a lot of baby snails in your pen, you will no longer need to keep the fully grown snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;149. So, take out all of the fully grown snails that you first put into your pen. You can either eat them or sell them at the market.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p097b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Take out all fully grown snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;150. Now, with only the baby snails left, the food plants in the pen will be more likely to last until the baby snails are big enough to harvest.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;151. Later in this booklet, you will be told when the baby snails are big enough to harvest and how to harvest them.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+</Section>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Taking care of your snails</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;152. After you have put your snails in their pen, watch them carefully to see that they are eating well.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;153. If you have given them enough of the right kinds of food plants, they will eat a lot and you will have very little to do for them.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;154. However, here are some things that you must do&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• wet the plants and moisten the ground&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• take care of the plants&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• take away the weeds and the creeping grass&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">Wet the food and shelter plants and moisten the ground</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;155. You have already been told that the leaves of the food and shelter plants must be wet and clean and that the ground must be moist (see Items 52 to 58 in the last booklet).&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;156. If there is too lime dew and not enough rainfall during the time when the plants and the snails are growing, you will have to water the plants and the ground yourself.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;157. If it is dry, you should water the plants and the ground at least every second day. However, if it is very dry, you may have to water them every day.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;158. Never water in the morning or during the day when the sun is hot. Always water in the evening at about sunset.&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;159. If you water when the sun is hot, the snails will begin to move away from the shelter plants and the hot sun may kill them before they can find shelter again.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;160. An easy way to wet the plants and moisten the ground is by hand. First fill a bucket with water and wrap a piece of cloth around your hand.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p098a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Wrap a cloth around your hand&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;161. Then, dip your hand with the cloth into the bucket of water and gently splash the plants and the ground.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p099a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Gently splash plants and ground&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;162. Continue to splash the plants and the ground gently until you have watered the whole pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;163. When you have finished, the leaves of the plants should be wet and the ground should be moist.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;164. You can tell when the plants are wet enough and the ground is moist enough when you can see your snails moving about easily.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p099b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snails move about easily&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;165. Remember: the soil must be moist and not wet in order for snail eggs to hatch.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;You have already been told that if you live in a place that has a dry season when the plants do not grow, snails dig into the ground to rest. Never water at this time or your snails may come out of the ground when they should not.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Tend the food and shelter plants</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;166. Watch all of your plants to see that they are growing well and that they do not get too tall or too thick.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;167. Plants that are too tall or thick stop the dew from reaching the leaves and stop the rain from washing away the dust and the dirt that snails leave when they move about.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;168. If you see that the plants are not being wet or washed by dew or rain, cut them back.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p101a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Cut back the plants&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Take away the weeds and creeping grass</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;169. After your snails are in their pen you must be sure to take away all weeds and especially creeping grass as soon as you see them.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;170. Creeping grass grows very fast and so thick that it can kill the food and shelter plants. If this happens, your snails will have no food and no place to find shelter.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;171. Taking away weeds and creeping grass when snails are in the pen is very difficult. So, you must be very careful not to hurt them or step on them.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;172. If the weeds and creeping grass get too thick, it may be better to move the snails before you take weeds and creeping grass away (see Item 183 in this booklet).&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;173. Keep the path around the pen clear of weeds, grass and creeping grass. This will help to keep weed seeds and unwanted plants out of the pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p101b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Keep the path clean&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;174. If the path is clean, insects will be less likely to cross it to get into the pen and you will be able to see signs of mice, rats and shrews.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Feeding your snails other kinds of food</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;175. There are a number of reasons for giving your snails other kinds of food. Here are a few&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• when you have not planted the right kinds of food plants&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• when you have too many snails for the number of food plants that you have planted&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• when most of the food plants in the pen have been eaten by the snails&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;176. If you decide for any of these reasons that you must give your snails other kinds of food, here are some foods that snails like to eat&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• the outside leaves of vegetables such as cabbage or cauliflower&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• the tops of vegetables such as carrots or beets&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• ripe banana fruit&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• most waste fruit and vegetables&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• cut- up papaya, melon or squash&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p102a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Food snails eat&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;177. There are many other foods that snails like to eat. If you have some food that you think might be good, try it with your snails and see if they like it.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;178. If your snails are not eating their food plants well, you also can try some others. Cut pieces from the plant that you want to try and put them in the pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;179. If you see that your snails like the new food plants better, you can use these plants when you build the second pen.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+</Section>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Building the second pen</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;180. In the last booklet you were told that to farm snails you will need at least two pens.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p103a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Two pens needed&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;181 . With two pens you can move your snails from one pen to the other to get rid of any enemies that may have got in.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;182. You can also move your snails to dig the ground and work the soil so that they can dig into the soil to rest and can lay their eggs easily.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;183. With two pens you can move your snails from one pen to the other if the weeds and creeping grass get too thick to take away with snails in the pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;184. You can also plant new food plants when the old ones have been eaten. When you are moving the snails, you can get rid of any of them that have not grown well.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">When to build the second pen and how to build it</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;185. Build your second pen a little before the growing season and exactly one year after you built the first pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;186. Begin just as you did before, by cleaning and preparing the ground (see Items 86 to 96 in the last booklet).&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;187. However, if you put your second pen near your first pen, be very careful when you burn the plant material not to burn your first pen or harm the snails in it.&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;188. For this reason it is best to leave an open space of at least 3 metres between your first and second pens.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p103b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Be very carefull when you burn the plant material&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;189. Now you are ready to build the second 5 x 5 metre pen and to plant the food and shelter plants (see Items 97 to 117 in the last booklet).&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Putting snails in your second pen</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;190. When the plants in your second pen have grown big enough to provide food and shelter, you can put in the snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p104a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ When the plants are grown, you can bring the snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;191. If the snails in your first pen have grown well, you can use some of them for your second pen. So, collect the right number of the biggest and best snails from your first pen to put in your second pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;192. If the snails in your first pen have not grown well, you will have to begin again with new fully grown snails for your second pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;193. Remember, with your first pen you put in 150 snails if you used the small kind and 25 snails if you used the large kind.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;194. However, different snails lay different amounts of eggs. So with your second pen you may want to change the number of snails that you put in.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;195. If there were too many baby snails for the food plants in your first pen, put fewer fully grown snails in your second pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;196. If there were too few baby snails for the food plants in your first pen, put more fully grown snails in your second pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;197. If you are not sure how many snails to use, it is best to continue to put in 150 if you use small snails and 25 if you use large snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p104b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ 25 Large snails; 150 small snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;198. Later, when you have learned more about the kind of snails that you are using and how many baby snails they have, you will be better able to judge just how many fully grown snails that you should use.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Do not forget to take out all of the fully grown snails that you have put in after you see a lot of baby snails in your second pen (see Items 148 to 151 in this booklet).&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Harvesting your snails</Metadata>
+  </Description>
+  <Content>
+
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">When to harvest your snails</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;199. If your snails have grown well, some of them will be big enough to harvest about one year after you have first put snails in the pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;200. If you need any snails to put in another pen, collect them first. So, choose the right number (see Items 193 to 198 in this booklet) of the biggest and best snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;201. Carefully put these snails into a container so that you can carry them to the other pen without hurting them.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p105a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Put snails into a container&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;202. Now you are ready to harvest the rest of your biggest snails. Remember, the best way to harvest is a few snails at a time when you want some to eat or to sell at the market.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;203. However, harvest all of the snails by the end of the second year so that you can plant the pen in time for the next growing season.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">How to harvest your snails</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;204. Harvesting snails is done by hand. It is often hard work to find them because they may be hiding.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p105b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Harvesting snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;205. The easiest time to find the snails is when the plants are wet, after it has rained or at night when there is dew and they are moving about or eating.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;206. You can also put out some of the food that snails like and when they come to eat it, you can collect them easily.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p105c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Put out some food&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;207. When you are harvesting, handle your snails carefully and put them into a container such as a box or basket or a net sack. However, do not put more than 10 kilograms in a container or you may hurt them.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p106a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Put snails in a container&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">What to do with the snails you harvest</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;208. If you are going to sell the snails, you can carry them to the market in containers like the ones above. However, you must be very careful not to hurt them or break their shells.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;209. Remember, snails with clean shells and well- cared- for snails will sell better at the market.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;210. If you want to keep the snails for you and your family to eat later, you can store them alive in containers filled with material such as sawdust or chopped maize husks.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;211. That way you can keep them for as long as six to eight weeks before you use them. The drawings below show you how to store snails this way.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;1 a box is a good container to store snails in&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p106b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ A box&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;2 cover the bottom of the box with about 5 cm of sawdust or chopped maize husks&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p106c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Cover the bottom of the box with sawdust&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3 carefully put in a layer of snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;4 cover the snails with about 3 cm of sawdust or chopped maize husks&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p106d.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Cover the snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;5 continue to do this until the box is full&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note: be sure that the top layer of snails is covered&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+</Section>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Preparing snails for cooking</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;212. Before snails can be used you must be sure that there is no food in them. They must be clean inside.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;213. Snails that have been stored in a container (see Items 210 and 211 in this booklet) for more than four days will have no food left in them. They are clean inside.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;214. However, snails which have just been taken from the pen have been eating and are usually full of food.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;215. So, before you can use them you must wait for them to become clean inside. To do this you need only to keep them from eating.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;216. Put them in a container where they can get no food but plenty of air. You can use a covered basket or a net sack.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p107a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Use a covered basket or a net sack&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;217. Put the basket or sack in a cool place away from the sun. After four days the snails will be clean inside.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p107b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Put the container away from sun&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;218. All snails must be washed and boiled just before cooking them.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;219. First, put them in clean, cool water with a little salt and vinegar.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p107c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Put them in clean water&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;220. After a short time the water will begin 10 turn white and you will know that the snails are being washed inside.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;221. When the water is very white, take the snails out and empty out the old water. Then put them again in clean, cool water with a little salt and vinegar.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p108a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Empty out dirty water; wash snails again&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;222. Continue to wash them this way until the water no longer turns white. Then you will know that the snails are completely washed.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;223. Now put the snails in boiling water, again with salt and vinegar, and boil them at least five minutes. The snails are now ready to be cooked.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p108b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Boil snails with salt and vinegar for five minutes&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Snail meat can be cooked like any meat or it can be cut into pieces and added to a stew or vegetables. If snails are eaten where you live, there will be many ways to cook them.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Further improvement</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;224. After you have been farming snails using two pens for some time, you may find that you and your family could eat or sell more snails if you had them.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;225. You can raise more snails by building another pen. You can either build another 5 x 5 metre pen or you can build a still bigger pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;226. You can also raise more snails by taking better care of the snails that you have. If you take better care of your snails, year after year they will become bigger, healthier and stronger and produce more baby snails.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">Building the third pen</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;227. Perhaps the most important thing that you can do to improve your snail farm is to build a third pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p109a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Build a third pen&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;228. Up until now, using only two pens, you have had to use both of them all of the time so that you could take fully grown snails from one after you had harvested the other.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p109b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Using two pens&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;229. Today, farmers know that it is not good to grow the same crops in the same place all of the time.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;230. This is also true if you grow the same food and shelter plants in the same pen all of the time.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;231. However, if you plant vegetables in one of your three pens for a year, the vegetables will grow well because of the snail manure in the soil. Afterwards, your food and shelter plants will also grow better because the soil has had a rest.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;232. Also, if you raise snails in the same place all of the time, the sicknesses that they may get would do more harm year after year.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;233. So, if you plant something else for a year or two and then start with snails again, they will be less likely to get sick.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;234. The diagram below shows you how to improve a snail farm by planting a vegetable garden in each pen from to time.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p110a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Diagram&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Building a bigger pen</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;235. You may want to build a still bigger pen for your third pen so you can grow many more snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;236. If you build a 5 x 10 metre pen, you can grow two times as many snails. If you build a 10 x 10 metre pen, you can grow four times as many snails as you did in a 5 x 5 metre pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p110b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Pens&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;237. However, building a bigger pen is a lot more work and you will need&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• more land&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• more materials to build it&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• more food and shelter plants&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• more fully grown snails to begin&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;238. You must also be sure that you and your family have enough time to take care of a bigger pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;239. If you do decide to build a bigger pen, build it exactly the same way that you built your first 5 x 5 metre pen (see pages 43 to 46 in the last booklet).&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p111a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Building a bigger pen&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Taking better care of your snails</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;240. The better you understand the snails that you are farming, the better you can take care of them. So, you should always watch them and learn as much as you can.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;241. When you have learned the exact kinds of food plants that your snails like to eat, you will see that they grow well.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;242. Then, if you always choose the biggest and best snails each time you begin, you will improve the quality of the snails that you are farming.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;243. So, with bigger and better snails and with more pens or bigger pens, you will be able to raise many more snails to eat or to sell and you arid your family will be able to live better.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f34p111b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Your family will be able to live better&lt;/P&gt;
+</Content>
+</Section>
+</Section>
+</Section>
+</Archive>

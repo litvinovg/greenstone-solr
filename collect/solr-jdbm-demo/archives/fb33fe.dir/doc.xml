@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE Archive SYSTEM "http://greenstone.org/dtd/Archive/1.0/Archive.dtd">
+<Archive>
+<Section>
+  <Description>
+    <Metadata name="gsdlsourcefilename">import/fb33fe/fb33fe.htm</Metadata>
+    <Metadata name="gsdldoctype">indexed_doc</Metadata>
+    <Metadata name="Plugin">HTMLPlugin</Metadata>
+    <Metadata name="FileSize">41269</Metadata>
+    <Metadata name="Source">fb33fe.htm</Metadata>
+    <Metadata name="SourceFile">fb33fe.htm</Metadata>
+    <Metadata name="Language">en</Metadata>
+    <Metadata name="Encoding">windows_1252</Metadata>
+    <Metadata name="URL">http://fb33fe/fb33fe.htm</Metadata>
+    <Metadata name="UTF8URL">http://fb33fe/fb33fe.htm</Metadata>
+    <Metadata name="Title">Farming snails 1: Learning about snails; Building a pen; Food and shelter plants</Metadata>
+    <Metadata name="hascover">1</Metadata>
+    <Metadata name="dc.Language">English</Metadata>
+    <Metadata name="dc.Subject">Agriculture and Food Processing|Better Farming series of FAO and INADES - 46 booklets</Metadata>
+    <Metadata name="dc.Subject">Settlements, Housing, Building - Infrastructure Construction (Roads etc)|Settlements and housing: general works incl. low- cost housing, planning techniques, surveying, etc.</Metadata>
+    <Metadata name="dc.Title">Farming snails 1: Learning about snails; Building a pen; Food and shelter plants (fb33fe)</Metadata>
+    <Metadata name="dls.Organization">FAO Better Farming series</Metadata>
+    <Metadata name="Identifier">fb33fe</Metadata>
+    <Metadata name="lastmodified">1479280714</Metadata>
+    <Metadata name="lastmodifieddate">20161116</Metadata>
+    <Metadata name="oailastmodified">1479689659</Metadata>
+    <Metadata name="oailastmodifieddate">20161121</Metadata>
+    <Metadata name="assocfilepath">fb33fe.dir</Metadata>
+    <Metadata name="gsdlassocfile">f33p60a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p61a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p61b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p61c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p61d.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p62a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p62b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p63a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p63b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p64a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p64b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p64c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p64d.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p65a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p65b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p65c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p65d.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p66a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p66b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p66c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p67a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p67b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p68a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p68b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p68c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p68d.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p69a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p69b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p69c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p70a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p70b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p70c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p71a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p71b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p71c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p72a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p72b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p73a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p73b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p74a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p74b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p75a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p75b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p75c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p76a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p76b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p76c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p77a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p77b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p77c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p78a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p78b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p79a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p79b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p79c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p79d.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p80a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p80b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p81a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p81b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p82a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p82b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p82c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p82d.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p83a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p84a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p84b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p84c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p84d.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p85a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p85b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p85c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p86a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p86b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p86c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p87a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p87b.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p87c.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">f33p88a.png:image/png:</Metadata>
+    <Metadata name="gsdlassocfile">cover.jpg:image/jpeg:</Metadata>
+  </Description>
+  <Content>
+
+&lt;B&gt;&lt;FONT FACE=&quot;Arial&quot; SIZE=2&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;FOOD AND AGRICULTURE ORGANIZATION OF THE UNITED NATIONS&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Rome 1986&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;P-69&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;ISBN 92-5-102396-4&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;© FAO 1986&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">Introduction</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;1. Did you know that many kinds of snails are good to eat?&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;2. Snail meat tastes good and it is also good for you. If you have snail meat to eat, it will help to keep you and your family strong and healthy.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p60a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Family kept strong and healthy&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3. If you want to have snails to eat you can get them in different ways.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;4. Many people gather wild snails that live nearby. Sometimes you can buy snails at the market or from people who gather them to sell to others.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;5. You can also raise your own snails. This is called snail farming. Today, a great many people all over the world farm snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;6. If you farm your own snails, you will always have a supply of fresh snail meat whenever you want it.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;7. Then, if your family is not too big and you grow more snails than you need to eat, you can sell what you do not use to your neighbours or at the market.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p61a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Selling snails at the market&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;8. With more food to eat and the money you get by selling snails, you and your family can live better.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;9. However, if your family is big you will need to grow many more snails if you are going to have enough to eat and to sell at the market.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p61b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ You need to grow more snails if your family is big&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">What do you need to start?</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;You will need&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• enough snails to start your snail farm&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p61c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snail&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• a place near your house with the right kind of soil and the right amount of water for snails to live and grow&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p61d.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ A place near your house&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• the kinds of plants that snails need for food and shelter&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• the materials to build a pen for the snail&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p62a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Plants that snails need; The materials to build a pen&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;10. If you have or can get all of these things, you can raise snails.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+</Section>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Learning about snails</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;11. To farm snails is not hard; however, it is quite different from keeping chickens or ducks or from growing crops such as maize, rice, cassava or groundnuts.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;12. Since farming snails is so different from other kinds of farming, you will have to learn a lot of new things.&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;13. One way to learn about snails so that you will be able to farm them is to watch the wild snails that live near you.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p62b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Watch the wild snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;14. Try to see how they live, how they move and where they go, what plants they like best and what they eat.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;15. You can learn many things by watching wild snails that will help you later if you decide to start a snail farm.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p63a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Wild snail&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;16. Another way to learn about snails is to ask an older farmer who knows a lot about your area. If there are people near you who gather snails to sell to others, they may be able to help you.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;17. In the next part of this booklet, you will begin to learn some things that you need to know to farm snails.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">What kind of snails can you farm?</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;18. The kind of snails that you can farm are snails that live on land, and there are many kinds of land snails that are good to eat.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;19. However, some kinds of land snails are not good to eat and they may even make you very, very sick.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;20. So, you must be very careful when you choose snails to farm. If you are not sure that a snail is good to eat, do not use it.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p63b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Do not use snail unless you are sure it is good to eat&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;21. Now look at the drawings on pages 8 to 11 and you will see four kinds of good snails that live in different places.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;22. You may be able to find one of these kinds of snails where you live. Notice that two of them are small and two of them are large.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;23. The smaller kinds of snails, shown on pages 8 and 9, can often be found in places where part of the year is warm and part of the year is cold.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;24. The larger kinds of snails, shown on pages 10 and 11, can often be found in places where it is warm all year round.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p64a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Helix pomatia&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;This kind of small snail&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;1 can be found in places where part of the year is warm and part of the year is cold&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;2 weighs from 15 to 25 grams and measures from 40 to 50 millimetres&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3 has a strong shell which is pale brown and off- white&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;4 grows to full size in two to three years if it is well fed&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;5 lays from 30 to 50 eggs each growing season&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p64b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Helix Pomatia - 30 to 50 small eggs&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p64c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Helix aspersa&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;This kind of small snail&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;1 can often be found in places where part of the year is warm and part of the year is cold&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;2 weighs from 4 to 20 grams and measures from 30 to 45 millimetres&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3 has a weak shell with broken stripes which are light brown to black&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;4 grows to full size in one year if it is well fed&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;5 lays from 40 to 170 eggs one to three times each growing season&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p64d.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Helix aspersa - 40 to 170 small eggs&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p65a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Achatina achatina&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;This kind of large snail&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;1 can often be found in places where it is warm all year round&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;2 weighs from 150 to 200 grams or more and measures from 90 to 130 millimetres&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3 has a very strong brown shell&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;4 grows to full size in two years if it is well fed&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;5 lays from 100 to 300 eggs one to two times each growing season&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p65b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Achatina achatina - 100 to 300 small eggs&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p65c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Archchatina marginata&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;This kind of large snail&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;1 can often be found in places where it is warm all year round&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;2 weighs from 150 to 200 grams or more and measures from 90 to 130 millimetres&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3 has a very strong brown shell&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;4 grows to full size in two years if it is well fed&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;5 lays from five to ten eggs four to eight times each growing season&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p65d.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Archchatina marginata - five to ten large eggs&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;25. If you cannot get one of these snails, you may be able to get others very much like them where you live.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;26. There are many other kinds of good snails. There may even be several kinds of good snails that are eaten where you live.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;27. If snails are eaten where you live, you can farm one of these. Then you will be sure that it is good to eat.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Where can you get snails?</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;28. When you are ready to get snails, perhaps you can get them by gathering wild snails that live near you.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p66a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Gathering wild snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;29. Perhaps you can buy them from people who gather wild snails to sell to others.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p66b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Buying from one who gathers wild snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;30. You may even be able to buy them from another snail farmer.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p66c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Buying from another snail farmer&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Never term snails that you buy at the market. Snails at the market may have been washed, kept too cold or hurt and they may die soon.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Where can you farm snails?</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;31. A good place for a snail farm is one where there already are snails. If there already are snails, you will know that the soil and the water in the soil are right for snails to live and grow.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;32. However, if there are no snails near where you live it does not mean that you cannot raise snails there.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;33. If you have the right kind of soil with the right amount of water, you can bring good snails from another place to start your snail farm.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">The soil and the water in the soil</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;34. Soil is important for snails. Part of the time they live on the soil and part of the time they live in the soil, and to live well, snails need good soil.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p67a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snail on the soil; Snail in the soil&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;35. When snails are not on the soil or in the soil, they are on plants which grow in the soil. So, the soil must also be good for the kinds of plants that snails need.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p67b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snail on plant&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;36. When snails are in the soil, they are resting or laying their eggs. If the soil has the right amount of water, snails will live well, the eggs they lay will hatch well and the baby snails will come out of the soil easily.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;37. Snails cannot live in hard soil such as heavy clay soils. When heavy clay soil is too dry, snails cannot dig into it to rest and lay their eggs. When heavy clay is too wet, snails and the eggs they lay may die.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;38. Snails cannot live in loose soil such as soils that have a lot of sand. Sandy soils do not hold enough water for snail eggs to hatch.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;39. The drawings on the next page show how a snail digs a hole, lays its eggs, closes the hole and how the baby snails come out when they have hatched.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;40. Snails need calcium from the soil to make their shells. All snails grow better and have stronger shells when there is a lot of calcium in the soil.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;41. So, if you are going to farm snails, you must have a good medium soil that has neither too much clay nor too much sand. It must also have enough calcium and the right amount of water for your snails to live and grow.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;If you have a garden, you can easily tell if your soll is good for snails. If your green leafy vegetables grow well, snails will also grow well in the same kind of soil&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p68a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snails will grow well in a garden&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;1 snail digging a hole&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p68b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ 1 snail digging a hole&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;2 laying the eggs and closing the hole&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p68c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snail laying eggs&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3 baby snails hatching and coming out of the hole&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p68d.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Baby snails hatching and coming out of the hole&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Plants for food and plants for shelter</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;42. Snails need plants for both food and sheller. Most kinds of snails use several kinds for food and several other kinds for shelter.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p69a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Plants for food and plants for shelter&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;43. They may also use different plants for food and shelter at different times of the year. Sometimes during the growing season snails eat and find shelter on the same plants.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;44. Snails usually hide on shelter plants during the day when it is dry and move to food plants to eat at night or early in the morning when they are wet with dew. However, sometimes snails do eat during the day after it has rained.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;45. If you live in a place which has a season when plants do not grow, snails will dig into the soil to rest and they do not eat then.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;46. During the growing season snails will eat a lot and grow very fast if they have food plants that they like.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;47. So, before you begin you will have to find out exactly what plants they like to eat. To do this you will have to watch snails at night when they eat.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p69b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ See what snails eat at night&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;48. You can tell that snails are eating when you see their heads moving as they scrape food into their mouths. You can also tell when a snail has been eating by the holes it makes in the leaves.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p69c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snail on leaf&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;49. You will also have to find out what plants they like for shelter. To do this you will have to watch snails during the day when they rest.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p70a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ See where snails rest during the day&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;50. It is often difficult to find snails on shelter plants because they are hiding. So, you will have to look very carefully.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p70b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snails are hiding on shelter plants&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;51. In addition to the food plants, there are many other kinds of foods that you can put into a pen for your snails to eat. You will learn about these foods and when you should use them in the next booklet in this series.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Dew and rain</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;52. Dew at night in the growing season helps the plants to grow and makes the leaves and the ground wet so that snails can move about.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;53. Rain in the growing season also helps the plants to grow and it cleans the plants of dust and the dirt that snails leave when they move about. The dirt that snails leave may make them sick.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;54. So, it is very important that the food and shelter plants are wet and clean.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;55. When the leaves are wet, snails move easily, eat more and grow well. When the leaves are dry, snails move very little, or not at all, and they grow poorly.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p70c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Wet leaves are good for snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;56. When it rains and the plants are clean, the snails will be healthy. When it does not rain and the plants are dirty, the snails may get sick.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;57. Dew and rain also keep the ground moist so that the snails can move easily and dig into it to rest and to lay their eggs.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;58. In the next booklet, you will be told how to wet the leaves of plants and moisten the ground when it is too dry.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Land that is wet</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;59. Land that is very wet, low land that does not drain well or land that floods in the rainy season is not good for snail farming.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p71a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Low, wet land is bad for snails&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Wind</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;60. Wind during the growing season is bad because it dries the dew and dries out the snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p71b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Wind is bad for snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;61. If you decide to farm snails, try to keep them in a place that is protected from the wind.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p71c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Snails should be farmed in a place protected from the wind&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Where do you keep snails when you farm them?</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;62. If you decide to farm snails you must keep them in a pen. Snails kept in a well- built pen will not get away easily and you can watch them and take care of them well.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;63. After the first year you will need at least two pens. If you decide to farm more snails you may want even more pens. You will learn how to use two or more pens in the next booklet.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p72a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Two pens the second year&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;64. In each pen you can give your snails the right kinds of plants for them to eat and to use as shelter.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;65. In each pen you can put the food and shelter plants near each other so that the snails can move easily from one to the other.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;66. Each pen you build must also keep the snails safe from their enemies. Snails have many enemies. You must be careful to protect them from&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• mice and rats&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• shrews and moles&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• walking insects that live on the ground such as ants and beetles&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• slugs and other snails that eat snail meat&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• birds that eat snails&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• frogs and toads&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• thieves&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p72b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Protect them from…&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;67. A snail pen can be small or large depending on how many snails you want to raise. However, when you first begin, start with a small pen. You will need fewer materials. It will be easier to take care of.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;68. In addition, with a small pen you will need fewer snails to begin. When you know more about raising snails, you can build a bigger pen and get more snails to raise.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;69. A good size for a pen is 5 x 5 metres. Later in this booklet you will learn how to build a small pen of this size.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">How many snails will you need when you first begin?</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;70. If you are using small snails like those you have seen on pages 8 and 9 in this booklet, you will need more snails to begin.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;71. If you are using large snails like those you have seen on pages 10 and 11 in this booklet, you will need fewer snails to begin.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;72. With a pen of 5 x 5 metres (25 square metres) you will need&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• 150 snails if you use the small kind (6 for each square metre)&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• 25 snails if you use the large kind (1 for each square metre).&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p73a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ 150 small snails; 25 large snails&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">How much snail meat can you expect to get?</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;73. The amount of snail meat that you will get from small snails will be about the same as what you would get from large snails. This is because you will use many more small snails than large snails and the meat will be about equal.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;74. With one 5 x 5 metre pen you will get 12 to 13 kilograms of snail meat each year and with two 5 x 5 metre pens you will get 24 to 26 kilograms each year.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p73b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ 12 to 13 kilograms each year; 24 to 26 kilograms each year&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Now you must decide</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;75. In the first part of this booklet you have learned many things about snails and farming snails. You have learned&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• why it is good to farm snails&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• what you need to farm snails&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• what kinds of snails you can farm&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• how to find plants near you that are good for food and shelter&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• what kind of soil and how much water in the soil snails need&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• where to keep snails and how many you need to start&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;76. You may also have been able to learn a lot about snails by watching the wild snails near where you live.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;77. An old farmer may have told you what he knows about snails. Someone who gathers snails to sell to others or another snail farmer may have helped you to learn.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;78. So, now that you know a lot about snails it is time to decide if you would like to start your own snail farm.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;79. If you would like to begin you will learn exactly what to do in the rest of this booklet and in the next booklet.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+</Section>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">How to begin</Metadata>
+  </Description>
+  <Content>
+
+&lt;P&gt;&lt;/P&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">Choose a place on your land to put your snail farm</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;80. Try to choose a place that is close to your house. That way you will be able to watch your snails, protect them from their enemies and take care of them easily&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p74a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Close to your house&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;81. In Items 34 to 41 you were told that to farm snails you must have the right kind of soil with the right amount of water.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;82. Remember, if green leafy vegetables grow well in your soil, snails will also grow well in the same kind of soil.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p74b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ If your garden grows well, so will your snails&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;83. In Items 59 to 61 you were told that low, wet land and wind are bad for snails. So, avoid low, wet places and try to put your snail farm where it is protected from the wind.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p75a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Avoid low, wet land; Find a place protected from wind&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;84. In Item 63 you were told that after the first year you will need at least two pens and later you may want even more. In Item 69 you were told that it is best to start with a small pen of 5 x 5 metres.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;85. So, try to find a place where you can put at least two or three 5 x 5 metre pens.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p75b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ two or three 5 x 5 metre pens&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Clean the site and prepare the ground</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;86. Clean the site and prepare the ground a little before the growing season so that you can build the pen in time to plant the food and shelter plants.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;87. First, mark out a square of 8 x 8 metres on the place that you have chosen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p75c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Mark and clear the 8 x 8 metre square&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;88. That way, with a pen of 5 x 5 metres in the centre of the square, you will have a path of 1.5 metres all the way around it (see Item 92). If you have enough land, the path can be even wider.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;89. Clear the square of trees, bushes grass, creeping grass and weeds. Take away all of the roots and the big stones that you can.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p76a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Take away roots and big stones&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;90. Spread the plant material that you have cleaned evenly on the ground and cover the whole square. If there is not enough, bring more plant material from another place.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p76b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Cover the square with plant materials&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;91. When the plant material is dry, burn it. This will kill the insects, the weed seeds and the roots of creeping grass, and rid the ground of mice, rats and shrews.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p76c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Burn the plant materials&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Insecticides and poisons can also be used to rid your pen of insects, mice, rats and other enemies of snails. However, if you use them, do not use them by yourself because they are very dangerous. Ask someone who knows how to use them, such as your extension agent.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;92. Now mark out a smaller square of 5 x 5 metres inside the big square. This is for your first snail pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p77a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Mark the 5 x 5 metre square&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;93. Dig the ground in the smaller square to a depth of 20 centimetres and turn it over well. As you dig, remove any rubbish or roots that you find.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p77b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Dig in the ground&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;94. While you are digging, if you see any more insects or any of the enemies of snails, bring more dry plant material and burn the ground again. To farm snails, the area must be free of insects, mice, rats and other enemies.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;95. When you have finished digging, the ground in the 5 x 5 metre square should be as smooth and well worked as it would be if you were planting a vegetable garden.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p77c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ The 5 x 5 metre square should be smooth&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;96. However, do not use any fertilizer, animal manure or compost as you might with a vegetable garden. Fertilizers may burn the snails and animal manure or compost may bring in insects and weed seeds.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+</Section>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Building a pen</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;97. Build a pen for your snails as soon as you can after you have burned the plant material. This is to keep other insects, mice, rats or shrews from getting into your pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;98. A snail pen is a simple fenced- in area and you can build a fence using&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• corrugated sheet metal or plastic sheets&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• woven plant material&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• woven plant material with chicken wire&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p78a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Materials for fence&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Using corrugated sheet metal or plastic sheets&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;99. A fence of corrugated sheet metal or plastic sheets makes the best pen for snails because it keeps out their enemies very well. However, sheet metal or plastic costs a lot of money.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p78b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ A fence of corrugated sheet metal&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;100. If you are going to build a pen using corrugated metal or plastic, you must build it in such a way that the enemies of snails cannot get in between the sheets.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Using woven plant material&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;101. To save money, you can build a fence of woven plant material such as split bamboo. If the woven material is tight, it will keep out enough of enemies for you to farm snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p79a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Woven material&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Using woven plant material with chicken wire&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;102. If you can get fine- mesh chicken wire, you can improve a fence that is made of woven material.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p79b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Chicken wire&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;103. To do this, first make the fence of chicken wire and then cover it with woven material.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p79c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ First use chicken wire then cover it with woven material&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;104. The chicken wire will keep out rats and other small animals. The woven plant material will keep most of the insects out and keep the snails in.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p79d.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Keep out small animals&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;With any kind of pen animals such as rats may get in, and this is especially true with pens made only of woven plant material. So, you must always watch for rats and other animals and keep them out.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;How to build the fence&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;105. Build the fence as you would any fence, by driving posts into the ground. Use posts 1.40 metres long. When the posts are in place they should be 1.00 metre above and 0.40 metre below the ground.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p80a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Drive posts into the ground&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;106. Whatever material you use for the fence of your pen, it should be buried 0.40 metre below the ground.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;107. If you are using woven material you will have to change the bottom of the fence when it rots.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;108. This can be done more easily by making the woven material in two parts, one for the top and one for the bottom. When the bottom part rots, you can change it without having to change the whole fence.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p80b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Attach top parts first; attach bottom parts second&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Keeping your snails in the pen&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;109. Many of your snails may crawl over the fence and get out of the pen. If you build a flap on the inside at the top of the fence, it will be more difficult for your snails to get out.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;110. However, even with a flap some snails may get out, and for this reason many snail farmers put two flaps on their fence. With two flaps they find that fewer snails get out.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p81a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ With two flaps, your snails will not easily crawl out of the pen&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;If you make your pen using galvanized sheet metal, you will not need flaps. Snails will not crawl on galvanized sheet metal.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;111. The drawings show you how to build a 5 x 5 metre pen using woven plant material, with and without chicken wire and how to build flaps to keep your snails in.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p81b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ How to build a 5 x 5 metre small pen&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3 if you are using woven material only, attach it as you were told to do in Item 108&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p82a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Attach woven material&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;4 If you are using chicken wire and woven material, attach the chicken wire first and then the woven material&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p82b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Attach the chicken material first&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;5 be sure that the fence cover goes all the way to the bottom of the 0.40- m trench&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p82c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ 0.40- m trench&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;6 fill in the trench&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p82d.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Fill in the trench&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;7 attach the flaps to the inside of the pen&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Note: use woven material 0.25 m wide for the flaps&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;8 first attach the bottom flap using heavy cord&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p83a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Use heavy cord&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;9 then attach the top flap&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;
+</Content>
+</Section>
+<Section>
+  <Description>
+    <Metadata name="Title">Plant the food and shelter plants</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;112. You have already been told that you should clean and prepare the site and build your snail pen in time for the planting season.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;113. If it has been only a short time since you dug the ground and worked the soil in your pen, you can begin to plant.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;114. If it has been a long time, dig and work the soil again before you plant. However, as you were told in Item 96, do not use fertilizer, animal manure or compost.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;115. Now you can begin to plant the food and shelter plants. Remember that you should use&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• plants that grow well where you live&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• plants that last a long time&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• plants that snails like&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;116. The drawings, show you two ways to plant food and shelter plants in a 5 x 5 metre pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;117. On pages 50 to 55 you will see some food and shelter plants that snails are known to like. Look at them carefully. Perhaps you can find some of them where you live.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Two ways plant food and shelter plants&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;1 if your shelter plants are small, plant your pen like this&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p84a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Mark three places for small shelter plants&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;2 plant the shelter plants first and then plant the food plants all around the shelter plants&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p84b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ First plant the shelter plants&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;3 if your shelter plants are large, plant your pen like this&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p84c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Mark only one place for large shelter plants&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;4 plant the shelter plants first and then plant the food plants all around the shelter plants&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p84d.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Leave a path inside the fence&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;RAMPE&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p85a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Some plants for food&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Rape is one of many kinds of smooth- leaved cabbage. It grows from seed and lasts a number of months. Rape is the best food plant for Helix snails (see pages 8 and 9 in this booklet). Many of the other kinds of smooth- leaved cabbage also make good food plants for snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p85b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Rape&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;AFRICAN SPINACH (Amaranthus)&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;This green leafy vegetable is a good food plant for young Achatina and Archachatina snails. However, if you plant African spinach for your snails, they will need other kinds of food plants as well.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p85c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ African spinach&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;PAPAYA&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;You have already been told that snails can be given food to eat other than the food plants that you have planted in the pen (see also Items 175 to 179 in the next booklet). The tender green leaves and cut- up fruit of the papaya tree are very good for Achatina and Archachatina snails. However, the papaya should not be planted inside the pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p86a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Papaya&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;HORSE- RADISH&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Horse- radish is a good food and shelter plant for young Helix snails. However, when they are older they will need other kinds of food plants as well.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p86b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Horse- Radish&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;LEAF BEET&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Leaf beet grows well from seed and lives for one year. It can be used with He/ix snails for both food and for shelter. As a food plant alone it is not the best and you will have to give your snails other food plants as well. However, as a shelter plant it is very good for Helix snails. These snails lay eggs under the beet plants and find shelter around the roots in cold weather.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p86c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Leaf Beet&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;BURDOCK&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Burdock grows from seed and lives for more than a year. It grows very slowly and you should plant it as soon as you can so that it can grow big enough for your snails. However, once it has grown it makes a good food and shelter plant for almost any kind of snail.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p87a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Burdock&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;BANANA and LOOFAH&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Banana and loofah plants together provide both food and shelter for Achatina and Archachatina snails. Ripe bananas can be cut up and fed to the snails and they can use the loofah plant for food and for shelter. However, your snails will need other food plants as well.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p87b.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Banana and Loofah&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;PLANTAGO&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Plantago grows well from seed and lasts about two years. It is the best shelter plant for Helix snails.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p87c.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Plantago&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;ASPARAGUS&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;Asparagus lives for many years and it is a good shelter plant for young Achatina and Archachatina snails. However, it is not good for older snails because they are too heavy for asparagus plants.&lt;/P&gt;
+
+&lt;B&gt;&lt;/B&gt;&lt;P&gt;&lt;/P&gt;
+</Content>
+<Section>
+  <Description>
+    <Metadata name="Title">When are the plants big enough for food and for shelter?</Metadata>
+  </Description>
+  <Content>
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;118. The food plants must be big enough to feed your snails and the shelter plants tall enough to cover them and to protect them from the sun.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;119. Depending on the kind of snails that you are raising, most plants will be big enough after they have been growing for about five to six weeks or when they have reached a height of 10 to 20 centimetres.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;&lt;center&gt;&lt;img src=&quot;_httpdocimg_/f33p88a.png&quot;&gt;&lt;/center&gt;&lt;br&gt;
+ Plants will grow to a height of 10 to 20 cm.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;120. When you are sure that the plants are big enough to provide food and shelter, you can begin to collect the snails and put them into the pen.&lt;/P&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;121. In Booklet No. 34, Farming snails 2, you will learn&lt;/P&gt;
+&lt;DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• how to choose good snails and how to put them in the pen&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• how to take care of your snails&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• when and how to harvest snails&lt;/P&gt;
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;• how to prepare snails for cooking&lt;/P&gt;
+&lt;/DIR&gt;
+
+&lt;P ALIGN=&quot;JUSTIFY&quot;&gt;122. You will also be told some things that you can do to improve your snail farm so that later when you have more experience you can raise more and better snails.&lt;/P&gt;&lt;/FONT&gt;
+</Content>
+</Section>
+</Section>
+</Section>
+</Archive>
