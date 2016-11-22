@@ -94,8 +94,8 @@ echo +Your environment is now setup for %extdesc%
 
 ::echo ++Solr/Jetty server will run on port %SOLR_JETTY_PORT% (+ port %JETTY_STOP_PORT% for shutdown command)
 echo ++Solr will run off the tomcat server on port %SOLR_PORT%
-echo --These port values can be changed by editing:
-echo --  %0
+echo --This port value can be changed by editing tomcat.port in build.properties
+::echo --  %0
 
 
 

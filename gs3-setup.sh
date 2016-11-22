@@ -26,8 +26,8 @@ while IFS== read propname propval; do
     fi          
 done < $file
 
-echo "Tomcat port: $SOLR_PORT"
-echo "Tomcat host: $SOLR_HOST"
+echo "SOLR port: $SOLR_PORT"
+echo "SOLR host: $SOLR_HOST"
 
 # If using jetty:
 # The port Jetty runs on:
@@ -89,9 +89,10 @@ else
   echo "+Your environment is already setup for $extdesc"
 fi
 
-echo "++Solr/Jetty server will run on port $SOLR_JETTY_PORT (+ port $JETTY_STOP_PORT for shutdown command)"
+#echo "++Solr/Jetty server will run on port $SOLR_JETTY_PORT (+ port $JETTY_STOP_PORT for shutdown command)"
 
 if [ "$first_time" = "1" ] ; then
-  echo "--These port values can be changed by editing:"
-  echo "--  $full_setup"
+  echo "++Solr will run off the tomcat server on port $SOLR_PORT. "
+  echo "-- This port value can be changed by editing tomcat.port in build.properties"
+  echo ""
 fi
