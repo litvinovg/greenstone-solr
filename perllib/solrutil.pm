@@ -79,7 +79,7 @@ sub open_post_pipe
     $post_props .= " -Ddata=stdin";
     $post_props .= " -Dcommit=yes";
     
-    my $post_java_cmd = "java -Xmx256M $post_props -jar \"$full_post_jar\"";
+    my $post_java_cmd = "java -Xmx512M $post_props -jar \"$full_post_jar\"";
     
 	##print STDERR "**** post cmd = $post_java_cmd\n";
     
