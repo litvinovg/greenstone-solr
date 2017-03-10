@@ -66,7 +66,7 @@ sub open_java_solr
   $self->{'solr_server'} = $solr_server;
 
   # Now start up the solr-post command
-  &solrutil::open_post_pipe($core);
+  &solrutil::open_post_pipe($core, $solr_server->get_solr_base_url());
 }
 
 sub close_java_solr

@@ -42,15 +42,29 @@ sub new {
 
     $self->{'server_explicitly_started'} = undef;
 
-    my $server_port = $ENV{'SOLR_PORT'};
-    my $server_host = $ENV{'SOLR_HOST'};
-    my $base_url = "http://$server_host:$server_port/solr/";
-    my $admin_url = "http://$server_host:$server_port/solr/admin/cores";
+    # set SOLR_HOST and SOLR_PORT env vars (tomcat host and port, if not using jetty) 
+    # by calling ant get-default-solr-servlet if possible. Else fallback on whatever the existing env vars are.
+    # tomcat host and port would have been set up in the env as SOLR_HOST and SOLR_PORT
+    # In case someone changed the tomcat host/port, we want to update the solr server variables too
+    my $solr_url = &solrutil::get_solr_servlet_url();    
+    # get the url parts, though we won't be using most of them
+    my ($protocol, $server_host, $server_port, $servlet_name) = &solrutil::get_solr_url_parts($solr_url);
     
-    $self->{'base-url'} = $base_url;
-    $self->{'admin-url'} = $admin_url;
+    # set the solr server env vars to what was discovered, so that any other old perl code
+    # dependent on these env vars will have any changes propagated. 
+    # (All perl code referencing these env vars should already be updated, but still...)
+    $ENV{'SOLR_HOST'} = $server_host;
+    $ENV{'SOLR_PORT'} = $server_port;
+    
+    $self->{'base-url'} = $solr_url; # e.g. of the form http://localhost:8383/solr
+    $self->{'admin-url'} = "$solr_url/admin/cores";
 
     return bless $self, $class;
+}
+
+sub get_solr_base_url {
+    my $self = shift (@_);
+    return $self->{'base-url'};
 }
 
 sub _wget_service
