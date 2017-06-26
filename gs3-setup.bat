@@ -20,6 +20,8 @@ set FOUNDPROPS=
 :: http://stackoverflow.com/questions/7708681/how-to-read-from-a-properties-file-using-batch-script 
 :: for with usebackq option allows spaces in filepath to be protected with double quotes 
 :: (backquotes will be used for executing the commands)
+:: See also https://stackoverflow.com/questions/5553040/batch-file-for-loop-with-spaces-in-dir-name
+:: for alternative suggestions useful in other instances
 FOR /F "usebackq tokens=1,2 delims==" %%G IN ("%GSDL3SRCHOME%\build.properties") DO ( 
 	if "%%G"=="tomcat.server" set SOLR_HOST=%%H& set FOUNDPROPS=!FOUNDPROPS!found
 	if "%%G"=="tomcat.port" set SOLR_PORT=%%H& set FOUNDPROPS=!FOUNDPROPS!found
