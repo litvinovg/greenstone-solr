@@ -365,11 +365,10 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		solrQuery.setHighlight(true);
 		//Return 3 snippets for each document
 		solrQuery.setParam("hl.snippets", "3");
+		solrQuery.setParam("hl.useFastVectorHighlighter", "true");
 		solrQuery.setParam("hl.fl", highlight_field);
-		solrQuery.setHighlightSimplePre("&lt;span class=\"snippetText\"&gt;");
-		
-		//Set text which appears after highlighted term
-		solrQuery.setHighlightSimplePost("&lt;/span&gt;");
+		solrQuery.setParam("hl.tag.pre", "&lt;span class=\"snippetText\"&gt;" );
+		solrQuery.setParam("hl.tag.post","&lt;/span&gt;" );
 		
 		//solrQuery.setTerms(true); // turn on the termsComponent		
 		//solrQuery.set("terms.fl", "ZZ"); // which field to get the terms from. ModifiableSolrParams method
@@ -544,12 +543,9 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		//Return only required document by docOID
 		solrQuery.setFilterQueries("docOID:"+ hldocOID);
 		
-		//Set text which appears before highlighted term
-		//solrQuery.setHighlightSimplePre("<annotation type=\"query_term\">");
 		solrQuery.setHighlightSimplePre("<span class=\"termHighlight\">");
-		//Set text which appears after highlighted term
-		//solrQuery.setHighlightSimplePost("</annotation>");
 		solrQuery.setHighlightSimplePost("</span>");
+		
 		//Prepare results
 		String text = null;
 		// do the query
