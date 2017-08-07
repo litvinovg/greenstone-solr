@@ -1163,7 +1163,7 @@
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ru.txt" format="snowball" />
-        <filter class="org.apache.lucene.morphology.russian.RussianFilterFactory"/>
+        <filter class="company.evo.jmorphy2.lucene.Jmorphy2StemFilterFactory" dict="lang/pymorphy2_dicts"/>
       </analyzer>
     </fieldType>
  

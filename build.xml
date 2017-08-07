@@ -87,8 +87,16 @@
 		   xsltc.jar
 		   serializer.jar"/>
   <property name="russian-morph-jars"
-            value="russian-4.7.2.jar
-                   morph-4.7.2.jar"/>
+	    value="jmorphy2-lucene-0.2.0.jar
+                   jmorphy2-nlp-0.2.0.jar
+                   jmorphy2-core-0.2.0.jar
+                   dawg-0.2.0.jar
+                   jmorphy2-dicts-uk-0.2.0.jar
+                   guava-18.0.jar
+                   commons-codec-1.10.jar
+                   noggit-0.7.jar
+                   jmorphy2-dicts-ru-0.2.0.jar"/>
+
 
   <property name="java-service-files" 
     value="SolrSearch.java		   	
