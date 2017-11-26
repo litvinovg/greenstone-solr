@@ -73,6 +73,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 	protected SolrQueryWrapper solr_src = null;
 
 	protected ArrayList<String> _facets = new ArrayList<String>();
+  protected HashMap<String, Element> _facet_display_names = new HashMap<String, Element>();
 
 	public GS2SolrSearch()
 	{
@@ -118,11 +119,33 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		}
 		
 		// Setting up facets
-		// TODO - get these from build config, in case some haven't built
+
+		// the search element from collectionConfig
 		Element searchElem = (Element) GSXML.getChildByTagName(extra_info, GSXML.SEARCH_ELEM);
+
+		Document owner = info.getOwnerDocument();
+		// for each facet in buildConfig
 		NodeList facet_list = info.getElementsByTagName("facet");
 		for (int i=0; i<facet_list.getLength(); i++) {
-		  _facets.add(((Element)facet_list.item(i)).getAttribute(GSXML.SHORTNAME_ATT));
+		  Element facet = (Element)facet_list.item(i);
+		  String shortname = facet.getAttribute(GSXML.SHORTNAME_ATT);
+		  _facets.add(shortname);
+
+		  // now add any displayItems into the facet element
+		  // (which is stored as part of info), then we can add to
+		  // the result if needed
+		  String longname = facet.getAttribute(GSXML.NAME_ATT);
+		  Element config_facet = GSXML.getNamedElement(searchElem, "facet", GSXML.NAME_ATT, longname);
+		  if (config_facet != null) {
+		    NodeList display_items = config_facet.getElementsByTagName(GSXML.DISPLAY_TEXT_ELEM);
+		    for (int j=0; j<display_items.getLength(); j++) {
+		      Element e = (Element) display_items.item(j);
+		      facet.appendChild(owner.importNode(e, true));
+		    }
+		    _facet_display_names.put(shortname, facet);
+
+		  }
+		      
 		}
 		
 		//If use Solr check if cores loaded
@@ -456,7 +479,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		return true;
 	}
 
-	protected ArrayList<FacetWrapper> getFacets(Object query_result)
+  protected ArrayList<FacetWrapper> getFacets(Object query_result, String lang)
 	{
 		if (!(query_result instanceof SolrQueryResult))
 		{
@@ -476,10 +499,9 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		for (FacetField facet : facets)
 		{
 		  SolrFacetWrapper wrap = new SolrFacetWrapper(facet);
-		  // String name = wrap.getName();
-		  // String display_name = "Poo";
-		  // wrap.setDisplayName(display_name);
-		    
+		  String fname = wrap.getName();
+		  String dname = getDisplayText(_facet_display_names.get(fname), GSXML.DISPLAY_TEXT_NAME, lang, "en", "metadata_names");
+		  wrap.setDisplayName(dname);		    
 		  newFacetList.add(wrap);
 		}
 
