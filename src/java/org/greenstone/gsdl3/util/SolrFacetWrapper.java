@@ -31,7 +31,6 @@ import org.apache.solr.client.solrj.response.FacetField;
 
 public class SolrFacetWrapper extends FacetWrapper
 {
-	protected String _name = null;
 	protected HashMap<String, Long> _counts = new HashMap<String, Long>();
 	
 	public SolrFacetWrapper(FacetField facet)
@@ -42,11 +41,6 @@ public class SolrFacetWrapper extends FacetWrapper
 		{
 			_counts.put(count.getName(), count.getCount());
 		}
-	}
-	
-	public String getName()
-	{
-		return _name;
 	}
 	
 	public HashMap<String, Long> getCounts()
