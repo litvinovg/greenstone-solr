@@ -111,8 +111,7 @@ sub get_solr_url_parts {
     return ($protocol, $server_host, $server_port, $servlet_name);
 }
 
-
-sub open_post_pipe
+sub get_post_pipe_cmd
 {
     my ($core, $solr_base_url) = @_;
 
@@ -124,17 +123,42 @@ sub open_post_pipe
     my $full_post_jar   = solrutil::locate_file($search_path,$post_jar);
     
     # Now run solr-post command
+    # See https://wiki.apache.org/solr/UpdateXmlMessages
+    # also https://lucene.apache.org/solr/4_2_1/tutorial.html
+        # suffixing commit=true/commitWithin=10000 to solr's /update servlet didn't work, because
+        # when using SimplePostTool, the commit only happens after the pipe to the tool is closed
     my $post_props = "-Durl=$solr_base_url/$core/update"; # robustness of protocol is taken care of too
 
     $post_props .= " -Ddata=stdin";
     $post_props .= " -Dcommit=yes";
+
+    # increased VM mem from 512 to 1024, but increasing to 2048M didn't help either when too much
+    # data streamed to SimplePostTool before commit. Nothing works short of committing before the
+    # data streamed gets too large. The solution is to close and reopen the pipe to force commits.
+    my $post_java_cmd = "java -Xmx1024M $post_props -jar \"$full_post_jar\"";
     
-    my $post_java_cmd = "java -Xmx512M $post_props -jar \"$full_post_jar\"";
+       ##print STDERR "**** post cmd = $post_java_cmd\n";
     
-	##print STDERR "**** post cmd = $post_java_cmd\n";
-    
+    return $post_java_cmd;
+}
+
+sub open_post_pipe
+{
+    my ($core, $solr_base_url) = @_;
+    my $post_java_cmd = &get_post_pipe_cmd($core, $solr_base_url);
+
     open (PIPEOUT, "| $post_java_cmd") 
 	|| die "Error in solr_passes.pl: Failed to run $post_java_cmd\n!$\n";
+
+    return $post_java_cmd; # return the post_java_cmd so caller can store it and reopen_post_pipe()
+}
+
+sub reopen_post_pipe
+{
+    my $post_java_cmd = shift(@_);
+    
+    open (PIPEOUT, "| $post_java_cmd") 
+	|| die "Error in solrutil::reopen_post_pipe: Failed to run $post_java_cmd\n!$\n";
     
 }
 

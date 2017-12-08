@@ -50,6 +50,8 @@ use util;
 use solrutil;
 use solrserver;
 
+my $DOC_BATCH_SIZE = 20;
+
 # Not quite OO, but close enough for now
 #
 my $self = { 'solr_server' => undef };
@@ -65,8 +67,16 @@ sub open_java_solr
   $solr_server->start();
   $self->{'solr_server'} = $solr_server;
 
-  # Now start up the solr-post command
-  &solrutil::open_post_pipe($core, $solr_server->get_solr_base_url());
+  # Now start up the solr-post command and store the open cmd that is returned
+  $self->{'post_java_cmd'} = &solrutil::open_post_pipe($core, $solr_server->get_solr_base_url());
+}
+
+# To commit any stream of data to solr that's amassed so far on the pipe to SimplePostTool,
+# close the pipe. Then reopen it to continue streaming data to it.
+sub flush_and_reopen_java_solr
+{
+    &solrutil::close_post_pipe();
+    &solrutil::reopen_post_pipe($self->{'post_java_cmd'});
 }
 
 sub close_java_solr
@@ -159,15 +169,63 @@ sub monitor_xml_stream
 }
 
 
+# Called when mode = index,
+# This is the function that passes the contents of the docs for ingesting into solr
+# as one long stream.
+# Since if we have many docs in a collection, there will be one long stream of bytes
+# sent to the SimplePostTool/(solr-)post.jar, which remain uncommitted until
+# the pipe is closed. And for a long bytestream, this will result in an out of heap memory
+# https://stackoverflow.com/questions/2082057/outputstream-outofmemoryerror-when-sending-http
+# So we need to close and then reopen solr post pipe to force commit after some $DOC_BATCH_SIZE
+# We could still have the same issue if any one document is very large (long stream of bytes),
+# but then we'd need to take care of the problem at the root, see the StackOverFlow page
+# and SimplePostTool.java, as the problem lies in HttpURLConnection.
 sub pass_on_xml_stream
 {
+    # the xml_stream sent to solr looks like:
+    # <update>
+    #   <add>
+    #     <doc>
+    #       ....
+    #     </doc>
+    #   </add>
+    #     <doc>
+    #       ....
+    #     </doc>
+    #   </add>
+    #   ...
+    # </update>    
+    
+    my $doc_count = 0;
+    
     my $line;
     while (defined ($line = <STDIN>)) {
+	# monitor for end of each document	    
+	if ($line =~ m/^\s*<\/add>$/) {
+	    $doc_count++;
+	}
+	else {
+	    if ($doc_count == $DOC_BATCH_SIZE) {
+		# evidence that there is still more documents to process
+		# => but reached batch size, so flush and reopen
+		# to force a commit of past docs to solr
+		# before sending this current line on its way
+		
+		if ($line =~ m/^\s*<add>$/) {
+		    &solrutil::print_to_post_pipe("</update>\n");
+		    flush_and_reopen_java_solr();
+		
+		    # start next doc
+		    &solrutil::print_to_post_pipe("<update>\n");
+		    $doc_count = 0;
+		}
+	    }
+	}
+		    
 	&solrutil::print_to_post_pipe($line);
+
     }
 }
-
-
 
 
 # /** This checks the arguments on the command line, filters the
