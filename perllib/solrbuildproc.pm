@@ -610,17 +610,33 @@ sub textedit {
 		    }
 		push (@metadata_list, @section_metadata);
 	    }
-	    my $new_text = "";
+	    # my $new_text = "";
+	    # foreach my $item (@metadata_list) {
+	    # 	&ghtml::htmlsafe($item);
+	    # 	$new_text .= "$item ";
+	    # }
+	    # if ($new_text =~ /\S/) {
+	    # 	$new_text = "<field name=\"$sf_shortname\">$new_text</field>\n";
+	    # 	# filter the text???
+	    # 	$text .= "$new_text"; # add it to the main text block
+	    # 	print "#### new_text: $new_text\n";
+
+	    # 	$self->{'actualsortfields'}->{$sfield} = 1;
+	    # }
+	    # print "#### TEXT: $text\n";
+
 	    foreach my $item (@metadata_list) {
 		&ghtml::htmlsafe($item);
-		$new_text .= "$item ";
-	    }
-	    if ($new_text =~ /\S/) {
-		$new_text = "<field name=\"$sf_shortname\">$new_text</field>\n";
+		
+		$item = "<field name=\"$sf_shortname\">$item</field>\n";
 		# filter the text???
-		$text .= "$new_text"; # add it to the main text block
-		$self->{'actualsortfields'}->{$sfield} = 1;
+		$text .= "$item"; # add it to the main text block
+		#print "#### new_text: $item\n";
 	    }
+	    if(scalar @metadata_list > 0) {
+	    	$self->{'actualsortfields'}->{$sfield} = 1;
+	    }
+	    
 	}
 	}
 
