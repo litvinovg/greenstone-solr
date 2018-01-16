@@ -72,6 +72,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 	static Logger logger = Logger.getLogger(org.greenstone.gsdl3.util.SolrQueryWrapper.class.getName());
 	protected int max_docs = 100;
 	protected String sort_order = SORT_DESCENDING;
+	//Filter results by document hash. To get results from limited document sections.
+	protected String docFilter = null;
   protected String sort_field = SORT_BY_RANK; // don't want null default for solr
 	protected ArrayList<String> _facets = new ArrayList<String>();
 	protected ArrayList<String> _facetQueries = new ArrayList<String>();
@@ -114,6 +116,10 @@ public class SolrQueryWrapper extends SharedSoleneQuery
   public void setSortOrder(String order)
   {
     this.sort_order = order;
+  }
+  public void setDocFilter(String docFilter)
+  {
+  	this.docFilter = docFilter;
   }
 	public void addFacet(String facet)
 	{
@@ -355,7 +361,7 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		// WORKS (search didx core):
 		//TI:farming
 		//docOID,score,termfreq(TI,'farming'),totaltermfreq(TI,'farming')
-
+		
 
 		// which fields to return for each document, we'll add the request for totaltermfreq later
 		// fl=docOID score termfreq(TI,'farming') totaltermfreq(TI,'farming')
@@ -370,6 +376,9 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 		solrQuery.setParam("hl.tag.pre", "&lt;span class=\"snippetText\"&gt;" );
 		solrQuery.setParam("hl.tag.post","&lt;/span&gt;" );
 		
+		if (docFilter != null) {
+			solrQuery.setParam("fq", "docOID:" + docFilter + "*");
+		}
 		//solrQuery.setTerms(true); // turn on the termsComponent		
 		//solrQuery.set("terms.fl", "ZZ"); // which field to get the terms from. ModifiableSolrParams method
 		

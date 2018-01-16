@@ -250,6 +250,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 		}
 		String physical_index_language_name = null;
 		String physical_sub_index_name = null;
+		String docFilter = null;
 		int maxdocs = 100;
 		int hits_per_page = 20;
 		int start_page = 1;
@@ -338,6 +339,12 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			{
 				physical_index_language_name = value;
 			} // ignore any others
+			else if (name.equals("docFilter"))
+			{
+				docFilter = value;
+				docFilter = docFilter.replaceAll("[^A-Za-z0-9.]", "");
+					this.solr_src.setDocFilter(value);
+			}
 		}
 		// set up start and end results if necessary
 		int start_results = 0;
