@@ -329,6 +329,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 			}
 			else if (name.equals("facetQueries") && value.length() > 0)
 			{
+			    //logger.info("@@@ SOLR FACET VALUE FOUND: " + value);
 				this.solr_src.addFacetQuery(value);
 			}
 			else if (name.equals(INDEX_SUBCOLLECTION_PARAM))
@@ -409,6 +410,7 @@ public class GS2SolrSearch extends SharedSoleneGS2FieldSearch
 				//Highlighting request failed. Do standard request.
 				hldocOID = null;
 			}
+			//logger.info("@@@@ Query is now: " + query);
 			SharedSoleneQueryResult sqr = this.solr_src.runQuery(query);
 
 			return sqr;

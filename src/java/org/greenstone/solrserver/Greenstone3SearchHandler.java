@@ -76,8 +76,10 @@ import java.util.HashSet;
 // https://wiki.apache.org/solr/SolrPlugins
 public class Greenstone3SearchHandler extends SearchHandler
 {
-    // IMPORTANT NOTE: Logging doesn't work in this class either with log4j or slf4j, 
+    // IMPORTANT NOTES: 1. Logging doesn't work in this class either with log4j or slf4j, 
     // but System.err goes to catalina.out.
+    // 2. To compile this class, "ant compile" in ext/solr is insufficient. The class file produced
+    // isn't copied into tomcat. Need to do "ant compile-gs3-solrserver".
 
     //protected static Logger log = LoggerFactory.getLogger(Greenstone3SearchHandler.class);
     //static Logger logger = LoggerFactory.getLogger(org.greenstone.solrserver.Greenstone3SearchHandler.class.getName());
@@ -156,7 +158,8 @@ public class Greenstone3SearchHandler extends SearchHandler
 
 
 	if(query_string == null || query_string.equals("")) {
-	    log.error("@@@@@@@@@ " + this.getClass() + " - QUERY STRING EMPTY");
+	    //log.error("@@@@@@@@@ " + this.getClass() + " - QUERY STRING EMPTY"); // logging won't work
+	    System.err.println("@@@@@@@@@ " + this.getClass() + " - QUERY STRING EMPTY");
 	}
 	else {
 	    //System.err.println("@@@ Parsing query_string " + query_string);
@@ -233,9 +236,17 @@ public class Greenstone3SearchHandler extends SearchHandler
 		String queryTerm = term.text();
 
 		// totaltermfreq(TI, 'farming') 
-		// termfreq(TI, 'farming')		
+		// termfreq(TI, 'farming')
+		//System.err.println("@@@@ SOLR FACET queryTerm: " + queryTerm);
 		solrParams.addField("totaltermfreq(" + field + ",'" + queryTerm + "')");
 		solrParams.addField("termfreq(" + field + ",'" + queryTerm + "')");
+
+		// handle the special case of apostrophes in facet query terms
+		// (facet_scripts.js does the other half of handling them)
+		query_string = query_string.replace("%27", "'");
+		solrParams.set("q", query_string);
+		
+		System.err.println("@@@@ SOLR FACET query_string: " + query_string);
 	    }
 	}
 

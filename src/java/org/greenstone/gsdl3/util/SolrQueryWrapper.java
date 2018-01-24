@@ -296,6 +296,8 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 				//Group each query segment by the index it uses
 				for (String currentQueryElement : queryElems)
 				{
+				    //logger.info("@@@@ currentQueryElement " + currentQueryElement);
+				    
 					String decodedQueryElement = null;
 					try
 					{
@@ -399,10 +401,25 @@ public class SolrQueryWrapper extends SharedSoleneQuery
 			for (int i = 0; i < _facets.size(); i++)
 			{
 			  // add this field as a facet
-			  solrQuery.addFacetField(_facets.get(i)); // solrParams.add("facet.field", _facets.get(i));
+			    solrQuery.addFacetField(_facets.get(i)); // solrParams.add("facet.field", _facets.get(i));
 			}
+			//for(int i = 0; i < _facetQueries.size(); i++) {
+			//    logger.info("@@@@ facet query i: " + _facetQueries.get(i));
+			//}
+		}
+				
+
+		// Some debugging		
+		logger.info("@@@@ solrQuery: " + solrQuery);		
+		try {
+		    // https://stackoverflow.com/questions/2632175/decoding-uri-query-string-in-java
+		    String displayQueryString = URLDecoder.decode(solrQuery.toString().replace("+", " "), "UTF-8");
+		    logger.info("@@@@ solrQuery URL decoded: " + displayQueryString);
+		} catch(Exception uee) { // UnsupportedEncodingException
+		    logger.info("Got debug exception " + uee.getMessage());
 		}
 
+		
 		// the solrserver will now
 		// get the individual terms that make up the query, then request solr to return the totaltermfreq for each term
 
