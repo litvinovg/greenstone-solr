@@ -413,9 +413,33 @@ public class NewSolrHighlighter extends SolrHighlighter implements PluginInfoIni
       NamedList docSummaries = new SimpleOrderedMap();
       for (String fieldName : fieldNames) {
         fieldName = fieldName.trim();
-        if( useFastVectorHighlighter( params, schema, fieldName ) )
+        if( useFastVectorHighlighter( params, schema, fieldName ) ) {
           doHighlightingByFastVectorHighlighter( fvh, fieldQuery, req, docSummaries, docId, doc, fieldName );
-        else
+        } else if(getPositions(params, schema, fieldName)) {
+        	FieldQuery fq = fvh.getFieldQuery(query, searcher.getIndexReader());
+          FieldTermStack stack = new FieldTermStack(req.getSearcher().getIndexReader(), docId, fieldName, fq);
+          FieldPhraseList fpl = new FieldPhraseList(stack, fq);
+
+          NamedList<NamedList<Object>> terms = new SimpleOrderedMap<NamedList<Object>>();
+          for (FieldPhraseList.WeightedPhraseInfo wpi : fpl
+              .getPhraseList()) {
+            for (FieldTermStack.TermInfo ti : wpi.getTermsInfos()) {
+              NamedList<Object> term = new SimpleOrderedMap<Object>();
+              
+              term.add("position", ti.getPosition());
+              
+              ArrayList<Integer> ofst = new ArrayList<Integer>(2);
+              ofst.add(ti.getStartOffset());
+              ofst.add(ti.getEndOffset());
+              term.add("offsets", ofst);
+              
+              terms.add(ti.getText(), term);
+            }
+          }
+          NamedList<Object> info = new SimpleOrderedMap<Object>();
+          info.add("terms", terms);
+          docSummaries.add(fieldName, info);
+        } else
           doHighlightingByHighlighter( query, req, docSummaries, docId, doc, fieldName );
       }
       String printId = schema.printableUniqueKey(doc);
@@ -433,6 +457,18 @@ public class NewSolrHighlighter extends SolrHighlighter implements PluginInfoIni
     if( schemaField == null ) return false;
     boolean useFvhParam = params.getFieldBool( fieldName, HighlightParams.USE_FVH, false );
     if( !useFvhParam ) return false;
+    boolean termPosOff = schemaField.storeTermPositions() && schemaField.storeTermOffsets();
+    if( !termPosOff ) {
+      log.warn( "Solr will use Highlighter instead of FastVectorHighlighter because {} field does not store TermPositions and TermOffsets.", fieldName );
+    }
+    return termPosOff;
+  }
+  
+  private boolean getPositions( SolrParams params, IndexSchema schema, String fieldName ){
+    SchemaField schemaField = schema.getFieldOrNull( fieldName );
+    if( schemaField == null ) return false;
+    boolean useGetPositionsParam = params.getFieldBool( fieldName, "hl.getPositions", false );
+    if( !useGetPositionsParam ) return false;
     boolean termPosOff = schemaField.storeTermPositions() && schemaField.storeTermOffsets();
     if( !termPosOff ) {
       log.warn( "Solr will use Highlighter instead of FastVectorHighlighter because {} field does not store TermPositions and TermOffsets.", fieldName );
