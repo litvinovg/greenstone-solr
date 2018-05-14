@@ -513,13 +513,13 @@ sub pre_build_indexes
 	    my $check_core_exists = $solr_server->admin_ping_core($core);
        
 	    if ($check_core_exists) {	    
-		print $outhandle "Reloading Solr core: $core\n";
-		$solr_server->admin_reload_core($core);
+		print $outhandle "Unloading Solr core: $core\n";
+		$solr_server->admin_unload_core($core);
 	    }
-	    else {
+	    
 		print $outhandle "Creating Solr core: $core\n";
 		$solr_server->admin_create_core($core);
-	    }
+	    
 	}
     }
 
