@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CollectionConfig xmlns:gsf="http://www.greenstone.org/greenstone3/schema/ConfigFormat" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<CollectionConfig xmlns:gsf="http://www.greenstone.org/greenstone3/schema/ConfigFormat" xmlns:gslib="http://www.greenstone.org/skinning" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <metadataList>
     <metadata lang="en" name="creator">Greenstone Project</metadata>
